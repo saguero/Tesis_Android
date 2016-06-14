@@ -37,7 +37,7 @@ public class Info {
 										"Select File Dataset",
 										"Select predicted attribute",
 										"Select schemes"};
-	
+	//comment
 	int attributeSelected;
 	LibraryClasses librarySelected;
 	File fileDatasetSelected;
@@ -78,6 +78,8 @@ public class Info {
 		for(int index = 0; index < aux.size(); index++)
 			atts[index] = aux.elementAt(index);
 	}
+	
+	
 	
 	public void setListSchemes(){
 		

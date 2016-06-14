@@ -27,7 +27,7 @@ public class FilteredSchemesActivity extends Activity {
         
         ImageView imageview = (ImageView) findViewById(R.id.imageView_display);
        
-        
+      //comment
         
         /*	HARDCODE PARA PROBAR		*/
         Info info = new Info();

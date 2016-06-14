@@ -12,7 +12,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class SelectorSingleItems extends DialogFragment {
-	
+	//comment
 	int checkedItem = 0;
 	static Info info = new Info();
 	static int item;

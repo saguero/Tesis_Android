@@ -5,7 +5,7 @@ package com.example.prediction.logica;
 public class ClassEstructure {
 	
 	public abstract class LibraryClasses {
-		
+		//comment
 		String ID;											
 		
 		AbsDataset trainingSet;

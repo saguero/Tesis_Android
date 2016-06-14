@@ -18,7 +18,7 @@ import com.example.prediction.logica.Config;
 
 public class ConfiguresActivity extends Activity {
 	
-	
+	//comment
 	public class RowItem {
 		//COMPLETAR
 	}
