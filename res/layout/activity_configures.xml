@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_fase3"
+    tools:context=".ConfiguresActivity" >
+
+    <ListView
+        android:id="@+id/listview_configure"
+        android:layout_width="370dp"
+        android:layout_height="390dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_configure"
+        android:layout_marginStart="6dp"
+        android:cacheColorHint="@color/black"
+        android:dividerHeight="2dp"
+        android:drawSelectorOnTop="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/textView_configure"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/configure"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_makePred"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="120dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/listview_configure"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/icon_start"
+        android:stateListAnimator="@null"
+        android:text="@string/make_prediction"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</RelativeLayout>

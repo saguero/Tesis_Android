@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array
+        name="array_chooseSchemes">
+        
+        <item>Simple Linear Regression</item>
+        <item>Support Vector Machine for Regression</item>
+        <item>MultiLayer Perceptron</item>
+        <item>Linear Regression</item>
+        <item>Clustered</item>
+    
+    
+    </string-array>
+    
+</resources>
