@@ -69,7 +69,12 @@ public class SelectorSingleItems extends DialogFragment {
 							info.setAttributeSelected(item);
 							break;
 						case Config.Item.ITEM_SELECT_FILE_DATASET:
-							info.setFileDatasetSelected(items[item].toString());
+							try {
+								info.setFileDatasetSelected(items[item].toString());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							break; 
 						}	
 					}

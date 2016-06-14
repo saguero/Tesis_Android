@@ -41,11 +41,13 @@ public class Info {
 	int attributeSelected;
 	LibraryClasses librarySelected;
 	File fileDatasetSelected;
+	AbsDataset trainingSet;
 	Vector<AbsClassifier> schemesSelected;
 	ClassEstructure classEstructure;
 	
 	public Info() {
-			
+		setLibraries();
+		setListFilesDataset();
 	}
 	
 	public void setLibraries(){
@@ -56,12 +58,13 @@ public class Info {
 	public void setListFilesDataset(){
 		File dir = Environment.getExternalStorageDirectory();
         File[] files =  dir.listFiles();
-        filesDataset = new CharSequence[files.length];
+        
         Vector<CharSequence> aux = new Vector<CharSequence>();
         for (int f = 0; f < files.length; f++) {
-        	if(files[f].isFile())
+        	if(files[f].isFile() && files[f].getAbsolutePath().contains(Config.EXTENSION_DATASET))
         		aux.add(files[f].getName());
         }
+        filesDataset = new CharSequence[aux.size()];
         int index=0;
         for(CharSequence cs:aux){
         	filesDataset[index]=cs;
@@ -161,8 +164,11 @@ public class Info {
 		librarySelected = classEstructure.getLibrary(ID);
 	}
 	
-	public void setFileDatasetSelected(String name){			//--> A MODIFICAR
+	public void setFileDatasetSelected(String name) throws Exception{			//--> A MODIFICAR
 		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
+		trainingSet = getLibrarySelected().getDatasetObject();
+		trainingSet.setFile(trainingSet.convertFile(fileDatasetSelected));
+		setListAttributes(trainingSet);
 	}
 	
 	public void setAttributeSelected(int att){
@@ -182,8 +188,8 @@ public class Info {
 		return attributeSelected;
 	}
 	
-	public File getFileDatasetSelected(){
-		return fileDatasetSelected;
+	public AbsDataset getDatasetSelected(){
+		return trainingSet;
 	}
 	
 	public Vector<AbsClassifier> getListSchemesSelected(){
@@ -193,7 +199,7 @@ public class Info {
 	public Bitmap generateImageLearningCurve(Context context) throws Exception {
 		// TODO Auto-generated method stub	
 		AbsDataset trainingSet = this.getLibrarySelected().getDatasetObject();
-		trainingSet.setFile(getFileDatasetSelected());
+		trainingSet.setFile(fileDatasetSelected);
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
 		
 		AbsClassifier scheme = null;				//-->MODIFICAR!
@@ -209,7 +215,7 @@ public class Info {
 	public Bitmap generateImageErrorPrediction(Context context) throws Exception {
 		// TODO Auto-generated method stub
 		AbsDataset trainingSet = this.getLibrarySelected().getDatasetObject();
-		trainingSet.setFile(getFileDatasetSelected());
+		trainingSet.setFile(fileDatasetSelected);
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
 		
 		LineGraphics linechart = new LineGraphics();

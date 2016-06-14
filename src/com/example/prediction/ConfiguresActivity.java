@@ -27,17 +27,19 @@ public class ConfiguresActivity extends Activity {
 	Button button_prediction;
 	ListView lvList;
 	
-	Info info;
-	int[] selectItems;
+	Info info = new Info();
+	Integer[] selectItems;
 	int selectedItems;
-	ArrayList<RowItem> rowItems = new ArrayList<RowItem>();
-	//TypedArray profile_pics = getResources().obtainTypedArray(R.array);
+	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configures);
-        
+        String[] configureItems = {	"Select library",
+    			"Select File Dataset",
+    			"Select predicted attribute",
+    			"Select schemes"};
      
         button_prediction = (Button) findViewById(R.id.button_makePred);
         button_prediction.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +74,15 @@ public class ConfiguresActivity extends Activity {
         
         initializeSelectedItems();
         button_prediction.setVisibility(View.INVISIBLE);
-        lvList= (ListView) findViewById(R.id.listview_configure);
         
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.item_configures, info.getConfigureItems());
+                R.layout.item_configures, R.id.textview_configures_id, configureItems);
+
+        lvList= (ListView) findViewById(R.id.listview_configure);
         lvList.setAdapter(adapter);
+         
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        	
+        
             @Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
@@ -110,7 +114,7 @@ public class ConfiguresActivity extends Activity {
 	private void initializeSelectedItems(){
 		selectedItems = 0;
 		int length = info.getConfigureItems().length;
-		selectItems = new int[length];
+		selectItems = new Integer[length];
 		for(int index = 0; index<length; index++)
 			selectItems[index] = 0;	
 	}

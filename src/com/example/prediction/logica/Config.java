@@ -10,9 +10,10 @@ import android.os.Environment;
 public class Config {
 	public static final String DIR_RESOURCES = System.getProperty("user.dir") + System.getProperty("file.separator");
 	public static final File DIR_EXTERNAL_STORAGE = new File(Environment.getExternalStorageDirectory() + "/" );
+	public static final String EXTENSION_DATASET = ".csv";
 	
 	
-	public static class Graphic {
+ 	public static class Graphic {
 		
 		public static final int GRAPHIC_TYPE_LINE = 0;
 		public static final int GRAPHIC_TYPE_BAR = 1;

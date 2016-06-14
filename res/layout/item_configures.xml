@@ -15,6 +15,7 @@
         android:paddingRight="10dp" />
 
 	<TextView
+	    android:id="@+id/textview_configures_id"
     	android:layout_width="match_parent"
     	android:layout_height="match_parent"
     	android:textStyle="normal"

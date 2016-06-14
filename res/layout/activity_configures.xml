@@ -42,7 +42,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="120dp"
         android:background="@drawable/icon_start"
-        android:stateListAnimator="@null"
         android:text="@string/make_prediction"
         android:textAllCaps="false"
         android:textColor="@color/white"
