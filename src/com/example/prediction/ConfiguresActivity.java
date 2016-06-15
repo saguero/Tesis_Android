@@ -36,10 +36,8 @@ public class ConfiguresActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configures);
-        String[] configureItems = {	"Select library",
-    			"Select File Dataset",
-    			"Select predicted attribute",
-    			"Select schemes"};
+        String[] configureItems = info.getConfigureItems();
+        
      
         button_prediction = (Button) findViewById(R.id.button_makePred);
         button_prediction.setOnClickListener(new View.OnClickListener() {

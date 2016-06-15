@@ -12,7 +12,7 @@ public abstract class AbsDataset {
 	}
 	
 	public AbsDataset(File file) throws Exception{
-		setFile(file);
+		convertInstancesObject(convertFile(file));
 	}
 	
 	public AbsDataset newInstance(){
@@ -58,12 +58,14 @@ public abstract class AbsDataset {
 	}
 	
 	public AbsDataset getNewDatasetByRemove(int first, int last) throws Exception{
-		return newInstance(removeInstances(first, last));
+		AbsDataset result = newInstance();
+		result.trainingSet = removeInstances(first,last);
+		return result;
 		
 	}
 	
 	
-	public abstract void setFile(File file) throws Exception;
+	public abstract void convertInstancesObject(File fileInstances) throws Exception;
 	public abstract Object removeInstances(int first, int last) throws Exception;
 	public abstract File convertFile(File file) throws Exception;
 	public abstract int getClassIndex();

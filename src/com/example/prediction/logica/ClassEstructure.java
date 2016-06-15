@@ -38,7 +38,7 @@ public class ClassEstructure {
 		}
 		
 		public abstract void setDatasetObject();
-		public abstract void setEvalutionObject();
+		public abstract void setEvaluationObject();
 		public abstract void setMetricsEvaluationObject();
 		public abstract void setSchemesObject();	
 	}
@@ -48,6 +48,11 @@ public class ClassEstructure {
 		public WekaLibrary(String ID) {
 			super(ID);
 			// TODO Auto-generated constructor stub
+			setDatasetObject();
+			setEvaluationObject();
+			setMetricsEvaluationObject();
+			setSchemesObject();
+			
 		}
 
 		@Override
@@ -57,7 +62,7 @@ public class ClassEstructure {
 		}
 
 		@Override
-		public void setEvalutionObject() {
+		public void setEvaluationObject() {
 			// TODO Auto-generated method stub
 			this.evaluator = new EvaluationWeka();
 		}

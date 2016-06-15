@@ -12,7 +12,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class SelectorSingleItems extends DialogFragment {
-	//comment
+	
 	int checkedItem = 0;
 	static Info info = new Info();
 	static int item;
@@ -58,32 +58,32 @@ public class SelectorSingleItems extends DialogFragment {
 	             new DialogInterface.OnClickListener(){
 
 					@Override
-					public void onClick(DialogInterface arg0, int item) {
+					public void onClick(DialogInterface arg0, int itemsel) {
 						// TODO Auto-generated method stub
+						checkedItem = itemsel;
 						
-						switch(item){
-						case Config.Item.ITEM_SELECT_LIBRARY:
-							info.setLibrarySelected(items[item].toString());
-							break;
-						case Config.Item.ITEM_SELECT_PREDICTED_ATT:
-							info.setAttributeSelected(item);
-							break;
-						case Config.Item.ITEM_SELECT_FILE_DATASET:
-							try {
-								info.setFileDatasetSelected(items[item].toString());
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							break; 
-						}	
 					}
 	    		
 	    	}).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 	             @Override
 	             public void onClick(DialogInterface dialog, int id) {
 	                   
-	            	 //FALTA HACER ALGO CON EL ITEM SELECCIONADO!
+	            	 switch(item){
+						case Config.Item.ITEM_SELECT_LIBRARY:
+							info.setLibrarySelected(items[checkedItem].toString());
+							break;
+						case Config.Item.ITEM_SELECT_PREDICTED_ATT:
+							info.setAttributeSelected(checkedItem);
+							break;
+						case Config.Item.ITEM_SELECT_FILE_DATASET:
+							try {
+								info.setFileDatasetSelected(items[checkedItem].toString());
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break; 
+						}	
 	            	 
 	            	 
 	                  dialog.dismiss();
