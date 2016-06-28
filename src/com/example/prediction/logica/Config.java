@@ -1,18 +1,19 @@
 package com.example.prediction.logica;
 
-import java.io.File;
 
 import org.afree.graphics.SolidColor;
+
+import com.example.prediction.R;
 
 import android.graphics.Color;
 import android.os.Environment;
 
 public class Config {
-	public static final String DIR_RESOURCES = System.getProperty("user.dir") + System.getProperty("file.separator");
+	public static final String DIR_RESOURCES = System.getProperty("file.separator") + "resources" + System.getProperty("file.separator");
 	public static final String DIR_EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().toString() + "/" ;
 	public static final String EXTENSION_DATASET = ".csv";
 	
-	//comment
+	
  	public static class Graphic {
 		
 		public static final int GRAPHIC_TYPE_LINE = 0;
@@ -32,8 +33,8 @@ public class Config {
 		public static final String GRAPHIC_LINE_TITLE_CHART_LC = "Learning Curve";
 		public static final String GRAPHIC_LINE_TITLE_AXISX = "Instances";
 		public static final String GRAPHIC_LINE_TITLE_AXISY = "Measure";
-		public static final String GRAPHIC_LINE_BACKGROUND_IMAGE_LC = "learning_curve.jpg";
-		public static final String GRAPHIC_LINE_BACKGROUND_IMAGE_EP = "Prediction_error.png";
+		public static final int GRAPHIC_LINE_BACKGROUND_IMAGE_LC = R.drawable.learning_curve;
+		public static final int GRAPHIC_LINE_BACKGROUND_IMAGE_EP = R.drawable.learning_curve;
 		public static final String GRAPHIC_LINE_LABEL_TRAINING = "TrainingSet";
 		public static final String GRAPHIC_LINE_LABEL_CROSSVALIDATION = "Cross Validation";
 		
@@ -48,7 +49,7 @@ public class Config {
 		public static final String GRAPHIC_BAR_TITLE_CHART = "Schemes Comparator";
 		public static final String GRAPHIC_BAR_TITLE_AXISX = "Metrics";
 		public static final String GRAPHIC_BAR_TITLE_AXISY = "Measure";
-		public static final String GRAPHIC_BAR_BACKGROUND_IMAGE = "ML.png";
+		public static final int GRAPHIC_BAR_BACKGROUND_IMAGE = R.drawable.machine_learning;
 
 		public static final SolidColor GRAPHIC_BAR_COLOR = new SolidColor(Color.GRAY);
 		public static final SolidColor GRAPHIC_BAR_COLOR_BESTRESULT1 = new SolidColor(Color.rgb(133,47,4));

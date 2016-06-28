@@ -96,7 +96,7 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	        
 	        //Learning curve 
 	        try {
-	        	image_learningcurve = info.generateImageLearningCurve(this);
+	        	image_learningcurve = info.generateImageLearningCurve(this, info.getBestScheme());
 				images.add(image_learningcurve);
 				image_errorprediction = info.generateImageErrorPrediction(this);
 				images.add(image_errorprediction);

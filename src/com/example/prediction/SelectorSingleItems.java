@@ -71,6 +71,7 @@ public class SelectorSingleItems extends DialogFragment {
 	            	 switch(item){
 						case Config.Item.ITEM_SELECT_LIBRARY:
 							info.setLibrarySelected(items[checkedItem].toString());
+							info.setListSchemes();
 							break;
 						case Config.Item.ITEM_SELECT_PREDICTED_ATT:
 							info.setAttributeSelected(checkedItem);

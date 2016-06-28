@@ -1,10 +1,7 @@
 package com.example.prediction.logica;
 
 import java.util.Vector;
-import weka.attributeSelection.CfsSubsetEval;
-import weka.attributeSelection.ExhaustiveSearch;
 import weka.classifiers.Classifier;
-import weka.classifiers.meta.AttributeSelectedClassifier;
 import weka.classifiers.meta.MultiScheme;
 import weka.core.Instances;
 
@@ -19,14 +16,8 @@ public abstract class AbsClassifier {
 	
 	
 	private Classifier performAttSelect(Classifier base, Instances dataset) throws Exception{
-		AttributeSelectedClassifier asc = new AttributeSelectedClassifier();
-	    CfsSubsetEval evaluator = new CfsSubsetEval();
-	    ExhaustiveSearch search = new ExhaustiveSearch();
-	    asc.setClassifier(base);
-	    asc.setEvaluator(evaluator);
-	    asc.setSearch(search);
-	    asc.buildClassifier(dataset);
-	    return asc.getClassifier();
+		
+	    return null;
 	}
 	
 	public Classifier optimizingParams(Instances dataset) throws Exception{
@@ -45,6 +36,10 @@ public abstract class AbsClassifier {
 		return optclassifiers[ms.getBestClassifierIndex()];
 	}
 	
+	public Vector<AbsClassifier> getListSchemes(){
+		return classifiers;
+	}
+	
 	public Classifier getScheme(){
 		return scheme;
 	}
@@ -55,4 +50,5 @@ public abstract class AbsClassifier {
 	public abstract String globalInfo();
 	
 
+	
 }

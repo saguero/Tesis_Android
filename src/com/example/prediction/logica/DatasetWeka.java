@@ -1,8 +1,7 @@
 package com.example.prediction.logica;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
@@ -21,18 +20,23 @@ public class DatasetWeka extends AbsDataset {
 	
 	public File convertFile(File file) throws Exception {
 		// TODO Auto-generated method stub
-		String prueba = "";
-		CSVLoader loader = new CSVLoader();
-		loader.setSource(file);
-		Instances data = loader.getDataSet();
-		
+		Instances data = null;
+		if(file.exists()){
+			if(file.canRead()){
+				CSVLoader loader = new CSVLoader();	//-M ? -E ",'
+				loader.fieldSeparatorTipText();
+				loader.setFieldSeparator(",");
+				loader.setSource(file);
+				data = loader.getDataSet();
+			}
+		}		
 		// save ARFF
        ArffSaver saver = new ArffSaver();
        saver.setInstances(data);
-       saver.setFile(new File(Config.DIR_EXTERNAL_STORAGE +"\\dataset.arff"));
+       saver.setFile(new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff"));
        saver.writeBatch();
        
-       return new File(Config.DIR_EXTERNAL_STORAGE +"\\dataset.arff");
+       return new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff");
 	}
 	@Override
 	public void setClassIndex(int classIndex) {

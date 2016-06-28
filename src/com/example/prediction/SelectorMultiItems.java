@@ -1,6 +1,8 @@
 package com.example.prediction;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
+import com.example.prediction.logica.AbsClassifier;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,7 +11,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class SelectorMultiItems extends DialogFragment {
-	ArrayList<Integer> mSelectedItems; 
+	Vector<Integer> mSelectedItems; 
+	Info info=new Info();
 	
 	
 	
@@ -24,14 +27,22 @@ public class SelectorMultiItems extends DialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-	    mSelectedItems = new ArrayList<Integer>();  // Where we track the selected items
+	    mSelectedItems = new Vector<Integer>();  // Where we track the selected items
+	    CharSequence[] items;
+	    Vector<AbsClassifier> schemes = info.getLibrarySelected().getListSchemes();
+	    items = new CharSequence[schemes.size()];
+	    int index = 0;
+	    for(AbsClassifier s:schemes){
+	    	items[index] = s.getName();
+	    	index++;
+	    }
 	    
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    
 	    // Set the dialog title
 	    builder.setTitle(R.string.title_chooseSchemes)
 	    
-	    	.setMultiChoiceItems(R.array.array_chooseSchemes, null,
+	    	.setMultiChoiceItems(items, null,
 	             new DialogInterface.OnMultiChoiceClickListener() {
 	               	@Override
 	               	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -47,9 +58,7 @@ public class SelectorMultiItems extends DialogFragment {
 	             @Override
 	             public void onClick(DialogInterface dialog, int id) {
 	                   
-	            	 Info i=new Info();
-	            	 i.setListSchemes();		//--> FALTA!!!
-	            	 
+	            	 info.setSchemesSelected(mSelectedItems);
 	                 dialog.dismiss();
 	               }
 	           })

@@ -19,6 +19,8 @@ public abstract class AbsMetricsEvaluation {
 	public enum Type {REGRESSION, CLASSIFICATION}
 	public enum Info {ERROR_PREDICTION, RELATION_DATA}
 	
+	public 	Type type = Type.REGRESSION;												//VER DESPUES
+	
 	public abstract class Metric  {
 		private int ID;
 		private Required required;
@@ -59,6 +61,9 @@ public abstract class AbsMetricsEvaluation {
 			return representation.equals(rep);
 		}
 		
+		boolean isInfo(Info info){
+			return this.info.equals(info);
+		}
 		
 		boolean forRegression(){
 			return type.equals(Type.REGRESSION);
@@ -77,6 +82,8 @@ public abstract class AbsMetricsEvaluation {
 			if(representation.equals(Representation.PERCENTUAL))
 				return calculate(evaluation)/100;
 			if(representation.equals(Representation.NORMALIZED))
+				return calculate(evaluation);
+			if(representation.equals(Representation.SCALE))
 				return calculate(evaluation);
 			return null;
 		}
@@ -291,18 +298,33 @@ public abstract class AbsMetricsEvaluation {
 				m.accept();
 		}	
 	}
-	
-	public Vector<Metric> association(Representation rep){
-		
+
+	public Vector<Metric> ErrorPredictionNormalizedMetrics(){
 		Vector<Metric> result = new Vector<Metric>();
 		for(Metric m: metricsEvaluation){
-			result.addAll(m.associationRep(rep));
+			if(m.getType().equals(type) && m.canBeNormalized() && m.isInfo(Info.ERROR_PREDICTION) )
+				result.add(m);
 		}
-		for(Metric m:result)
-			System.out.println(m.getID());
 		return result;
 	}
 	
+	public Vector<Metric> ErrorPredictionScaleMetrics(){
+		Vector<Metric> result = new Vector<Metric>();
+		for(Metric m: metricsEvaluation){
+			if(m.getType().equals(type) && m.isRep(Representation.SCALE) && m.isInfo(Info.ERROR_PREDICTION) )
+				result.add(m);
+		}		
+		return result;
+	}
+	
+	public Vector<Metric> RelationDataMetrics(){
+		Vector<Metric> result = new Vector<Metric>();
+		for(Metric m: metricsEvaluation){
+			if(m.getType().equals(type) && m.canBeNormalized() && m.isInfo(Info.RELATION_DATA) )
+				result.add(m);
+		}		
+		return result;
+	}
 	
 	public abstract Double calculateCC(Object evaluation) throws Exception;
 	public abstract Double calculateRMSE(Object evaluation) throws Exception;

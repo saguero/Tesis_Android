@@ -23,7 +23,7 @@ import com.example.prediction.logica.*;
 
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
-	private String image;
+	private int image;
 	Context context;
 	
 	
@@ -51,10 +51,10 @@ public class LineGraphics extends AbsGraphics {
 		height = Config.Graphic.GRAPHIC_LINE_HEIGHT;
 		width = Config.Graphic.GRAPHIC_LINE_WIDTH;
 		
-		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		//ChartColor
+		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		
 		
-		String workingDir = Config.DIR_RESOURCES;
-		Bitmap img = BitmapFactory.decodeFile(workingDir  + image);
+	
+		Bitmap img = BitmapFactory.decodeResource(context.getResources(), image);
 		
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));

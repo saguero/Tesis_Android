@@ -1,6 +1,7 @@
 package com.example.prediction.graphic;
 
 import com.example.prediction.logica.*;
+import com.example.prediction.logica.AbsMetricsEvaluation.Metric;
 import com.example.prediction.logica.AbsMetricsEvaluation.*;
 
 import java.text.DecimalFormat;
@@ -17,6 +18,7 @@ import org.afree.chart.plot.CategoryPlot;
 import org.afree.chart.plot.PlotOrientation;
 import org.afree.chart.renderer.category.BarRenderer;
 import org.afree.chart.renderer.category.CategoryItemRenderer;
+import org.afree.data.category.DefaultCategoryDataset;
 import org.afree.graphics.PaintType;
 import org.afree.graphics.SolidColor;
 import org.afree.ui.RectangleInsets;
@@ -62,7 +64,8 @@ public class BarGraphics extends AbsGraphics {
 		} 
 	}
 	
-	public BarGraphics() {
+	public BarGraphics(Context context) {
+		this.context = context;
 	}
 
 	//DEFINE EL ANCHO DE LAS BARRAS 
@@ -126,13 +129,14 @@ public class BarGraphics extends AbsGraphics {
 	}
 	 
 	protected  void configureDataset(AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception{
-		AbsClassifier[] axisY = (AbsClassifier[]) series;										
+		dataset = new DefaultCategoryDataset();
+		Vector<AbsClassifier> axisY = series;										
 		  double value=0;
-		  for(int y=0; y< axisY.length; y++){	
-			  Object e = evaluator.evaluateUseTrainingSet(trainingSet, axisY[y]);
+		  for(int y=0; y< axisY.size(); y++){	
+			  Object e = evaluator.evaluateUseTrainingSet(trainingSet, axisY.elementAt(y));
 			  for(int x=0; x< categorys.length; x++){
 				  value = categorys[x].calculateNormalized(e);								
-				  dataset.addValue(value, axisY[y].getName(), categorys[x].getID()); 
+				  dataset.addValue(value, axisY.elementAt(y).getName(), categorys[x].getID()); 
 			  }
 		  }
 	}
@@ -142,14 +146,12 @@ public class BarGraphics extends AbsGraphics {
 		width = Config.Graphic.GRAPHIC_BAR_WIDTH;
 		settings();
 		
-		String workingDir = Config.DIR_RESOURCES;
-		
-		// chart.setBackgroundImageAlpha(0.1F);
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));
-		 
-	    Bitmap img = BitmapFactory.decodeFile(workingDir + Config.Graphic.GRAPHIC_BAR_BACKGROUND_IMAGE);
-	    CategoryPlot plot = chart.getCategoryPlot();
-		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));			
+		
+		CategoryPlot plot = chart.getCategoryPlot();
+	    Bitmap img = BitmapFactory.decodeResource(context.getResources(),Config.Graphic.GRAPHIC_BAR_BACKGROUND_IMAGE);
+		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));
+		plot.setBackgroundAlpha(0);				//VER
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
 	    plot.setRangeGridlinePaintType(new SolidColor(Color.WHITE));
@@ -164,48 +166,43 @@ public class BarGraphics extends AbsGraphics {
 			chart.getLegend().setItemLabelPadding(new RectangleInsets(5.0,2.0,3.0,width));
 		}
 	    
-	    plot.setRenderer(renderer);
-	    //renderer.setItemLabelsVisible(true);
-	    
-	    for(int i=0;i<dataset.getRowCount();i++)
+	   for(int i=0;i<dataset.getRowCount();i++)
 	    	renderer.setSeriesItemLabelsVisible(i, true);
 	    
 	    renderer.setBaseItemLabelsVisible(true);
-	 //   renderer.setBaseItemLabelFont(new Font("SansSerif", Font.ITALIC, 15));
-	  //  renderer.setItemLabelFont(new Font("SansSerif", Font.ITALIC, 15));
-	
+	    plot.setRenderer(renderer);
 	    //SET RANGE AXIS
 	    ValueAxis yAxis = plot.getRangeAxis();
 	    yAxis.setRange(min, max);  	    
 	}
 
-	public AFreeChart graphed(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation, Info info, Vector<Representation> rep) throws Exception{
+	public AFreeChart graphedErrorPredictionNormalized(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation) throws Exception{
+		Vector<Metric> metrics = metricsEvaluation.ErrorPredictionNormalizedMetrics();
+		return graphed(metrics, trainingSet, evaluator);	
+	}
 	
-		Vector<Metric> metrics = new Vector<Metric>(); 
-		Vector<Metric> aux = new Vector<Metric>(); 
-		for(Representation r: rep){	
-			Vector<Metric> toAdd = metricsEvaluation.association(r);
-			for(Metric m: toAdd)
-				if(m.canBeNormalized())
-					metrics.add(m);
-		}
-		
-		for(Metric m:metrics){
-			if( m.getInfo().equals(info) ) 
-				aux.add(m);
-		}
-		metrics.removeAllElements(); 
+	public AFreeChart graphedErrorPredictionScale(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation) throws Exception{
+		Vector<Metric> metrics = metricsEvaluation.ErrorPredictionScaleMetrics();
+		return graphed(metrics, trainingSet, evaluator);	
+	}
+	
+	public AFreeChart graphedRelationData(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation) throws Exception{
+		Vector<Metric> metrics = metricsEvaluation.RelationDataMetrics();
+		return graphed(metrics, trainingSet, evaluator);
+	}
+	
+	private AFreeChart graphed(Vector<Metric> metrics, AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception{
 		int index=0;
-		categorys = new Metric[aux.size()];
-		for(Metric m:aux){	
+		categorys = new Metric[metrics.size()];
+		for(Metric m:metrics){	
 			categorys[index]=m;
 			index++;
 		}
+
 		configureDataset(trainingSet, evaluator);
 		return getChart(series, Config.Graphic.GRAPHIC_BAR_TITLE_CHART,
 				Config.Graphic.GRAPHIC_BAR_TITLE_AXISX,  Config.Graphic.GRAPHIC_BAR_TITLE_AXISY);	
 	}
-	
 	
 	
 }

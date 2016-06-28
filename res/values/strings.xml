@@ -24,7 +24,6 @@
 	<string name="title_chooseSchemes">Choose Schemes</string>
 	<string name="title_chooseFileDataset">Choose File Dataset</string>
 	<string name="make_prediction">Make Prediction!</string>
-	<string name="title_fase1">Step 1: Filtered Schemes</string>
 	<string name="title_presentation">Tecnicas de aprendizaje de maquina para predecir atributos no funcionales en componentes de aplicaciones Android</string>
     <string name="missingImg">Missing Image</string>
     <string name="start">Start</string>
@@ -35,7 +34,7 @@
     <string name="title_causes">Causes</string>
     <string name="title_underfitting">Underfitting</string>
     <string name="title_overfitting">Overfitting</string>
-    
+    <string name="title_filteredScheme">First Step: Filtered Schemes</string>
     
     <string name="introduction_modelfit">Understanding model fit is important for understanding the root cause for poor model accuracy. We can determine whether a predictive model is underfitting or overfitting the training data by looking at the prediction error on the training data and the evaluation data.</string>
     <string name="introduction_modelfit_biasvar">The bias - variance is the way of analysing a learning algorithm\'s expected generalization error beyond their training set </string>

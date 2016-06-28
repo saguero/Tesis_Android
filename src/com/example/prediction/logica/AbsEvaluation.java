@@ -18,7 +18,8 @@ public abstract class AbsEvaluation {
 	
 	public Object evaluateUseTrainingSet(AbsDataset trainingSet, AbsClassifier scheme) throws Exception{
 		Object classifier = configEvaluation(trainingSet, scheme);
-		return testTrainingSet(trainingSet, classifier);
+		Object data = trainingSet.getTrainingSet();
+		return testTrainingSet(data, classifier);
 	}
 	
 	public Object evaluateUseCrossValidation(AbsDataset trainingSet, AbsClassifier scheme) throws Exception{

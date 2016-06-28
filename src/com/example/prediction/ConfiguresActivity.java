@@ -1,6 +1,5 @@
 package com.example.prediction;
 
-import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -122,8 +121,6 @@ public class ConfiguresActivity extends Activity {
 		if(selectItems[Config.Item.ITEM_SELECT_LIBRARY]==1){
 			SelectorMultiItems dialogFrag = SelectorMultiItems.newInstance();
 			dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
-			
-			//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
 		}
 		else
 			Toast.makeText(getApplicationContext(),Config.Exception.MISSING_LIBRARY,Toast.LENGTH_LONG).show();
@@ -139,13 +136,13 @@ public class ConfiguresActivity extends Activity {
 				Toast.makeText(getApplicationContext(),Config.Exception.MISSING_FILEDATASET,Toast.LENGTH_LONG).show();
 			else {
 				showDialogSelectSingleItems(Config.Item.ITEM_SELECT_PREDICTED_ATT);
-				//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
+			
 			}
 	}
 	
 	private void selectLibrary(){
 		showDialogSelectSingleItems(Config.Item.ITEM_SELECT_LIBRARY);
-		//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
+	
 	}
 	
 	private void pickFile(){

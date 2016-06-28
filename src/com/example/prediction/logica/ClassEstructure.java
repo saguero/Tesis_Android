@@ -1,17 +1,18 @@
 package com.example.prediction.logica;
 
-
+import java.util.Vector;
 
 public class ClassEstructure {
 	
 	public abstract class LibraryClasses {
-		//comment
+		
 		String ID;											
 		
 		AbsDataset trainingSet;
 		AbsEvaluation evaluator;					
 		AbsMetricsEvaluation metricsEvaluation;	
-		AbsClassifier schemes;								
+		AbsClassifier scheme;
+		Vector<AbsClassifier> listSchemes;								
 		
 		public LibraryClasses(String ID){
 			this.ID =ID;
@@ -33,14 +34,21 @@ public class ClassEstructure {
 			return metricsEvaluation;
 		}
 		
-		public AbsClassifier getSchemesObject(){
-			return schemes;
+		public Vector<AbsClassifier> getListSchemes(){
+			return listSchemes;
 		}
+		
+		public AbsClassifier getSchemeObject(){
+			return scheme;
+		}
+		
 		
 		public abstract void setDatasetObject();
 		public abstract void setEvaluationObject();
 		public abstract void setMetricsEvaluationObject();
-		public abstract void setSchemesObject();	
+		public abstract void setSchemeObject();
+		public abstract void setListSchemes();
+		
 	}
 	
 	public class WekaLibrary extends LibraryClasses{
@@ -51,8 +59,8 @@ public class ClassEstructure {
 			setDatasetObject();
 			setEvaluationObject();
 			setMetricsEvaluationObject();
-			setSchemesObject();
-			
+			setSchemeObject();
+			setListSchemes();
 		}
 
 		@Override
@@ -76,9 +84,18 @@ public class ClassEstructure {
 		}
 
 		@Override
-		public void setSchemesObject() {
+		public void setSchemeObject() {
 			// TODO Auto-generated method stub
-			
+			this.scheme = new ClassifierWeka();	
+		}
+
+		@Override
+		public void setListSchemes() {
+			// TODO Auto-generated method stub
+			listSchemes = new Vector<AbsClassifier>();
+			listSchemes.add(new LinearReg());
+			listSchemes.add(new SimpleLinearReg());
+			listSchemes.add(new Smoreg());
 		}
 		
 	}

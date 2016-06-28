@@ -10,20 +10,34 @@
     tools:context="com.example.prediction.FilteredSchemesActivity" >
 
     <TextView
-            android:id="@+id/textView_titleApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_fase1"
-            android:textColor="@color/darkgrey"
-            android:textSize="30sp"
-            android:textStyle="italic" />
+        android:id="@+id/textView_titleApp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/title_filteredScheme"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
-   <ImageView
-       android:id="@+id/imageView_display"
-       android:layout_width="match_parent"
-       android:layout_height="200dp"
-       android:layout_marginTop="150dp"
-       android:contentDescription="@string/ok"
-       android:src="@drawable/grafico" />
+    <ImageView
+        android:id="@+id/imageView_display"
+        android:layout_width="400dp"
+        android:layout_height="450dp"
+        android:layout_alignEnd="@+id/textView_titleApp"
+        android:layout_below="@+id/textView_titleApp"
+        android:layout_marginTop="11dp"
+        android:contentDescription="@string/ok"
+        android:src="@drawable/grafico" />
+
+    <Button
+        android:id="@+id/button_changeImage"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignEnd="@+id/textView_titleApp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView_titleApp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/icon_nextbutton"
+        android:stateListAnimator="@null" />
 
 </RelativeLayout>
