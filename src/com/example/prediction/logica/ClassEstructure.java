@@ -2,6 +2,8 @@ package com.example.prediction.logica;
 
 import java.util.Vector;
 
+import weka.classifiers.functions.MultilayerPerceptron;
+
 public class ClassEstructure {
 	
 	public abstract class LibraryClasses {
@@ -90,9 +92,10 @@ public class ClassEstructure {
 		}
 
 		@Override
-		public void setListSchemes() {
+		public void setListSchemes() {						//HARDCODE!
 			// TODO Auto-generated method stub
 			listSchemes = new Vector<AbsClassifier>();
+			listSchemes.add(new Multilayerperceptron());
 			listSchemes.add(new LinearReg());
 			listSchemes.add(new SimpleLinearReg());
 			listSchemes.add(new Smoreg());

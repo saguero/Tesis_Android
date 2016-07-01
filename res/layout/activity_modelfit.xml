@@ -10,14 +10,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView_titleApp"
+            android:id="@+id/textView_presentation_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_modelfit"
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/textView_nameApp"
+            android:id="@+id/textView_presentation_nameApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title2_modelfit"
@@ -66,7 +66,7 @@
             android:id="@+id/imageView_modelfit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/ok"
+            android:contentDescription="@string/configures_dialogok"
             android:src="@drawable/modelfit_introduction" />
 
         <TextView
@@ -125,7 +125,7 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/ok"
+            android:contentDescription="@string/configures_dialogok"
             android:src="@drawable/icon_settings" />
 
         <Button

@@ -39,7 +39,7 @@ public class Info {
 										"Select File Dataset",
 										"Select predicted attribute",
 										"Select schemes"};
-	static AbsClassifier bestScheme;
+	
 	static int attributeSelected;
 	static LibraryClasses librarySelected;
 	static File fileDatasetSelected;
@@ -47,10 +47,16 @@ public class Info {
 	static Vector<AbsClassifier> schemesSelected = new Vector<AbsClassifier>();
 	static ClassEstructure classEstructure;
 	
+	static AbsClassifier bestScheme;
+	static Vector<AbsClassifier> filteredBestSchemes = new Vector<AbsClassifier>();
+	
 	public Info() {
 		setLibraries();
 		setListFilesDataset();
 	}
+	
+
+	/*	SET OPTIONS TO SELECT	*/
 	
 	public void setLibraries(){
 		classEstructure = new ClassEstructure();
@@ -88,6 +94,9 @@ public class Info {
 		}
 	}
 	
+	
+	/*	GET OPTIONS TO SELECT	*/
+	
 	public String[] getConfigureItems(){
 		return configureItems;
 	}
@@ -108,134 +117,38 @@ public class Info {
 		return schemes;
 	}
 
-	public void saveLearningCurveImage(Bitmap img){
-		images_learningCurve.add(0,img);
-		String name = "learning_curve" + IMG_LC_serialId;
-		if(persist(img, name))
-			IMG_LC_serialId++;		
-	}
 	
-	public void saveErrorPredictionImage(Bitmap img){
-		images_errorPrediction.add(0,img);
-		String name = "error_prediction" + IMG_EP_serialId;
-		if(persist(img, name))
-			IMG_EP_serialId++;		
-	}
+										/*	GRAPHIC IMAGES	*/
 	
-	public void saveSchemesComparatorImage(Bitmap img){
-		images_schemesComparator.add(0,img);
-		String name = "schemes_comparator" + IMG_SC_serialId;
-		if(persist(img, name))
-			IMG_SC_serialId++;		
-	}
+	/*	GENERATE IMAGE	*/
 	
-	public Vector<Bitmap> getSchemesComparatorImages(){
-		return images_schemesComparator;
-	}
-	
-	public Vector<Bitmap> getLearningCurveImages(){
-		return images_learningCurve;
-	}
-	
-	public Vector<Bitmap> getErrorPredictionImages(){
-		return images_errorPrediction;
-	}
-	
-	private boolean persist(Bitmap bitmap, String name){
-		
-		boolean result = false;
-		String path = Config.DIR_EXTERNAL_STORAGE  + name;
-		
-		FileOutputStream out = null;
-		try {
-		    out = new FileOutputStream(path);
-		    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-		    result = true;  
-		} 
-		catch (Exception e) {  }
-		finally {
-		    try  {
-		        if (out != null) 
-		            out.close(); 
-		    } 
-		    catch (IOException e) { }
-		}
-		return result;
-	}
-	
-	public void setLibrarySelected(String ID){
-		librarySelected = classEstructure.getLibrary(ID);
-	}
-	
-	public void setFileDatasetSelected(String name) throws Exception{			
-		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
-		trainingSet = getLibrarySelected().getDatasetObject();
-		File aux = trainingSet.convertFile(fileDatasetSelected);
-		trainingSet.convertInstancesObject(aux);
-		setListAttributes(trainingSet);
-	}
-	
-	public void setAttributeSelected(int att){
-		attributeSelected = att;
-		trainingSet.setPredictedAtt(attributeSelected);
-	}
-	
-	public void setSchemesSelected(Vector<Integer> schemes){		//NO EXISTE UN METODO QUE RETORNE LOS SCHEMES
-		Vector<AbsClassifier> aux = librarySelected.getListSchemes();
-		for(Integer s:schemes)
-			schemesSelected.add(aux.elementAt(s));
-		
-	}
-	
-	public AbsDataset getDatasetSelected(){
-		return trainingSet;
-	}
-	
-	public LibraryClasses getLibrarySelected(){		
-		return librarySelected;
-	}
-	
-	public int getAttributeSelected(){
-		return attributeSelected;
-	}
-	
-	public File getFileDatasetSelected(){
-		return fileDatasetSelected;
-	}
-	
-	public Vector<AbsClassifier> getListSchemesSelected(){
-		return schemesSelected;
-	}
-
 	public Bitmap generateImageLearningCurve(Context context,AbsClassifier scheme) throws Exception {
 		// TODO Auto-generated method stub	
 		
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
 		
-		LineGraphics linechart = new LineGraphics();
+		LineGraphics linechart = new LineGraphics(context);
 		AFreeChart chart = linechart.graphedLearningCurve(trainingSet, evaluator, scheme);
         ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
         chartView.drawChart(chart);
-        
-        return chartView.getDrawingCache();	 
+        return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
 	}
 	
 	public Bitmap generateImageErrorPrediction(Context context) throws Exception {
 		// TODO Auto-generated method stub
 		
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
-		LineGraphics linechart = new LineGraphics();
+		LineGraphics linechart = new LineGraphics(context);
 		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, evaluator);
         ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
         chartView.drawChart(chart);
-        
-        return chartView.getDrawingCache();	 
+        return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
 	}
 
 	public Vector<Bitmap> generateImagesSchemesComparator(Context context) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Vector<AbsClassifier> listschemes = getListSchemesSelected();
+		Vector<AbsClassifier> listschemes = getBestSchemes();
 		
 		BarGraphics barchart = new BarGraphics(context);
 		barchart.setSeries(listschemes);
@@ -266,6 +179,127 @@ public class Info {
         images_schemesComparator.add( ((BitmapDrawable) chartView.getDrawable()).getBitmap() );	 
 	
 		return images_schemesComparator;
+	}
+	
+	/* SAVE IMAGES	*/
+	
+	private boolean persist(Bitmap bitmap, String name){
+		
+		boolean result = false;
+		String path = Config.DIR_EXTERNAL_STORAGE  + name;
+		
+		FileOutputStream out = null;
+		try {
+		    out = new FileOutputStream(path);
+		    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+		    result = true;  
+		} 
+		catch (Exception e) {  }
+		finally {
+		    try  {
+		        if (out != null) 
+		            out.close(); 
+		    } 
+		    catch (IOException e) { }
+		}
+		return result;
+	}
+	
+	public void saveLearningCurveImage(Bitmap img){
+		images_learningCurve.add(0,img);
+		String name = "learning_curve" + IMG_LC_serialId;
+		if(persist(img, name))
+			IMG_LC_serialId++;		
+	}
+	
+	public void saveErrorPredictionImage(Bitmap img){
+		images_errorPrediction.add(0,img);
+		String name = "error_prediction" + IMG_EP_serialId;
+		if(persist(img, name))
+			IMG_EP_serialId++;		
+	}
+	
+	public void saveSchemesComparatorImage(Bitmap img){
+		images_schemesComparator.add(0,img);
+		String name = "schemes_comparator" + IMG_SC_serialId;
+		if(persist(img, name))
+			IMG_SC_serialId++;		
+	}
+	
+	/*	GET IMAGES		*/
+	
+	public Vector<Bitmap> getSchemesComparatorImages(){
+		return images_schemesComparator;
+	}
+	
+	public Vector<Bitmap> getLearningCurveImages(){
+		return images_learningCurve;
+	}
+	
+	public Vector<Bitmap> getErrorPredictionImages(){
+		return images_errorPrediction;
+	}
+	
+	
+												/*	OPTIONS SELECTED	*/
+	/*	SET OPTIONS SELECTED	*/
+	
+	public void setLibrarySelected(String ID){
+		librarySelected = classEstructure.getLibrary(ID);
+	}
+	
+	public void setFileDatasetSelected(String name) throws Exception{			
+		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
+		trainingSet = getLibrarySelected().getDatasetObject();
+		File aux = trainingSet.convertFile(fileDatasetSelected);
+		trainingSet.convertInstancesObject(aux);
+		setListAttributes(trainingSet);
+	}
+	
+	public void setAttributeSelected(int att){
+		attributeSelected = att;
+		trainingSet.setPredictedAtt(attributeSelected);
+	}
+	
+	public void setSchemesSelected(Vector<Integer> schemes){
+		schemesSelected.removeAllElements();
+		Vector<AbsClassifier> aux = librarySelected.getListSchemes();
+		for(Integer s:schemes)
+			schemesSelected.add(aux.elementAt(s));
+		
+	}
+	
+	/*	GET OPTIONS SELECTED	*/
+	
+	public LibraryClasses getLibrarySelected(){		
+		return librarySelected;
+	}
+	
+	public File getFileDatasetSelected(){
+		return fileDatasetSelected;
+	}
+	
+	public AbsDataset getDatasetSelected(){
+		return trainingSet;
+	}
+	
+	public int getAttributeSelected(){
+		return attributeSelected;
+	}
+	
+	public Vector<AbsClassifier> getListSchemesSelected(){
+		return schemesSelected;
+	}
+
+	
+											/* PROCESSING	*/
+	
+	public void setFilteredBestSchemes(){							//MODIFICAR!!!!!!!!!
+		filteredBestSchemes = this.getListSchemesSelected();
+	}
+	
+	public Vector<AbsClassifier> getBestSchemes(){
+		return filteredBestSchemes;
 	}
 	
 	public void setBestScheme(AbsClassifier scheme){

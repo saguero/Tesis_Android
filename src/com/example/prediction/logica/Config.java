@@ -76,6 +76,7 @@ public class Config {
 		public final static String MISSING_LIBRARY = "Please, select the library before";
 		public final static String MISSING_FILEDATASET = "Please, select the file dataset before";
 		public final static String ALREADY_SAVED = "Files are already saved";
+		public final static String MISSING_SCHEME = "Please, select scheme to continue";
 		
 	}
 	

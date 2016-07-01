@@ -7,11 +7,11 @@
     tools:context=".ConfiguresActivity" >
 
     <ListView
-        android:id="@+id/listview_configure"
+        android:id="@+id/listview_configures"
         android:layout_width="370dp"
         android:layout_height="390dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_configure"
+        android:layout_below="@+id/textView_configures_title"
         android:layout_marginStart="6dp"
         android:cacheColorHint="@color/black"
         android:dividerHeight="2dp"
@@ -21,28 +21,28 @@
         android:padding="10dp" />
 
     <TextView
-        android:id="@+id/textView_configure"
+        android:id="@+id/textView_configures_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="@string/configure"
+        android:text="@string/configures_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button_makePred"
+        android:id="@+id/button_configures_makePrediction"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/listview_configure"
+        android:layout_below="@+id/listview_configures"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="120dp"
         android:background="@drawable/icon_start"
-        android:text="@string/make_prediction"
+        android:text="@string/configures_makeprediction"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15sp" />

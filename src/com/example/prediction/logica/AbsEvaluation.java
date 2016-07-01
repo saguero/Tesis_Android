@@ -18,13 +18,12 @@ public abstract class AbsEvaluation {
 	
 	public Object evaluateUseTrainingSet(AbsDataset trainingSet, AbsClassifier scheme) throws Exception{
 		Object classifier = configEvaluation(trainingSet, scheme);
-		Object data = trainingSet.getTrainingSet();
-		return testTrainingSet(data, classifier);
+		return testTrainingSet(trainingSet.getTrainingSet(), classifier);
 	}
 	
 	public Object evaluateUseCrossValidation(AbsDataset trainingSet, AbsClassifier scheme) throws Exception{
 		Object classifier = configEvaluation(trainingSet, scheme);
-		return testCV(trainingSet, classifier);
+		return testCV(trainingSet.getTrainingSet(), classifier);
 	}
 	
 	public Vector<Double> getPredictedValues(AbsDataset trainingSet, AbsClassifier scheme) throws Exception{

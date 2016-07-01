@@ -8,7 +8,7 @@ public class Multilayerperceptron extends AbsClassifier {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Multilayer Perceptron";
 	}
 
 	@Override

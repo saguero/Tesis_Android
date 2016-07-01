@@ -10,10 +10,10 @@
     tools:context="com.example.prediction.FilteredSchemesActivity" >
 
     <TextView
-        android:id="@+id/textView_titleApp"
+        android:id="@+id/textView_presentation_intro"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="@string/title_filteredScheme"
+        android:text="@string/filtered_title"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -21,23 +21,40 @@
     <ImageView
         android:id="@+id/imageView_display"
         android:layout_width="400dp"
-        android:layout_height="450dp"
-        android:layout_alignEnd="@+id/textView_titleApp"
-        android:layout_below="@+id/textView_titleApp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/textView_presentation_intro"
         android:layout_marginTop="11dp"
-        android:contentDescription="@string/ok"
+        android:contentDescription="@string/configures_dialogok"
         android:src="@drawable/grafico" />
 
     <Button
         android:id="@+id/button_changeImage"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignEnd="@+id/textView_titleApp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/textView_presentation_intro"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/textView_titleApp"
+        android:layout_alignTop="@+id/textView_presentation_intro"
         android:layout_marginTop="30dp"
         android:background="@drawable/icon_nextbutton"
+        android:stateListAnimator="@null" />
+
+    <Spinner
+        android:id="@+id/spinner_selectScheme"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/imageView_display"
+        android:layout_below="@+id/imageView_display"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:id="@+id/button_nextStep"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/spinner_selectScheme"
+        android:layout_alignRight="@+id/imageView_display"
+        android:background="@drawable/icon_check"
         android:stateListAnimator="@null" />
 
 </RelativeLayout>

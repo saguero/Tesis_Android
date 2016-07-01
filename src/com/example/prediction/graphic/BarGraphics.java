@@ -1,7 +1,6 @@
 package com.example.prediction.graphic;
 
 import com.example.prediction.logica.*;
-import com.example.prediction.logica.AbsMetricsEvaluation.Metric;
 import com.example.prediction.logica.AbsMetricsEvaluation.*;
 
 import java.text.DecimalFormat;
@@ -146,17 +145,18 @@ public class BarGraphics extends AbsGraphics {
 		width = Config.Graphic.GRAPHIC_BAR_WIDTH;
 		settings();
 		
-		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));
+		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));	
 		
 		CategoryPlot plot = chart.getCategoryPlot();
 	    Bitmap img = BitmapFactory.decodeResource(context.getResources(),Config.Graphic.GRAPHIC_BAR_BACKGROUND_IMAGE);
 		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));
-		plot.setBackgroundAlpha(0);				//VER
+		plot.setBackgroundAlpha(1);				//VER
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
 	    plot.setRangeGridlinePaintType(new SolidColor(Color.WHITE));
 	    
 	   CategoryItemRenderer renderer = new CustomRenderer();
+	   
 	    ((BarRenderer) renderer).setMaximumBarWidth( Config.Graphic.GRAPHIC_BAR_MAXBARWIDTH);
 		((BarRenderer) renderer).setItemMargin(itemMargin(dataset.getColumnCount(),dataset.getRowCount()));
 	    
@@ -164,10 +164,13 @@ public class BarGraphics extends AbsGraphics {
 	    	chart.getLegend().setFrame(BlockBorder.NONE);	
 			//TOP-LEFT-BOTTOM-RIGHT
 			chart.getLegend().setItemLabelPadding(new RectangleInsets(5.0,2.0,3.0,width));
+			
 		}
 	    
-	   for(int i=0;i<dataset.getRowCount();i++)
+	   for(int i=0;i<dataset.getRowCount();i++){
 	    	renderer.setSeriesItemLabelsVisible(i, true);
+	    	renderer.setSeriesPaintType(i, Config.Graphic.GRAPHIC_BAR_COLOR );
+	   }
 	    
 	    renderer.setBaseItemLabelsVisible(true);
 	    plot.setRenderer(renderer);

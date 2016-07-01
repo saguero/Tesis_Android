@@ -40,7 +40,7 @@ public class SelectorMultiItems extends DialogFragment {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    
 	    // Set the dialog title
-	    builder.setTitle(R.string.title_chooseSchemes)
+	    builder.setTitle(R.string.configures_dialogchooseSchemes)
 	    
 	    	.setMultiChoiceItems(items, null,
 	             new DialogInterface.OnMultiChoiceClickListener() {
@@ -54,15 +54,16 @@ public class SelectorMultiItems extends DialogFragment {
 	               }
 	           })
 	    // Set the action buttons
-	        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	        .setPositiveButton(R.string.configures_dialogok, new DialogInterface.OnClickListener() {
 	             @Override
 	             public void onClick(DialogInterface dialog, int id) {
 	                   
 	            	 info.setSchemesSelected(mSelectedItems);
+	            	 mSelectedItems.removeAllElements();
 	                 dialog.dismiss();
 	               }
 	           })
-	        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	        .setNegativeButton(R.string.configures_dialogcancel, new DialogInterface.OnClickListener() {
 	            @Override
 	            public void onClick(DialogInterface dialog, int id) {
 	            	dialog.dismiss();  

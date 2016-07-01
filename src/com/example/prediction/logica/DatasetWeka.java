@@ -24,7 +24,7 @@ public class DatasetWeka extends AbsDataset {
 		if(file.exists()){
 			if(file.canRead()){
 				CSVLoader loader = new CSVLoader();	//-M ? -E ",'
-				loader.fieldSeparatorTipText();
+				
 				loader.setFieldSeparator(",");
 				loader.setSource(file);
 				data = loader.getDataSet();
@@ -54,12 +54,18 @@ public class DatasetWeka extends AbsDataset {
 		return ((Instances) trainingSet).numInstances();
 	}
 	@Override
-	public Object removeInstances(int first, int last) throws Exception {
+	public Object removeInstances(int first, int last) throws Exception  {
 		// TODO Auto-generated method stub
-		String[] options = {"-R", ""+first+"-"+last};
+		String[] options = new String[2];
+		options[0] = "-R";
+		options[1] = first+"-"+last;
 		RemoveRange remove = new RemoveRange();
+		remove.setInputFormat((Instances) trainingSet );
 		remove.setOptions(options);
-		return Filter.useFilter((Instances) trainingSet, remove);	
+		remove.getOptions();
+		((Instances) trainingSet).numInstances();
+		Object result = Filter.useFilter((Instances) trainingSet, remove);
+		return result;
 	}
 	@Override
 	public Double getInstanceValue(int instance, int classIndex) {
@@ -81,5 +87,11 @@ public class DatasetWeka extends AbsDataset {
 	public void convertInstancesObject(File fileInstances) throws Exception {
 		// TODO Auto-generated method stub
 		trainingSet = new Instances(new FileReader(fileInstances));
+	}
+
+	@Override
+	public AbsDataset newInstance() {
+		// TODO Auto-generated method stub
+		return new DatasetWeka();
 	}
 }

@@ -27,9 +27,9 @@ public class LineGraphics extends AbsGraphics {
 	Context context;
 	
 	
-	public LineGraphics() throws Exception {
+	public LineGraphics(Context context) throws Exception {
 		// TODO Auto-generated constructor stub
-		
+		this.context = context;
 	}
 	
 	@Override
@@ -124,14 +124,18 @@ public class LineGraphics extends AbsGraphics {
 	}
 	
 	private void configureLearningCurve(AbsDataset trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
-		
+		dataset = new DefaultCategoryDataset();
 		int groupInstances = Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
 		int instances = (trainingSet.numInstances() / groupInstances);
 		int last = trainingSet.numInstances();
+		AbsDataset newTrainingSet = null;
 		for(int i=1; i<=instances; i++){
 			Integer cantInstances = groupInstances * i; 
-			int first = cantInstances++;
-			AbsDataset newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
+			int first = cantInstances+1;
+			if(i == instances)
+				newTrainingSet =  trainingSet;
+			else
+				newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
 			
 			Object et = evaluator.evaluateUseTrainingSet(newTrainingSet, scheme);
 			Double value = evaluator.getErrorEvaluation(et);

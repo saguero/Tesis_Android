@@ -15,13 +15,11 @@ public abstract class AbsDataset {
 		convertInstancesObject(convertFile(file));
 	}
 	
-	public AbsDataset newInstance(){
-		return this;
-	}
+	
 	
 	public AbsDataset newInstance(Object trainingSet){
-		AbsDataset result = this;
-		result.setTrainingSet(trainingSet);
+		AbsDataset result = newInstance();
+		result.setPredictedAtt(this.classIndex);
 		return result;
 	}
 			
@@ -59,12 +57,14 @@ public abstract class AbsDataset {
 	
 	public AbsDataset getNewDatasetByRemove(int first, int last) throws Exception{
 		AbsDataset result = newInstance();
-		result.trainingSet = removeInstances(first,last);
+		result.classIndex = this.classIndex;
+		result.trainingSet = this.trainingSet;
+		result.trainingSet = result.removeInstances(first,last);
 		return result;
 		
 	}
 	
-	
+	public abstract AbsDataset newInstance();
 	public abstract void convertInstancesObject(File fileInstances) throws Exception;
 	public abstract Object removeInstances(int first, int last) throws Exception;
 	public abstract File convertFile(File file) throws Exception;
