@@ -1,8 +1,11 @@
-package com.example.prediction.logica;
+package com.example.prediction.logica.metrics;
+
+import com.example.prediction.logica.AbsDataset;
+import com.example.prediction.logica.AbsEvaluation;
 
 import weka.classifiers.Evaluation;
 
-public class MetricsEvaluationWeka extends AbsMetricsEvaluation {
+public class MetricsEvaluationWeka extends MetricsCollection {
 	
 	
 	public MetricsEvaluationWeka(AbsDataset dataset, AbsEvaluation eval) {

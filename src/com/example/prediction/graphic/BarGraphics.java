@@ -1,7 +1,8 @@
 package com.example.prediction.graphic;
 
 import com.example.prediction.logica.*;
-import com.example.prediction.logica.AbsMetricsEvaluation.*;
+import com.example.prediction.logica.metrics.MetricsCollection;
+import com.example.prediction.logica.metrics.MetricsCollection.*;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -179,7 +180,7 @@ public class BarGraphics extends AbsGraphics {
 	    yAxis.setRange(min, max);  	    
 	}
 
-	public AFreeChart graphed(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation, Info info, Vector<Representation> rep) throws Exception{
+	public AFreeChart graphed(AbsDataset trainingSet, AbsEvaluation evaluator, MetricsCollection metricsEvaluation, Info info, Vector<Representation> rep) throws Exception{
 	
 		Vector<Metric> metrics = new Vector<Metric>(); 
 		Vector<Metric> aux = new Vector<Metric>(); 

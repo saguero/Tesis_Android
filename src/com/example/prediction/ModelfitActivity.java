@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ModelfitActivity extends Activity {
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +17,7 @@ public class ModelfitActivity extends Activity {
        String text = "<font COLOR=\'RED\'><b>" + "android-coding" + "</b></font>"
         	    + "<font COLOR=\'#00FF00\'><i>" + ".blogspot" + "</i></font>"
         	    + ".com";
-        	  test.setText(Html.fromHtml(text));
+        	  test.setText(Html.escapeHtml(text));
         
         
         

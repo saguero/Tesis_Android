@@ -44,14 +44,14 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 		
 		public  CautionDialog newInstance(int alert){
 			
-			switch(alert){
+			/*switch(alert){
 			case R.string.alert_save:
 				alert = R.string.alert_save;
 				break;
 			case R.string.alert_loadhistorial:
 				alert = R.string.alert_loadhistorial;
 				break;
-			}
+			}*/
 			
 			CautionDialog dialogFragment = new CautionDialog();
 		    Bundle bundle = new Bundle();
@@ -66,14 +66,13 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	        builder.setMessage(alert)
 	               .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 	                   public void onClick(DialogInterface dialog, int id) {
-	                	   switch(alert){
-	                	   case R.string.alert_save:
+	                	   if (alert==R.string.alert_save){
 	                		   actionSave();
-	                		   break;
-	                	   case R.string.alert_loadhistorial:
-	                		   actionLoadHistorial(state_historial);
-	                		   break;
-	                	   }  
+	                	   }else{
+	                		   if (alert==R.string.alert_loadhistorial){
+	                			   actionLoadHistorial(state_historial);
+	                		   }
+	                	   }
 	                   }
 	               })
 	               .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

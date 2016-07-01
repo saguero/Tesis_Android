@@ -1,107 +1,28 @@
 package com.example.prediction.logica;
 
+import com.example.prediction.logica.libraries.AbsLibrary;
+import com.example.prediction.logica.libraries.WekaLibrary;
 
-
-public class ClassEstructure {
+public class LibrariesCollection {
 	
-	public abstract class LibraryClasses {
-		//comment
-		String ID;											
-		
-		AbsDataset trainingSet;
-		AbsEvaluation evaluator;					
-		AbsMetricsEvaluation metricsEvaluation;	
-		AbsClassifier schemes;								
-		
-		public LibraryClasses(String ID){
-			this.ID =ID;
-		}
-		
-		public String getID(){
-			return ID;
-		}
-		
-		public AbsDataset getDatasetObject(){
-			return trainingSet;
-		}
-		
-		public AbsEvaluation getEvaluationObject(){
-			return evaluator;
-		}
-		
-		public AbsMetricsEvaluation getMetricsEvaluationObject(){
-			return metricsEvaluation;
-		}
-		
-		public AbsClassifier getSchemesObject(){
-			return schemes;
-		}
-		
-		public abstract void setDatasetObject();
-		public abstract void setEvaluationObject();
-		public abstract void setMetricsEvaluationObject();
-		public abstract void setSchemesObject();	
-	}
-	
-	public class WekaLibrary extends LibraryClasses{
-
-		public WekaLibrary(String ID) {
-			super(ID);
-			// TODO Auto-generated constructor stub
-			setDatasetObject();
-			setEvaluationObject();
-			setMetricsEvaluationObject();
-			setSchemesObject();
-			
-		}
-
-		@Override
-		public void setDatasetObject() {
-			// TODO Auto-generated method stub
-			this.trainingSet = new DatasetWeka();
-		}
-
-		@Override
-		public void setEvaluationObject() {
-			// TODO Auto-generated method stub
-			this.evaluator = new EvaluationWeka();
-		}
-
-		@Override
-		public void setMetricsEvaluationObject() {
-			// TODO Auto-generated method stub
-			AbsDataset d = getDatasetObject();
-			AbsEvaluation e = getEvaluationObject();
-			this.metricsEvaluation = new MetricsEvaluationWeka(d, e);
-		}
-
-		@Override
-		public void setSchemesObject() {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
-	LibraryClasses[] libraries = {new WekaLibrary("Weka")
+	private static AbsLibrary[] libraries = {new WekaLibrary("Weka")
 															}; 
-	
-	public ClassEstructure(){
+	public LibrariesCollection(){
 		
 	}
 	
-	public String[] getListLibraries(){
+	public static String[] getListLibraries(){
 		String[] result = new String[libraries.length];
 		int index = 0;
-		for(LibraryClasses lib:libraries){
+		for(AbsLibrary lib:libraries){
 			result[index] = lib.getID();
 		}
 		return result;	
 	}
 	
-	public LibraryClasses getLibrary(String ID){
-		LibraryClasses result = null;
-		for(LibraryClasses lib:libraries){
+	public static AbsLibrary getLibrary(String ID){
+		AbsLibrary result = null;
+		for(AbsLibrary lib:libraries){
 			if(lib.getID().equals(ID))
 				result = lib;
 		}

@@ -1,8 +1,7 @@
 package com.example.prediction;
 
-
-import com.example.prediction.logica.ClassEstructure.LibraryClasses;
 import com.example.prediction.logica.Config;
+import com.example.prediction.logica.libraries.AbsLibrary;
 import com.example.prediction.Info;
 
 import android.app.AlertDialog;
@@ -18,7 +17,7 @@ public class SelectorSingleItems extends DialogFragment {
 	static int item;
 	static int TitleId;
 	static CharSequence[] items;
-	static LibraryClasses library;
+	static AbsLibrary library;
 	
 	public static SelectorSingleItems newInstance(int type, CharSequence[] it){
 		

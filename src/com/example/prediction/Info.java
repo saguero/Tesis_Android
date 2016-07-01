@@ -16,9 +16,9 @@ import com.example.prediction.graphic.LineGraphics;
 import com.example.prediction.logica.AbsClassifier;
 import com.example.prediction.logica.AbsDataset;
 import com.example.prediction.logica.AbsEvaluation;
-import com.example.prediction.logica.ClassEstructure.LibraryClasses;
 import com.example.prediction.logica.Config;
-import com.example.prediction.logica.ClassEstructure;
+import com.example.prediction.logica.libraries.AbsLibrary;
+import com.example.prediction.logica.LibrariesCollection;
 
 public class Info {
 	static int IMG_LC_serialId = 0;
@@ -39,11 +39,10 @@ public class Info {
 										"Select schemes"};
 	
 	int attributeSelected;
-	LibraryClasses librarySelected;
+	AbsLibrary librarySelected;
 	File fileDatasetSelected;
 	AbsDataset trainingSet;
 	Vector<AbsClassifier> schemesSelected;
-	ClassEstructure classEstructure;
 	
 	public Info() {
 		setLibraries();
@@ -51,8 +50,7 @@ public class Info {
 	}
 	
 	public void setLibraries(){
-		classEstructure = new ClassEstructure();
-		libs = classEstructure.getListLibraries();
+		libs = LibrariesCollection.getListLibraries();
 	}
 	
 	public void setListFilesDataset(){
@@ -160,12 +158,12 @@ public class Info {
 	
 	
 	public void setLibrarySelected(String ID){
-		librarySelected = classEstructure.getLibrary(ID);
+		librarySelected = LibrariesCollection.getLibrary(ID);
 	}
 	
 	public void setFileDatasetSelected(String name) throws Exception{			
 		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
-		String path = fileDatasetSelected.getAbsolutePath();
+		fileDatasetSelected.getAbsolutePath();
 		trainingSet = getLibrarySelected().getDatasetObject();
 		File aux = trainingSet.convertFile(fileDatasetSelected);
 		trainingSet.convertInstancesObject(aux);
@@ -184,7 +182,7 @@ public class Info {
 		return trainingSet;
 	}
 	
-	public LibraryClasses getLibrarySelected(){		
+	public AbsLibrary getLibrarySelected(){		
 		return librarySelected;
 	}
 	

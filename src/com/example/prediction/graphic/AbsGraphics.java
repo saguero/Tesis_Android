@@ -2,6 +2,7 @@ package com.example.prediction.graphic;
 
 
 import com.example.prediction.logica.*;
+import com.example.prediction.logica.metrics.MetricsCollection;
 
 import org.afree.chart.AFreeChart;
 import org.afree.data.category.DefaultCategoryDataset;
@@ -14,7 +15,7 @@ public abstract class AbsGraphics {
 	protected int height;
 	protected int width;
 	protected AbsClassifier[] series;
-	protected AbsMetricsEvaluation metricsEvaluation;
+	protected MetricsCollection metricsEvaluation;
 	
 	
 	protected AFreeChart getChart(AbsClassifier[] series, String chartTitle, String axisX, String axisY) throws Exception{

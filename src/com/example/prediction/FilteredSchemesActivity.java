@@ -1,18 +1,11 @@
 package com.example.prediction;
 
-
-import java.io.File;
-
 import com.example.prediction.logica.AbsDataset;
-import com.example.prediction.logica.DatasetWeka;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
 import android.widget.ImageView;
 //import android.widget.ImageView;
-import android.widget.Toast;
-
 
 
 public class FilteredSchemesActivity extends Activity {

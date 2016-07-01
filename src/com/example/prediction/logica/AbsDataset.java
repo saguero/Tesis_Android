@@ -64,7 +64,6 @@ public abstract class AbsDataset {
 		
 	}
 	
-	
 	public abstract void convertInstancesObject(File fileInstances) throws Exception;
 	public abstract Object removeInstances(int first, int last) throws Exception;
 	public abstract File convertFile(File file) throws Exception;
