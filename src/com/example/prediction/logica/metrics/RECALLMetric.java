@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class RECALLMetric extends AbsMetric{
 
 		RECALLMetric() {
@@ -12,7 +14,7 @@ public class RECALLMetric extends AbsMetric{
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateRECALL(evaluation);								
+			return ((Evaluation) evaluation).recall(trainingSet.getClassIndex());							
 		}
 		
 		public String getID(){

@@ -1,12 +1,9 @@
 package com.example.prediction.logica.metrics;
 
-import com.example.prediction.logica.AbsDataset;
-import com.example.prediction.logica.AbsEvaluation;
-
-import weka.classifiers.Evaluation;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
 
 public class MetricsEvaluationWeka extends MetricsCollection {
-	
 	
 	public MetricsEvaluationWeka(AbsDataset dataset, AbsEvaluation eval) {
 		// TODO Auto-generated constructor stub
@@ -17,61 +14,6 @@ public class MetricsEvaluationWeka extends MetricsCollection {
 		acceptMetric(RAE);
 		acceptMetric(RMSE);
 		acceptMetric(RRSE);
-	}
-
-	@Override
-	public Double calculateMAE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).meanAbsoluteError();
-		 
-	}
-
-	@Override
-	public Double calculateRMSE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).rootMeanSquaredError();
-	}
-
-	@Override
-	public Double calculateRAE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).relativeAbsoluteError();
-	}
-
-	@Override
-	public Double calculateRRSE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).rootRelativeSquaredError();
-	}
-
-	@Override
-	public Double calculateCC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return  ((Evaluation) evaluation).correlationCoefficient();
-	}
-
-	@Override
-	public Double calculateACC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).precision(trainingSet.getClassIndex());
-	}
-
-	@Override
-	public Double calculateKAP(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).kappa();
-	}
-
-	@Override
-	public Double calculateROC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).areaUnderROC(trainingSet.getClassIndex());
-	}
-
-	@Override
-	public Double calculateRECALL(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).recall(trainingSet.getClassIndex());
 	}
 
 }

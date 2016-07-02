@@ -2,10 +2,10 @@ package com.example.prediction.logica.libraries;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.AbsDataset;
-import com.example.prediction.logica.AbsEvaluation;
-import com.example.prediction.logica.DatasetWeka;
-import com.example.prediction.logica.EvaluationWeka;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.database.DatasetWeka;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
+import com.example.prediction.logica.evaluation.WekaEvaluation;
 import com.example.prediction.logica.metrics.MetricsEvaluationWeka;
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.parameters.AbsParameter;
@@ -96,7 +96,7 @@ public class WekaLibrary extends AbsLibrary{
 	@Override
 	public void setEvaluationObject() {
 		// TODO Auto-generated method stub
-		this.evaluator = new EvaluationWeka();
+		this.evaluator = new WekaEvaluation();
 	}
 
 	@Override

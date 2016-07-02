@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class ACCMetric extends AbsMetric{
 
 		ACCMetric() {
@@ -12,7 +14,7 @@ public class ACCMetric extends AbsMetric{
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateACC(evaluation);							
+			return ((Evaluation) evaluation).precision(trainingSet.getClassIndex());							
 		}
 		
 		public String getID(){

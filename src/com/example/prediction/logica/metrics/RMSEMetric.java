@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class RMSEMetric extends AbsMetric {
 
 		RMSEMetric() {
@@ -12,7 +14,7 @@ public class RMSEMetric extends AbsMetric {
 		}
 
 		Double calculate(Object evaluation) throws Exception {
-			return calculateRMSE(evaluation);
+			 return ((Evaluation) evaluation).rootMeanSquaredError();
 		}	
 		
 		public String getID(){

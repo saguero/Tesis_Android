@@ -1,7 +1,7 @@
 package com.example.prediction.graphic;
 
 
-import com.example.prediction.logica.*;
+import com.example.prediction.logica.AbsClassifier;
 import com.example.prediction.logica.metrics.MetricsCollection;
 
 import org.afree.chart.AFreeChart;

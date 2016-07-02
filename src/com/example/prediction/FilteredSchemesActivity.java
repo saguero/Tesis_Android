@@ -1,8 +1,9 @@
 package com.example.prediction;
 
-import com.example.prediction.logica.AbsDataset;
-
 import android.os.Bundle;
+
+import com.example.prediction.logica.database.AbsDataset;
+
 import android.app.Activity;
 import android.widget.ImageView;
 //import android.widget.ImageView;

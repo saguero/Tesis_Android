@@ -2,6 +2,7 @@ package com.example.prediction.logica.metrics;
 
 import java.util.Vector;
 
+import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.metrics.MetricsCollection.Info;
 import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
@@ -77,7 +78,6 @@ public abstract class AbsMetric {
 		}
 		
 		public boolean canBeNormalized(){
-			
 			return representation.equals(Representation.NORMALIZED) ||
 					representation.equals(Representation.PERCENTUAL) ;
 		}

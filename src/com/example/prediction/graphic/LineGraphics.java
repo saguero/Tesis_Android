@@ -19,6 +19,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.example.prediction.logica.*;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
 
 
 public class LineGraphics extends AbsGraphics {

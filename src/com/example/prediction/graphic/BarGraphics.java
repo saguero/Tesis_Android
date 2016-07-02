@@ -1,6 +1,10 @@
 package com.example.prediction.graphic;
 
-import com.example.prediction.logica.*;
+import com.example.prediction.logica.AbsClassifier;
+import com.example.prediction.logica.Config;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
+import com.example.prediction.logica.metrics.AbsMetric;
 import com.example.prediction.logica.metrics.MetricsCollection;
 import com.example.prediction.logica.metrics.MetricsCollection.*;
 
@@ -30,7 +34,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 public class BarGraphics extends AbsGraphics {
 	private Vector<Integer> bestResults = new Vector<Integer>();
-	private Metric[] categorys;
+	private AbsMetric[] categorys;
 	Context context;
 	
 	class CustomRenderer extends BarRenderer{
@@ -182,23 +186,23 @@ public class BarGraphics extends AbsGraphics {
 
 	public AFreeChart graphed(AbsDataset trainingSet, AbsEvaluation evaluator, MetricsCollection metricsEvaluation, Info info, Vector<Representation> rep) throws Exception{
 	
-		Vector<Metric> metrics = new Vector<Metric>(); 
-		Vector<Metric> aux = new Vector<Metric>(); 
+		Vector<AbsMetric> metrics = new Vector<AbsMetric>(); 
+		Vector<AbsMetric> aux = new Vector<AbsMetric>(); 
 		for(Representation r: rep){	
-			Vector<Metric> toAdd = metricsEvaluation.association(r);
-			for(Metric m: toAdd)
+			Vector<AbsMetric> toAdd = metricsEvaluation.association(r);
+			for(AbsMetric m: toAdd)
 				if(m.canBeNormalized())
 					metrics.add(m);
 		}
 		
-		for(Metric m:metrics){
+		for(AbsMetric m:metrics){
 			if( m.getInfo().equals(info) ) 
 				aux.add(m);
 		}
 		metrics.removeAllElements(); 
 		int index=0;
-		categorys = new Metric[aux.size()];
-		for(Metric m:aux){	
+		categorys = new AbsMetric[aux.size()];
+		for(AbsMetric m:aux){	
 			categorys[index]=m;
 			index++;
 		}

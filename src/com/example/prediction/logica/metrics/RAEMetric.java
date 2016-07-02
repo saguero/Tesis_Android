@@ -1,24 +1,24 @@
 package com.example.prediction.logica.metrics;
 
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Info;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Representation;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Required;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Type;
+import com.example.prediction.logica.metrics.MetricsCollection.Info;
+import com.example.prediction.logica.metrics.MetricsCollection.Representation;
+import com.example.prediction.logica.metrics.MetricsCollection.Required;
+import com.example.prediction.logica.metrics.MetricsCollection.Type;
+
+import weka.classifiers.Evaluation;
 
 public class RAEMetric extends AbsMetric{
 
 		RAEMetric() {
-			super(AbsMetricsEvaluation.RAE,Required.MIN, Representation.PERCENTUAL, Type.REGRESSION, Info.ERROR_PREDICTION);
+			super(MetricsCollection.RAE,Required.MIN, Representation.PERCENTUAL, Type.REGRESSION, Info.ERROR_PREDICTION);
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateRAE(evaluation);
+			return ((Evaluation) evaluation).relativeAbsoluteError();
 		}
 		
 		public String getID(){
 			return "RAE";
 		}
-		
-	}
 
 }

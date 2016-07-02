@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class MAEMetric extends AbsMetric {
 
 		MAEMetric() {
@@ -12,7 +14,7 @@ public class MAEMetric extends AbsMetric {
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateMAE(evaluation);
+			return ((Evaluation) evaluation).meanAbsoluteError();
 		}
 		
 		public String getID(){

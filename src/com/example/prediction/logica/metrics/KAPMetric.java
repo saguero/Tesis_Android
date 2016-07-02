@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class KAPMetric extends AbsMetric{
 
 		KAPMetric() {
@@ -12,7 +14,7 @@ public class KAPMetric extends AbsMetric{
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateKAP(evaluation);								
+			return ((Evaluation) evaluation).kappa();								
 		}
 		
 		public String getID(){

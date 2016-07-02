@@ -5,6 +5,8 @@ import com.example.prediction.logica.metrics.MetricsCollection.Representation;
 import com.example.prediction.logica.metrics.MetricsCollection.Required;
 import com.example.prediction.logica.metrics.MetricsCollection.Type;
 
+import weka.classifiers.Evaluation;
+
 public class ROCMetric extends AbsMetric{
 
 		ROCMetric() {
@@ -12,7 +14,7 @@ public class ROCMetric extends AbsMetric{
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
-			return calculateROC(evaluation);								
+			return ((Evaluation) evaluation).areaUnderROC(trainingSet.getClassIndex());								
 		}
 		
 		public String getID(){

@@ -1,9 +1,9 @@
 package com.example.prediction.logica.libraries;
 
-import com.example.prediction.logica.AbsClassifier;
-import com.example.prediction.logica.AbsDataset;
-import com.example.prediction.logica.AbsEvaluation;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.metrics.MetricsCollection;
+import com.example.prediction.logica.models.AbsClassifier;
 
 public abstract class AbsLibrary {
 

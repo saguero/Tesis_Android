@@ -14,11 +14,11 @@ import android.os.Environment;
 import com.example.prediction.graphic.ChartView;
 import com.example.prediction.graphic.LineGraphics;
 import com.example.prediction.logica.AbsClassifier;
-import com.example.prediction.logica.AbsDataset;
-import com.example.prediction.logica.AbsEvaluation;
 import com.example.prediction.logica.Config;
 import com.example.prediction.logica.libraries.AbsLibrary;
-import com.example.prediction.logica.LibrariesCollection;
+import com.example.prediction.logica.libraries.LibrariesCollection;
+import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.evaluation.AbsEvaluation;
 
 public class Info {
 	static int IMG_LC_serialId = 0;

@@ -14,7 +14,8 @@ public class COMBMetric extends AbsMetric {
 		Double calculate(Object evaluation) throws Exception {
 			RAEMetric rae = new RAEMetric();
 			RRSEMetric rrse = new RRSEMetric();
-			return  1-Math.abs(calculateCC(evaluation)) + rrse.calculateNormalized(evaluation) 
+			CCMetric cc=new CCMetric();
+			return  1-Math.abs(cc.calculateNormalized(evaluation)) + rrse.calculateNormalized(evaluation) 
 					+ rae.calculateNormalized(evaluation);
 		}
 		
