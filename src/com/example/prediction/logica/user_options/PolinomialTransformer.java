@@ -32,7 +32,7 @@ public class PolinomialTransformer implements DatabaseTransformer {
 	};
 
 	private class Solution extends Object {
-		public Vector<node> sol = new Vector<>();
+		public Vector<node> sol = new Vector<node>();
 
 		@Override
 		public int hashCode() {

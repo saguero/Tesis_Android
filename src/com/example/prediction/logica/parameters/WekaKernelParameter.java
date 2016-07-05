@@ -9,6 +9,7 @@ import com.example.prediction.logica.models.SMOregClassifier;
 import weka.classifiers.functions.SMOreg;
 import weka.classifiers.functions.supportVector.Kernel;
 
+
 public class WekaKernelParameter extends AbsWekaParameter {
 
 	private Kernel kernel_;

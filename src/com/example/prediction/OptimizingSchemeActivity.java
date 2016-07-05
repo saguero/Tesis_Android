@@ -27,31 +27,41 @@ import com.example.prediction.Info;
 import com.example.prediction.logica.Config;
 
 public class OptimizingSchemeActivity<LineChart> extends Activity{
+	
+	static final int HISTORIAL = 0;
+	static final int SAVE = 1;
+	int alertDialog;
+	
 	private ImageSwitcher imageswitcher;
 	private int index = 0;
 	private Info info = new Info();
 	private Bitmap image_learningcurve;
 	private Bitmap image_errorprediction;
 	private boolean saved = false;
-	private Vector<Bitmap> images;
+	private Vector<Bitmap> images = new Vector<Bitmap>();
 	
 	Button button_historial;
 	String state_historial = "SHOW";
 	TextView title;
+	private int actionAlert;
+	
 	
 	public class CautionDialog extends DialogFragment {
-		int alert;
+		
+		public CautionDialog(){	
+		}
 		
 		public  CautionDialog newInstance(int alert){
-			
-			/*switch(alert){
-			case R.string.alert_save:
-				alert = R.string.alert_save;
+			switch(alert){
+			case SAVE:
+				alertDialog = R.string.optimizing_dialogsave;
+				actionAlert = SAVE;
 				break;
-			case R.string.alert_loadhistorial:
-				alert = R.string.alert_loadhistorial;
+			case HISTORIAL:
+				alertDialog = R.string.optimizing_dialogloadhistorial;
+				actionAlert = HISTORIAL;
 				break;
-			}*/
+			}
 			
 			CautionDialog dialogFragment = new CautionDialog();
 		    Bundle bundle = new Bundle();
@@ -63,19 +73,21 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	    public Dialog onCreateDialog(Bundle savedInstanceState) {
 	        // Use the Builder class for convenient dialog construction
 	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	        builder.setMessage(alert)
-	               .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-	                   public void onClick(DialogInterface dialog, int id) {
-	                	   if (alert==R.string.alert_save){
+	        builder.setTitle(alertDialog)													//VER QUE ONDA ESTO!!
+	               .setPositiveButton(R.string.optimizing_dialogyes, new DialogInterface.OnClickListener() {
+	                   
+	            	   public void onClick(DialogInterface dialog, int id) {
+	                	   switch(actionAlert){
+	                	   case SAVE:
 	                		   actionSave();
-	                	   }else{
-	                		   if (alert==R.string.alert_loadhistorial){
-	                			   actionLoadHistorial(state_historial);
-	                		   }
-	                	   }
+	                		   break;
+	                	   case HISTORIAL:
+	                		   actionLoadHistorial(state_historial);
+	                		   break;
+	                	   }  
 	                   }
 	               })
-	               .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+	               .setNegativeButton(R.string.optimizing_dialogno, new DialogInterface.OnClickListener() {
 	                   public void onClick(DialogInterface dialog, int id) {
 	                       // User cancelled the dialog
 	                   }
@@ -87,24 +99,89 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.activity_otimizingscheme);
+	        setContentView(R.layout.activity_optimizingscheme);
 	        
-	        button_historial = (Button) findViewById(R.id.button_opt_historial);
-	        title = (TextView) findViewById(R.id.textView_optscheme_action);
-	        title.setText(R.string.loading);
 	        
-	        //Learning curve 
+	        Button button_suggestion = (Button) findViewById(R.id.button_optimizing_help);
+	        button_suggestion.setOnClickListener(new View.OnClickListener(){
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					showSuggestion();
+				}
+	        	
+	        });
+	        
+	       button_historial = (Button) findViewById(R.id.button_optimizing_historial);
+	       button_historial.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					CautionDialog  dialog = new CautionDialog();
+					dialog.newInstance(HISTORIAL);
+					dialog.show(getFragmentManager().beginTransaction(), "dialog");	
+				}
+	        	
+	        });
+	        
+	        
+	        Button button_save = (Button) findViewById(R.id.button_optimizing_save);
+	        button_save.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					CautionDialog  dialog = new CautionDialog();
+					dialog.newInstance(SAVE);
+					dialog.show(getFragmentManager().beginTransaction(), "dialog");
+				}	        	
+	        });
+	        
+	        Button button_settings = (Button) findViewById(R.id.button_optimizing_settings);
+	        button_settings.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					configParameters();
+				}	        	
+	        });
+	        
+	        Button button_next = (Button) findViewById(R.id.button_optimizing_next);
+	        button_next.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					nextImage();
+				}	        	
+	        });
+	        
+	        Button button_previous = (Button) findViewById(R.id.button_optimizing_previous);
+	        button_previous.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					previousImage();
+				}	        	
+	        });
+	        
+	        
+	        
+	        title = (TextView) findViewById(R.id.textView_optimizing_subtitle);
+	        title.setText(R.string.optimizing_subtitle_loading);
+	        
 	        try {
-	        	image_learningcurve = info.generateImageLearningCurve(this);
-				images.add(image_learningcurve);
-				image_errorprediction = info.generateImageErrorPrediction(this);
-				images.add(image_errorprediction);
+	        	image_learningcurve = info.generateImageLearningCurve(this, info.getBestScheme());
+	    		images.add(image_learningcurve);
+	    		image_errorprediction = info.generateImageErrorPrediction(this);
+	    		images.add(image_errorprediction);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	        
+			
 	 
-	        imageswitcher=(ImageSwitcher) findViewById(R.id.imageSwitcher1);
+	        imageswitcher=(ImageSwitcher) findViewById(R.id.imageSwitcher_optimizing_display);
 	        imageswitcher.setFactory(new ViewSwitcher.ViewFactory() {
 				
 	        	//PONER UN ADAPTADOR?????
@@ -115,7 +192,7 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 					imageview.setScaleType(ImageView.ScaleType.FIT_CENTER);
 					imageview.setLayoutParams(new ImageSwitcher.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT) );
 					imageview.setImageBitmap(images.elementAt(0));
-					title.setText(R.string.title2_optimizing);
+					title.setText(R.string.optimizing_subtitle_principle);
 					return imageview;
 				}
 			});    
@@ -123,12 +200,13 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	    }
 
 	 
-	 public void showSuggestion(){
+	 
+	 private void showSuggestion(){
 		startActivity(new Intent(this, ModelfitActivity.class));
 		overridePendingTransition(R.anim.anim_left_in, R.anim.anim_left_out);
 	 }
 	
-	 public void button_next(){
+	 private void nextImage(){
 		 Drawable drawable = new BitmapDrawable(getResources(), images.elementAt(index));
 		 imageswitcher.setImageDrawable(drawable); 
 		 index = (index+1)%images.size();		
@@ -138,7 +216,7 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	     imageswitcher.setAnimation(out);
 	 }
 	
-	 public void button_previuos(){
+	 public void previousImage(){
 		 Drawable drawable = new BitmapDrawable(getResources(), images.elementAt(index));
 		 imageswitcher.setImageDrawable(drawable);
 		 index = (index-1);
@@ -150,29 +228,29 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	     imageswitcher.setAnimation(out);
 	 }
 	 
-	public void saveImages(){ 
+	 public void saveImages(){ 
 		if(!saved){
 			CautionDialog dialog = new CautionDialog();
-			dialog.newInstance(R.string.alert_save).show(getFragmentManager().beginTransaction(), "dialog");
+			dialog.newInstance(R.string.optimizing_dialogsave).show(getFragmentManager().beginTransaction(), "dialog");
 			saved = true;
 		}
 		else
 			Toast.makeText(getApplicationContext(), Config.Exception.ALREADY_SAVED,Toast.LENGTH_LONG).show(); 	
 	}
 	
-	public void loadHistorial(){
+	 public void loadHistorial(){
 		if(!saved)
 			saveImages();
 		CautionDialog dialog = new CautionDialog();
-		dialog.newInstance(R.string.alert_loadhistorial).show(getFragmentManager().beginTransaction(), "dialog");
+		dialog.newInstance(R.string.optimizing_dialogloadhistorial).show(getFragmentManager().beginTransaction(), "dialog");
 	}
 	
-	private void actionSave(){
+	 private void actionSave(){
 		info.saveLearningCurveImage(images.elementAt(0));
         info.saveErrorPredictionImage(images.elementAt(1));
 	}
 	
-	private void actionLoadHistorial(String state){
+	 private void actionLoadHistorial(String state){
 		
 		if(state.equals("SHOW")){
 			button_historial.setBackgroundResource(R.drawable.icon_undo);
@@ -189,10 +267,10 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 		index = 0;
 		Drawable drawable = new BitmapDrawable(getResources(), images.elementAt(index));
 		imageswitcher.setImageDrawable(drawable);	
-		title.setText(R.string.title2_optimizing);
+		title.setText(R.string.optimizing_subtitle_principle);
 	}
 	
-	public void configParameters(){
+	 public void configParameters(){
 		Intent intent = new Intent(this, ConfigParametersActivity.class);
     	startActivity(intent);
     	overridePendingTransition(R.anim.anim_left_in, R.anim.anim_left_out);

@@ -2,26 +2,30 @@ package com.example.prediction.logica.metrics;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.metrics.MetricsCollection.Info;
-import com.example.prediction.logica.metrics.MetricsCollection.Representation;
-import com.example.prediction.logica.metrics.MetricsCollection.Required;
-import com.example.prediction.logica.metrics.MetricsCollection.Type;
+import com.example.prediction.logica.libraries.AbsLibrary;
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Info;
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Representation;
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Required;
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Type;
 
 public abstract class AbsMetric {
+	
 		private int ID;
 		private Required required;
 		private Representation representation;
 		private Type type;
 		private Info info;
 		private boolean accept=false;
+		
+		protected AbsLibrary library;
 
-		AbsMetric(int ID, Required req, Representation rep, Type t, Info i) {
+		AbsMetric(int ID, Required req, Representation rep, Type t, Info i, AbsLibrary lib) {
 			this.ID = ID;
 			required = req;
 			representation = rep;
 			type = t; 
 			info = i;
+			library = lib;
 		}
 		
 		 public Required getRequired(){
@@ -48,6 +52,9 @@ public abstract class AbsMetric {
 			return representation.equals(rep);
 		}
 		
+		boolean isInfo(Info info){
+			return this.info.equals(info);
+		}
 		
 		boolean forRegression(){
 			return type.equals(Type.REGRESSION);
@@ -67,6 +74,8 @@ public abstract class AbsMetric {
 				return calculate(evaluation)/100;
 			if(representation.equals(Representation.NORMALIZED))
 				return calculate(evaluation);
+			if(representation.equals(Representation.SCALE))
+				return calculate(evaluation);
 			return null;
 		}
 				
@@ -78,6 +87,7 @@ public abstract class AbsMetric {
 		}
 		
 		public boolean canBeNormalized(){
+			
 			return representation.equals(Representation.NORMALIZED) ||
 					representation.equals(Representation.PERCENTUAL) ;
 		}

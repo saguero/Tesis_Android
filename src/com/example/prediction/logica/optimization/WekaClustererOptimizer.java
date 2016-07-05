@@ -5,8 +5,8 @@ import java.util.Vector;
 
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.models.AbsWekaClusterer;
-import com.example.prediction.logica.parameters.AbsParameter;
 import com.example.prediction.logica.parameters.AbsWekaParameter;
+import com.example.prediction.logica.parameters.AbsParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
 import weka.clusterers.SimpleKMeans;

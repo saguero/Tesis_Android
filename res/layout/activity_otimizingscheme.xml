@@ -105,7 +105,7 @@
         android:id="@+id/textView_titleOptimizing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_fase2"
+        android:text="@string/optimizing_title"
         android:textColor="@color/darkaquamarine"
         android:textSize="25sp"
         android:textStyle="italic" />

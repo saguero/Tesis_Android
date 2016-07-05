@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class Individual {
 	
-	private Hashtable<String, Double> attributes=new Hashtable<>();
+	private Hashtable<String, Double> attributes=new Hashtable<String, Double>();
 	
 	public Hashtable<String, Double> getIndividualAttributes(){
 		return attributes;

@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.example.prediction.logica.models.AbsModeler;
 
+
 public abstract class AbsWekaParameter extends AbsParameter {
 
 	public AbsWekaParameter(String name) {

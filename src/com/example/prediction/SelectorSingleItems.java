@@ -1,5 +1,6 @@
 package com.example.prediction;
 
+
 import com.example.prediction.logica.Config;
 import com.example.prediction.logica.libraries.AbsLibrary;
 import com.example.prediction.Info;
@@ -23,14 +24,14 @@ public class SelectorSingleItems extends DialogFragment {
 		
 		switch(type){
 		case Config.Item.ITEM_SELECT_LIBRARY:
-			TitleId = R.string.title_chooseLibrary;
+			TitleId = R.string.configures_dialogchooseLibrary;
 			break;
 		case Config.Item.ITEM_SELECT_PREDICTED_ATT:
-			TitleId = R.string.title_chooseAtt;
+			TitleId = R.string.configures_dialogchooseAtt;
 			library = info.getLibrarySelected();
 			break;
 		case Config.Item.ITEM_SELECT_FILE_DATASET:
-			TitleId = R.string.title_chooseFileDataset;
+			TitleId = R.string.configures_dialogchooseFileDataset;
 			library = info.getLibrarySelected();
 			break;
 		}
@@ -63,13 +64,14 @@ public class SelectorSingleItems extends DialogFragment {
 						
 					}
 	    		
-	    	}).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	    	}).setPositiveButton(R.string.configures_dialogok, new DialogInterface.OnClickListener() {
 	             @Override
 	             public void onClick(DialogInterface dialog, int id) {
 	                   
 	            	 switch(item){
 						case Config.Item.ITEM_SELECT_LIBRARY:
 							info.setLibrarySelected(items[checkedItem].toString());
+							info.setListSchemes();
 							break;
 						case Config.Item.ITEM_SELECT_PREDICTED_ATT:
 							info.setAttributeSelected(checkedItem);
@@ -87,7 +89,7 @@ public class SelectorSingleItems extends DialogFragment {
 	            	 
 	                  dialog.dismiss();
 	               }
-	    	}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	    	}).setNegativeButton(R.string.configures_dialogcancel, new DialogInterface.OnClickListener() {
 	            	@Override
 	            	public void onClick(DialogInterface dialog, int id) {
 	            		

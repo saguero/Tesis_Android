@@ -18,6 +18,7 @@ import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemoveRange;
 
+
 public class WekaDatabase extends AbsDatabase {
 
 	private Instances isTrainingSet;
@@ -25,6 +26,16 @@ public class WekaDatabase extends AbsDatabase {
 	public WekaDatabase() {
 		// TODO Auto-generated constructor stub
 		database = new Vector<Individual>();
+	}
+	
+	public WekaDatabase(Instances instances){
+		isTrainingSet = instances;
+		Enumeration<Instance> enDatabase = isTrainingSet.enumerateInstances();
+		while (enDatabase.hasMoreElements()) {
+			Instance i = enDatabase.nextElement();
+			WekaIndividual wi = new WekaIndividual(i);
+			database.addElement(wi);
+		}
 	}
 
 	@Override
@@ -74,13 +85,39 @@ public class WekaDatabase extends AbsDatabase {
 		isTrainingSet.insertAttributeAt(at, isTrainingSet.numAttributes());
 		super.addAttribute(name);
 	}
+	
+	/*Sil*/
+	
 
+	public WekaDatabase(File file) throws Exception{
+		super(file);
+	}
+
+	public File convertFile(File file) throws Exception {
+		// TODO Auto-generated method stub
+		Instances data = null;
+		if(file.exists()){
+			if(file.canRead()){
+				CSVLoader loader = new CSVLoader();	//-M ? -E ",'
+				
+				loader.setFieldSeparator(",");
+				loader.setSource(file);
+				data = loader.getDataSet();
+			}
+		}		
+		// save ARFF
+       ArffSaver saver = new ArffSaver();
+       saver.setInstances(data);
+       saver.setFile(new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff"));
+       saver.writeBatch();
+       
+       return new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff");
+	}
 	@Override
 	public void setClassIndex(int classIndex) {
 		// TODO Auto-generated method stub
 		((Instances) trainingSet).setClassIndex(classIndex);
 	}
-	
 	@Override
 	public int numAttributes() {
 		// TODO Auto-generated method stub
@@ -92,12 +129,18 @@ public class WekaDatabase extends AbsDatabase {
 		return ((Instances) trainingSet).numInstances();
 	}
 	@Override
-	public Object removeInstances(int first, int last) throws Exception {
+	public Object removeInstances(int first, int last) throws Exception  {
 		// TODO Auto-generated method stub
-		String[] options = {"-R", ""+first+"-"+last};
+		String[] options = new String[2];
+		options[0] = "-R";
+		options[1] = first+"-"+last;
 		RemoveRange remove = new RemoveRange();
+		remove.setInputFormat((Instances) trainingSet );
 		remove.setOptions(options);
-		return Filter.useFilter((Instances) trainingSet, remove);	
+		remove.getOptions();
+		((Instances) trainingSet).numInstances();
+		Object result = Filter.useFilter((Instances) trainingSet, remove);
+		return result;
 	}
 	@Override
 	public Double getInstanceValue(int instance, int classIndex) {
@@ -122,20 +165,9 @@ public class WekaDatabase extends AbsDatabase {
 	}
 
 	@Override
-	public File saveFile(File file) throws IOException {
+	public AbsDatabase newInstance() {
 		// TODO Auto-generated method stub
-		ArffSaver saver = new ArffSaver();
-	       //saver.setInstances(data);
-	       saver.setFile(new File(Config.DIR_EXTERNAL_STORAGE +"\\dataset.arff"));
-	       saver.writeBatch();
-	       
-	       return new File(Config.DIR_EXTERNAL_STORAGE +"\\dataset.arff");
+		return new WekaDatabase();
 	}
 
-	@Override
-	public File convertFile(File file) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

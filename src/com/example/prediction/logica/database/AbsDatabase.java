@@ -1,18 +1,15 @@
 package com.example.prediction.logica.database;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 
 import com.example.prediction.logica.individual.Individual;
 
+
 public abstract class AbsDatabase implements Cloneable{
 	
 	protected Vector<Individual> database;
-	
-	int classIndex = 0;
-	Object trainingSet;
 	
 	public AbsDatabase(){
 		database=new Vector<Individual>();
@@ -28,7 +25,7 @@ public abstract class AbsDatabase implements Cloneable{
 	
 	public void addAttribute(String name){		//Numeric attribute
 		for (Individual i:database){
-			i.addAttribute(name, new Double(-1));
+			i.addAttribute(name, Double.valueOf(-1));
 		}
 	}
 	
@@ -42,32 +39,48 @@ public abstract class AbsDatabase implements Cloneable{
 	
 	public AbsDatabase clone(){
 		 AbsDatabase b=null;
-		try {
-			b = getClass().getDeclaredConstructor().newInstance();
-			
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				b = getClass().getDeclaredConstructor().newInstance();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 		return b;
+		
 	}
 	
-	public abstract void parseFile(File file);
+	public abstract void parseFile(File file);	//Parsing del archivo
+
+	/*Sil*/
 	
-	//*Sil*//
+	int classIndex = 0;
+	Object trainingSet;
 	
 	public AbsDatabase(File file) throws Exception{
 		convertInstancesObject(convertFile(file));
 	}
 	
-	public AbsDatabase newInstance(){
-		return this;
-	}
+	
 	
 	public AbsDatabase newInstance(Object trainingSet){
-		AbsDatabase result = this;
-		result.setTrainingSet(trainingSet);
+		AbsDatabase result = newInstance();
+		result.setPredictedAtt(this.classIndex);
 		return result;
 	}
 			
@@ -105,11 +118,14 @@ public abstract class AbsDatabase implements Cloneable{
 	
 	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
 		AbsDatabase result = newInstance();
-		result.trainingSet = removeInstances(first,last);
+		result.classIndex = this.classIndex;
+		result.trainingSet = this.trainingSet;
+		result.trainingSet = result.removeInstances(first,last);
 		return result;
 		
 	}
 	
+	public abstract AbsDatabase newInstance();
 	public abstract void convertInstancesObject(File fileInstances) throws Exception;
 	public abstract Object removeInstances(int first, int last) throws Exception;
 	public abstract File convertFile(File file) throws Exception;
@@ -120,6 +136,4 @@ public abstract class AbsDatabase implements Cloneable{
 	public abstract Double getInstanceValue(int instance, int classIndex); 
 	public abstract String getAttribute(int attribute);
 	
-	public abstract File saveFile(File file) throws IOException;	
-
 }

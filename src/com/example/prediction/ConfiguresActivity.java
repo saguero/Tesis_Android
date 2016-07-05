@@ -16,11 +16,6 @@ import com.example.prediction.logica.Config;
 
 public class ConfiguresActivity extends Activity {
 	
-	//comment
-	public class RowItem {
-		//COMPLETAR
-	}
-	
 	ProgressDialog progressDialog;
 	Button button_prediction;
 	ListView lvList;
@@ -37,7 +32,7 @@ public class ConfiguresActivity extends Activity {
         String[] configureItems = info.getConfigureItems();
         
      
-        button_prediction = (Button) findViewById(R.id.button_makePred);
+        button_prediction = (Button) findViewById(R.id.button_configures_makePrediction);
         button_prediction.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -51,7 +46,8 @@ public class ConfiguresActivity extends Activity {
                     public void run() {
                         try {
                             //Do some stuff that take some time...
-                            Thread.sleep(5000); // Let's wait for some time			 
+                            Thread.sleep(5000); // Let's wait for some time	
+                            info.setFilteredBestSchemes();
                         } catch (Exception e) {
                              
                         }
@@ -74,7 +70,7 @@ public class ConfiguresActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.item_configures, R.id.textview_configures_id, configureItems);
 
-        lvList= (ListView) findViewById(R.id.listview_configure);
+        lvList= (ListView) findViewById(R.id.listview_configures);
         lvList.setAdapter(adapter);
          
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,8 +116,6 @@ public class ConfiguresActivity extends Activity {
 		if(selectItems[Config.Item.ITEM_SELECT_LIBRARY]==1){
 			SelectorMultiItems dialogFrag = SelectorMultiItems.newInstance();
 			dialogFrag.show(getFragmentManager().beginTransaction(), "dialog");
-			
-			//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
 		}
 		else
 			Toast.makeText(getApplicationContext(),Config.Exception.MISSING_LIBRARY,Toast.LENGTH_LONG).show();
@@ -137,13 +131,13 @@ public class ConfiguresActivity extends Activity {
 				Toast.makeText(getApplicationContext(),Config.Exception.MISSING_FILEDATASET,Toast.LENGTH_LONG).show();
 			else {
 				showDialogSelectSingleItems(Config.Item.ITEM_SELECT_PREDICTED_ATT);
-				//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
+			
 			}
 	}
 	
 	private void selectLibrary(){
 		showDialogSelectSingleItems(Config.Item.ITEM_SELECT_LIBRARY);
-		//GUARDAR LO SELECCIONADO EN ALGUNA CLASE.
+	
 	}
 	
 	private void pickFile(){

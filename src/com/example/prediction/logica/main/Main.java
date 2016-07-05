@@ -1,19 +1,19 @@
-package com.example.prediction.logica.main;
+/*package main;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import com.example.prediction.logica.database.WekaDatabase;
-import com.example.prediction.logica.models.AbsModeler;
-import com.example.prediction.logica.models.LinearRegClassifier;
-import com.example.prediction.logica.models.MultilayerPerceptronClassifier;
-import com.example.prediction.logica.models.SGDClassifier;
-import com.example.prediction.logica.models.SMOregClassifier;
-import com.example.prediction.logica.models.SimpleKClusterer;
-import com.example.prediction.logica.models.SimpleLinearRegClassifier;
-import com.example.prediction.logica.user_options.ExtendTransformer;
-import com.example.prediction.logica.user_options.PolinomialTransformer;
+import database.WekaDatabase;
+import models.AbsModeler;
+import models.LinearRegClassifier;
+import models.MultilayerPerceptronClassifier;
+import models.SGDClassifier;
+import models.SMOregClassifier;
+import models.SimpleKClusterer;
+import models.SimpleLinearRegClassifier;
+import user_options.ExtendTransformer;
+import user_options.PolinomialTransformer;
 
 public class Main {
 	
@@ -67,4 +67,4 @@ public class Main {
 		System.out.println("FINIsh");
 	}
 
-}
+}*/

@@ -2,17 +2,19 @@ package com.example.prediction.logica.libraries;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.database.AbsDataset;
-import com.example.prediction.logica.database.DatasetWeka;
+import com.example.prediction.logica.database.AbsDatabase;
+import com.example.prediction.logica.database.WekaDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
-import com.example.prediction.logica.evaluation.WekaEvaluation;
-import com.example.prediction.logica.metrics.MetricsEvaluationWeka;
+import com.example.prediction.logica.evaluation.EvaluationWeka;
+import com.example.prediction.logica.metrics.WekaMetricEvaluation;
+import com.example.prediction.logica.models.AbsClassifier;
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.parameters.AbsParameter;
 import com.example.prediction.logica.parameters.AbsWekaParameter;
 import com.example.prediction.logica.parameters.WekaKernelParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
+import weka.classifiers.Evaluation;
 import weka.core.OptionHandler;
 import weka.core.Utils;
 
@@ -76,41 +78,105 @@ public class WekaLibrary extends AbsLibrary{
 		}
 	}
 	
-
 	public WekaLibrary(String ID) {
 		super(ID);
 		// TODO Auto-generated constructor stub
 		setDatasetObject();
 		setEvaluationObject();
 		setMetricsEvaluationObject();
-		setSchemesObject();
-		
+		setSchemeObject();
+		setListSchemes();
 	}
 
 	@Override
 	public void setDatasetObject() {
 		// TODO Auto-generated method stub
-		this.trainingSet = new DatasetWeka();
+		this.trainingSet = new WekaDatabase();
 	}
 
 	@Override
 	public void setEvaluationObject() {
 		// TODO Auto-generated method stub
-		this.evaluator = new WekaEvaluation();
+		this.evaluator = new EvaluationWeka();
 	}
 
 	@Override
 	public void setMetricsEvaluationObject() {
 		// TODO Auto-generated method stub
-		AbsDataset d = getDatasetObject();
+		AbsDatabase d = getDatasetObject();
 		AbsEvaluation e = getEvaluationObject();
-		this.metricsEvaluation = new MetricsEvaluationWeka(d, e);
+		this.metricsEvaluation = new WekaMetricEvaluation(d, e);
 	}
 
 	@Override
-	public void setSchemesObject() {
+	public void setSchemeObject() {
 		// TODO Auto-generated method stub
-		
+		//this.scheme = new ClassifierWeka();	
+	}
+
+	@Override
+	public void setListSchemes() {						//HARDCODE!
+		// TODO Auto-generated method stub
+		listSchemes = new Vector<AbsClassifier>();
+		/*listSchemes.add(new Multilayerperceptron());
+		listSchemes.add(new LinearReg());
+		listSchemes.add(new SimpleLinearReg());
+		listSchemes.add(new Smoreg());*/
+	}
+	
+	@Override
+	public Double calculateMAE(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).meanAbsoluteError();
+		 
+	}
+
+	@Override
+	public Double calculateRMSE(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).rootMeanSquaredError();
+	}
+
+	@Override
+	public Double calculateRAE(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).relativeAbsoluteError();
+	}
+
+	@Override
+	public Double calculateRRSE(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).rootRelativeSquaredError();
+	}
+
+	@Override
+	public Double calculateCC(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return  ((Evaluation) evaluation).correlationCoefficient();
+	}
+
+	@Override
+	public Double calculateACC(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).precision(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public Double calculateKAP(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).kappa();
+	}
+
+	@Override
+	public Double calculateROC(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).areaUnderROC(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public Double calculateRECALL(Object evaluation) throws Exception {
+		// TODO Auto-generated method stub
+		return ((Evaluation) evaluation).recall(trainingSet.getClassIndex());
 	}
 	
 }

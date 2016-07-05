@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import com.example.prediction.logica.libraries.WekaLibrary;
 import com.example.prediction.logica.models.AbsModeler;
-import com.example.prediction.logica.models.AbsWekaClassifier;
 import com.example.prediction.logica.models.AbsWekaClusterer;
+import com.example.prediction.logica.models.AbsWekaClassifier;
 
 import weka.core.OptionHandler;
 
@@ -19,7 +19,7 @@ public class WekaSimpleParameter extends AbsWekaParameter {
 	public WekaSimpleParameter(char charOp, Object value, String name) {
 		super(name);
 		charOp_ = charOp;
-		value_ = (double) value;
+		value_ = (Double) value;
 	}
 
 	// getters and setters
@@ -78,7 +78,7 @@ public class WekaSimpleParameter extends AbsWekaParameter {
 	@Override
 	public Vector<String> getPropertyString(double min, double max) {
 		// TODO Auto-generated method stub
-		Vector<String> r=new Vector<>();
+		Vector<String> r=new Vector<String>();
 		r.addElement("-property " + charOp_ + " -min "+min+" -max "+max+" -step 1.0 -base 10.0 -expression I");
 		return r;
 	}

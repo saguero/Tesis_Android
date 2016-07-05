@@ -13,22 +13,22 @@ import weka.core.Instances;
 import weka.core.OptionHandler;
 
 public abstract class AbsWekaClassifier extends AbsClassifier{
-	protected Classifier classifier;
+	protected AbstractClassifier classifier;
 	protected AbsWekaOptimizer optimizer;
 	private int index;
 	
 	//--Public methods
 	/**/
-	public AbsWekaClassifier(Classifier clas, AbsWekaOptimizer optimizer, int index){
+	public AbsWekaClassifier(AbstractClassifier clas, AbsWekaOptimizer optimizer, int index){
 		database_=new WekaDatabase();
 		this.index=index;
 		classifier=clas;
 		this.optimizer=optimizer;
 	}
 
-	public void setClassifier(Classifier optclassifiers){
-		this.classifier=optclassifiers;
-		WekaLibrary.parseOptions(((CfsSubsetEval) optclassifiers).getOptions(), this);
+	public void setClassifier(AbstractClassifier classifier){
+		this.classifier=classifier;
+		WekaLibrary.parseOptions(classifier.getOptions(), this);
 	}
 
 	public String toString(){

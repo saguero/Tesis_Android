@@ -1,8 +1,9 @@
 package com.example.prediction.graphic;
 
+import java.util.Vector;
 
-import com.example.prediction.logica.AbsClassifier;
-import com.example.prediction.logica.metrics.MetricsCollection;
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation;
+import com.example.prediction.logica.models.AbsClassifier;
 
 import org.afree.chart.AFreeChart;
 import org.afree.data.category.DefaultCategoryDataset;
@@ -11,20 +12,20 @@ public abstract class AbsGraphics {
 	
 	protected double min;
 	protected double max;
-	protected DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	protected DefaultCategoryDataset dataset;
 	protected int height;
 	protected int width;
-	protected AbsClassifier[] series;
-	protected MetricsCollection metricsEvaluation;
+	protected Vector<AbsClassifier> series;
+	protected AbsMetricsEvaluation metricsEvaluation;
 	
 	
-	protected AFreeChart getChart(AbsClassifier[] series, String chartTitle, String axisX, String axisY) throws Exception{
+	protected AFreeChart getChart(Vector<AbsClassifier> series, String chartTitle, String axisX, String axisY) throws Exception{
 		AFreeChart chart = createChart(chartTitle,axisX,axisY);
 		customizeChart(chart);
 		return chart;	
 	}
 		
-	public void setSeries(AbsClassifier[] series){	
+	public void setSeries(Vector<AbsClassifier> series){	
 		this.series = series; 
 	}
 

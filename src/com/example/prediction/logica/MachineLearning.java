@@ -4,6 +4,10 @@ import java.io.FileReader;
 import java.util.Random;
 import java.util.Vector;
 
+import com.example.prediction.logica.database.WekaDatabase;
+import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsWekaClassifier;
+
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LinearRegression;
@@ -99,7 +103,8 @@ public class MachineLearning {
 		Instances filteredInstances = applyFilter(dataset);
 		Classifier[] optimizers = new Classifier[classifiers.size()];
 		for (AbsClassifier ac: classifiers){
-			optimizers[index] = ac.optimizingParams(filteredInstances); 		
+			WekaDatabase wd=new WekaDatabase(filteredInstances);
+			optimizers[index] = ((AbsWekaClassifier)(ac.calculateModeler(wd))).getClassifier(); 		
 			names[index] = ac.getName();
 			index++;
 		}

@@ -2,13 +2,14 @@ package com.example.prediction.logica.libraries;
 
 public class LibrariesCollection {
 	
-	private static AbsLibrary[] libraries = {new WekaLibrary("Weka")
+	AbsLibrary[] libraries = {new WekaLibrary("Weka")
 															}; 
+	
 	public LibrariesCollection(){
 		
 	}
 	
-	public static String[] getListLibraries(){
+	public String[] getListLibraries(){
 		String[] result = new String[libraries.length];
 		int index = 0;
 		for(AbsLibrary lib:libraries){
@@ -17,7 +18,7 @@ public class LibrariesCollection {
 		return result;	
 	}
 	
-	public static AbsLibrary getLibrary(String ID){
+	public AbsLibrary getLibrary(String ID){
 		AbsLibrary result = null;
 		for(AbsLibrary lib:libraries){
 			if(lib.getID().equals(ID))

@@ -15,7 +15,7 @@ public class PresentationActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentation);
         
-        Button start = (Button) findViewById(R.id.button_Start);
+        Button start = (Button) findViewById(R.id.button_presentation_start);
         
         start.setOnClickListener(new View.OnClickListener() {
 

@@ -11,7 +11,6 @@ import com.example.prediction.logica.parameters.WekaKernelParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
 import weka.classifiers.AbstractClassifier;
-import weka.classifiers.Classifier;
 import weka.classifiers.functions.SMOreg;
 import weka.classifiers.functions.supportVector.NormalizedPolyKernel;
 import weka.classifiers.functions.supportVector.PolyKernel;
@@ -68,14 +67,14 @@ public class WekaKernelOptimizer extends AbsWekaOptimizer {
 
 	}
 
-	private Classifier[] bestClassifiers(AbsModeler modeler, Instances dataset) throws Exception {
+	private AbstractClassifier[] bestClassifiers(AbsModeler modeler, Instances dataset) throws Exception {
 		MultiSearch ms = new MultiSearch();
 		SMOreg smoreg = new SMOreg();
 		ms.setEvaluation(new SelectedTag(GridSearch.EVALUATION_CC, GridSearch.TAGS_EVALUATION));
 		
 		setKernelOptions();
 
-		Classifier[] cls = new Classifier[kernels.size()];
+		AbstractClassifier[] cls = new AbstractClassifier[kernels.size()];
 		int kindex = 0;
 		for (WekaKernelParameter k : kernels) {
 			modeler.addParameter(k);
@@ -95,7 +94,7 @@ public class WekaKernelOptimizer extends AbsWekaOptimizer {
 			smoreg.setKernel(k.getKernel());
 			ms.setClassifier(smoreg);
 			ms.buildClassifier(dataset);
-			cls[kindex] = (Classifier) ms.getBestClassifier();
+			cls[kindex] = (AbstractClassifier) ms.getBestClassifier();
 			kindex++;
 		}
 		return cls;
@@ -106,7 +105,7 @@ public class WekaKernelOptimizer extends AbsWekaOptimizer {
 		// TODO Auto-generated method stub
 		try {
 			MultiScheme ms = new MultiScheme();
-			Classifier[] optclassifiers = bestClassifiers(modeler, isTrainingSet);
+			AbstractClassifier[] optclassifiers = bestClassifiers(modeler, isTrainingSet);
 			ms.setClassifiers(optclassifiers);
 			ms.buildClassifier(isTrainingSet);
 			((SMOregClassifier) modeler).setClassifier(optclassifiers[ms.getBestClassifierIndex()]);

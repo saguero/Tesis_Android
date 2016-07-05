@@ -26,21 +26,22 @@ public class ChartView extends ImageView {
 		
 		switch(type){
 		case Config.Graphic.GRAPHIC_TYPE_BAR:
-			bitmap = Bitmap.createBitmap(Config.Graphic.GRAPHIC_BAR_HEIGHT, Config.Graphic.GRAPHIC_BAR_WIDTH, Bitmap.Config.ARGB_8888);
-	        rectArea = new RectShape(0.0, 0.0, Config.Graphic.GRAPHIC_BAR_HEIGHT, Config.Graphic.GRAPHIC_BAR_WIDTH);
+			bitmap = Bitmap.createBitmap(Config.Graphic.GRAPHIC_BAR_WIDTH, Config.Graphic.GRAPHIC_BAR_HEIGHT, Bitmap.Config.ARGB_8888);
+	        rectArea = new RectShape(0.0, 0.0, Config.Graphic.GRAPHIC_BAR_WIDTH, Config.Graphic.GRAPHIC_BAR_HEIGHT);
 	        break;
 	        
 		case Config.Graphic.GRAPHIC_TYPE_LINE:
-			bitmap = Bitmap.createBitmap(Config.Graphic.GRAPHIC_LINE_HEIGHT, Config.Graphic.GRAPHIC_LINE_WIDTH, Bitmap.Config.ARGB_8888);
-	        rectArea = new RectShape(0.0, 0.0, Config.Graphic.GRAPHIC_LINE_HEIGHT, Config.Graphic.GRAPHIC_LINE_WIDTH);
+			bitmap = Bitmap.createBitmap(Config.Graphic.GRAPHIC_LINE_WIDTH, Config.Graphic.GRAPHIC_LINE_HEIGHT, Bitmap.Config.ARGB_8888);
+	        rectArea = new RectShape(0.0, 0.0, Config.Graphic.GRAPHIC_LINE_WIDTH, Config.Graphic.GRAPHIC_LINE_HEIGHT);
 	        break;
-		}	
+		}
+		
 	}
 	
 	public void drawChart( AFreeChart chart )
     {
         canvas = new Canvas(bitmap);
-        this.chart = chart;             
+        this.chart = chart;   
         this.chart.draw(canvas, rectArea);
         setImageBitmap(bitmap);
     }

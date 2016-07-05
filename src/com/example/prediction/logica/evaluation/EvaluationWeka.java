@@ -6,7 +6,7 @@ import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
 
-public class WekaEvaluation extends AbsEvaluation {
+public class EvaluationWeka extends AbsEvaluation {
 
 	@Override
 	public void buildClassifier(Object trainingSet, Object scheme) throws Exception {

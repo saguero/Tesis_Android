@@ -19,19 +19,20 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 
 import com.example.prediction.logica.*;
-import com.example.prediction.logica.database.AbsDataset;
+import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
+import com.example.prediction.logica.models.AbsClassifier;
 
 
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
-	private String image;
+	private int image;
 	Context context;
 	
 	
-	public LineGraphics() throws Exception {
+	public LineGraphics(Context context) throws Exception {
 		// TODO Auto-generated constructor stub
-		
+		this.context = context;
 	}
 	
 	@Override
@@ -53,10 +54,10 @@ public class LineGraphics extends AbsGraphics {
 		height = Config.Graphic.GRAPHIC_LINE_HEIGHT;
 		width = Config.Graphic.GRAPHIC_LINE_WIDTH;
 		
-		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		//ChartColor
+		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		
 		
-		String workingDir = Config.DIR_RESOURCES;
-		Bitmap img = BitmapFactory.decodeFile(workingDir  + image);
+	
+		Bitmap img = BitmapFactory.decodeResource(context.getResources(), image);
 		
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));
@@ -86,7 +87,7 @@ public class LineGraphics extends AbsGraphics {
 		yAxis.setRange(min - factorRange, max + factorRange); 	
 	}
 	
-	private void configureErrorPrediction(AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception {
+	private void configureErrorPrediction(AbsDatabase trainingSet, AbsEvaluation evaluator) throws Exception {
 		// TODO Auto-generated method stub
 		min = Double.MAX_VALUE;
 		max = Double.MIN_VALUE;
@@ -125,15 +126,19 @@ public class LineGraphics extends AbsGraphics {
 		
 	}
 	
-	private void configureLearningCurve(AbsDataset trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
-		
+	private void configureLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
+		dataset = new DefaultCategoryDataset();
 		int groupInstances = Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
 		int instances = (trainingSet.numInstances() / groupInstances);
 		int last = trainingSet.numInstances();
+		AbsDatabase newTrainingSet = null;
 		for(int i=1; i<=instances; i++){
 			Integer cantInstances = groupInstances * i; 
-			int first = cantInstances++;
-			AbsDataset newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
+			int first = cantInstances+1;
+			if(i == instances)
+				newTrainingSet =  trainingSet;
+			else
+				newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
 			
 			Object et = evaluator.evaluateUseTrainingSet(newTrainingSet, scheme);
 			Double value = evaluator.getErrorEvaluation(et);
@@ -151,7 +156,7 @@ public class LineGraphics extends AbsGraphics {
 		}	
 	}
 	
-	public AFreeChart graphedLearningCurve(AbsDataset trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
+	public AFreeChart graphedLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
 		configureLearningCurve(trainingSet,evaluator, scheme);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_LC;
 		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC,
@@ -159,7 +164,7 @@ public class LineGraphics extends AbsGraphics {
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISY);
 	}
 	
-	public AFreeChart graphedErrorPrediction(AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception{
+	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, AbsEvaluation evaluator) throws Exception{
 		configureErrorPrediction(trainingSet,evaluator);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_EP;
 		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC,
