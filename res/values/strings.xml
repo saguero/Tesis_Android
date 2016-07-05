@@ -6,6 +6,7 @@
      <string name="presentation_appname">Prediction</string>
      <string name="presentation_intro">Tecnicas de aprendizaje de maquina para predecir atributos no funcionales en componentes de aplicaciones Android</string>
      <string name="presentation_start">Start</string>
+    
    
     												<!-- Activity Configures-->
     <string name="configures_title">Configures</string>

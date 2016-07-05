@@ -54,5 +54,4 @@
         android:text="@string/presentation_intro"
         android:textColor="@color/black"
         android:textSize="25sp" />
-
 </RelativeLayout>

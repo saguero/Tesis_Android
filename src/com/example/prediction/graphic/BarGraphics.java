@@ -1,6 +1,6 @@
 package com.example.prediction.graphic;
 
-import com.example.prediction.logica.*;
+import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.metrics.AbsMetric;
@@ -211,6 +211,5 @@ public class BarGraphics extends AbsGraphics {
 		return getChart(series, Config.Graphic.GRAPHIC_BAR_TITLE_CHART,
 				Config.Graphic.GRAPHIC_BAR_TITLE_AXISX,  Config.Graphic.GRAPHIC_BAR_TITLE_AXISY);	
 	}
-	
 	
 }

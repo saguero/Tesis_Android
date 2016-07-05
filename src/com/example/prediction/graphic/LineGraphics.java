@@ -23,7 +23,6 @@ import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.models.AbsClassifier;
 
-
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
 	private int image;

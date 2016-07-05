@@ -2,11 +2,11 @@ package com.example.prediction.graphic;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation;
-import com.example.prediction.logica.models.AbsClassifier;
-
 import org.afree.chart.AFreeChart;
 import org.afree.data.category.DefaultCategoryDataset;
+
+import com.example.prediction.logica.metrics.AbsMetricsEvaluation;
+import com.example.prediction.logica.models.AbsClassifier;
 
 public abstract class AbsGraphics {
 	

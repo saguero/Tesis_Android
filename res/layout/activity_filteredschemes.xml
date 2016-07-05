@@ -56,5 +56,4 @@
         android:layout_alignRight="@+id/imageView_display"
         android:background="@drawable/icon_check"
         android:stateListAnimator="@null" />
-
 </RelativeLayout>

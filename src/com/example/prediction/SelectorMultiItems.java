@@ -14,6 +14,8 @@ public class SelectorMultiItems extends DialogFragment {
 	Vector<Integer> mSelectedItems; 
 	Info info=new Info();
 	
+	
+	
 	public static SelectorMultiItems newInstance(){
 
 		SelectorMultiItems dialogFragment = new SelectorMultiItems();
