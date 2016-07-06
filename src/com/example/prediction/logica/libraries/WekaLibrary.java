@@ -2,13 +2,19 @@ package com.example.prediction.logica.libraries;
 
 import java.util.Vector;
 
+import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.database.WekaDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.evaluation.EvaluationWeka;
 import com.example.prediction.logica.metrics.WekaMetricEvaluation;
-import com.example.prediction.logica.models.AbsClassifier;
 import com.example.prediction.logica.models.AbsModeler;
+import com.example.prediction.logica.models.LinearRegClassifier;
+import com.example.prediction.logica.models.MultilayerPerceptronClassifier;
+import com.example.prediction.logica.models.SGDClassifier;
+import com.example.prediction.logica.models.SMOregClassifier;
+import com.example.prediction.logica.models.SimpleKClusterer;
+import com.example.prediction.logica.models.SimpleLinearRegClassifier;
 import com.example.prediction.logica.parameters.AbsParameter;
 import com.example.prediction.logica.parameters.AbsWekaParameter;
 import com.example.prediction.logica.parameters.WekaKernelParameter;
@@ -84,8 +90,7 @@ public class WekaLibrary extends AbsLibrary{
 		setDatasetObject();
 		setEvaluationObject();
 		setMetricsEvaluationObject();
-		setSchemeObject();
-		setListSchemes();
+		setAcceptedModelers();
 	}
 
 	@Override
@@ -105,23 +110,18 @@ public class WekaLibrary extends AbsLibrary{
 		// TODO Auto-generated method stub
 		AbsDatabase d = getDatasetObject();
 		AbsEvaluation e = getEvaluationObject();
-		this.metricsEvaluation = new WekaMetricEvaluation(d, e);
+		this.metricsEvaluation = new WekaMetricEvaluation(d, e, this);
 	}
 
 	@Override
-	public void setSchemeObject() {
+	public void setAcceptedModelers() {						
 		// TODO Auto-generated method stub
-		//this.scheme = new ClassifierWeka();	
-	}
-
-	@Override
-	public void setListSchemes() {						//HARDCODE!
-		// TODO Auto-generated method stub
-		listSchemes = new Vector<AbsClassifier>();
-		/*listSchemes.add(new Multilayerperceptron());
-		listSchemes.add(new LinearReg());
-		listSchemes.add(new SimpleLinearReg());
-		listSchemes.add(new Smoreg());*/
+		acceptedModelers.add(Config.Modeler.LINEAR_REGRESSION);
+		acceptedModelers.add(Config.Modeler.NEURAL_NETWORK_REGRESSION);
+		acceptedModelers.add(Config.Modeler.SIMPLE_K_CLUSTERER);
+		acceptedModelers.add(Config.Modeler.SIMPLE_LINEAR_REGRESSION);
+		acceptedModelers.add(Config.Modeler.STOCHASTIC_GRADIENT_DESCENT_REGRESSION);
+		acceptedModelers.add(Config.Modeler.SUPPORT_VECTOR_MACHINE_REGRESSION);
 	}
 	
 	@Override
@@ -177,6 +177,33 @@ public class WekaLibrary extends AbsLibrary{
 	public Double calculateRECALL(Object evaluation) throws Exception {
 		// TODO Auto-generated method stub
 		return ((Evaluation) evaluation).recall(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public Vector<AbsModeler> getModelers(Vector<Integer> selectedModels, int index) {
+		// TODO Auto-generated method stub
+		Vector<AbsModeler> ret=new Vector<AbsModeler>();
+		for (Integer sel:selectedModels){ 
+			if (sel.equals(Config.Modeler.LINEAR_REGRESSION)){
+				ret.add(new LinearRegClassifier(index));
+			}
+			if (sel.equals(Config.Modeler.NEURAL_NETWORK_REGRESSION)){
+				ret.add(new MultilayerPerceptronClassifier(index));
+			}
+			if (sel.equals(Config.Modeler.SIMPLE_K_CLUSTERER)){
+				ret.add(new SimpleKClusterer());
+			}
+			if (sel.equals(Config.Modeler.SIMPLE_LINEAR_REGRESSION)){
+				ret.add(new SimpleLinearRegClassifier(index));
+			}
+			if (sel.equals(Config.Modeler.STOCHASTIC_GRADIENT_DESCENT_REGRESSION)){
+				ret.add(new SGDClassifier(index));
+			}
+			if (sel.equals(Config.Modeler.SUPPORT_VECTOR_MACHINE_REGRESSION)){
+				ret.add(new SMOregClassifier(index));
+			}
+		}
+		return ret;
 	}
 	
 }

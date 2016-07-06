@@ -1,6 +1,5 @@
 package com.example.prediction;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +11,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Vector;
+
 import com.example.prediction.Info;
 import com.example.prediction.logica.Config;
+import com.example.prediction.logica.models.AbsModeler;
 
 public class ConfiguresActivity extends Activity {
 	
@@ -47,7 +49,11 @@ public class ConfiguresActivity extends Activity {
                     public void run() {
                         try {
                             //Do some stuff that take some time...
-                            Thread.sleep(5000); // Let's wait for some time	
+                            //Thread.sleep(5000); // Let's wait for some time	
+                            Vector<AbsModeler> models=info.getListSchemesSelected();
+                            for (AbsModeler m:models){
+                            	m.calculateModeler(info.getDatasetSelected());
+                            }
                             info.setFilteredBestSchemes();
                         } catch (Exception e) {
                              

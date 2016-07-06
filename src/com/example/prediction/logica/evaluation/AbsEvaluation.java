@@ -3,7 +3,7 @@ package com.example.prediction.logica.evaluation;
 import java.util.Vector;
 
 import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.models.AbsWekaClassifier;
 
 
@@ -13,27 +13,27 @@ public abstract class AbsEvaluation {
 		return this;
 	}
 	
-	private Object configEvaluation(AbsDatabase trainingSet, AbsClassifier scheme) throws Exception{
+	private Object configEvaluation(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
 		Object classifier = ((AbsWekaClassifier)scheme).getClassifier();
-		Object dataset = trainingSet.getTrainingSet();
+		Object dataset = trainingSet.getDatabaseImplementation();
 		buildClassifier(dataset, classifier);
 		return classifier;
 	}
 	
-	public Object evaluateUseTrainingSet(AbsDatabase trainingSet, AbsClassifier scheme) throws Exception{
+	public Object evaluateUseTrainingSet(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
 		Object classifier = configEvaluation(trainingSet, scheme);
-		return testTrainingSet(trainingSet.getTrainingSet(), classifier);
+		return testTrainingSet(trainingSet.getDatabaseImplementation(), classifier);
 	}
 	
-	public Object evaluateUseCrossValidation(AbsDatabase trainingSet, AbsClassifier scheme) throws Exception{
+	public Object evaluateUseCrossValidation(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
 		Object classifier = configEvaluation(trainingSet, scheme);
-		return testCV(trainingSet.getTrainingSet(), classifier);
+		return testCV(trainingSet.getDatabaseImplementation(), classifier);
 	}
 	
-	public Vector<Double> getPredictedValues(AbsDatabase trainingSet, AbsClassifier scheme) throws Exception{
+	public Vector<Double> getPredictedValues(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
 		configEvaluation(trainingSet, scheme);
 		
-		Object t = trainingSet.getTrainingSet();
+		Object t = trainingSet.getDatabaseImplementation();
 		Object s = ((AbsWekaClassifier)scheme).getClassifier();
 		int classIndex = trainingSet.getClassIndex();
 		

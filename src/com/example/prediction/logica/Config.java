@@ -80,4 +80,14 @@ public class Config {
 		
 	}
 	
+	public class Modeler {
+		public final static int LINEAR_REGRESSION = 0;
+		public final static int NEURAL_NETWORK_REGRESSION = 1;
+		public final static int STOCHASTIC_GRADIENT_DESCENT_REGRESSION = 2;
+		public final static int SIMPLE_LINEAR_REGRESSION = 3;
+		public final static int SUPPORT_VECTOR_MACHINE_REGRESSION = 4;
+		public final static int SIMPLE_K_CLUSTERER = 5;
+		
+	}
+	
 }

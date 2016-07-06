@@ -26,14 +26,12 @@ public abstract class AbsMetricsEvaluation {
 	
 	public 	Type type = Type.REGRESSION;												//VER DESPUES
 	
-	protected AbsLibrary library;
-	
 	private Vector<AbsMetric> metricsEvaluation = new Vector<AbsMetric>();
 	public AbsDatabase trainingSet;
 	public AbsEvaluation evaluator;
 	public AbsClassifier scheme;
 	
-	public AbsMetricsEvaluation(AbsDatabase trainingSet, AbsEvaluation eval){
+	public AbsMetricsEvaluation(AbsDatabase trainingSet, AbsEvaluation eval, AbsLibrary library){
 		CCMetric cc = new CCMetric(library);
 		metricsEvaluation.add(cc);
 		RMSEMetric rmse = new RMSEMetric(library);

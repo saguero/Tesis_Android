@@ -21,16 +21,22 @@ import weka.filters.unsupervised.instance.RemoveRange;
 
 public class WekaDatabase extends AbsDatabase {
 
-	private Instances isTrainingSet;
+	private Instances trainingSet;
 
 	public WekaDatabase() {
 		// TODO Auto-generated constructor stub
 		database = new Vector<Individual>();
 	}
 	
+	public WekaDatabase(WekaDatabase wd){
+		this.trainingSet=(Instances)wd.getDatabaseImplementation();
+		this.database = wd.getIndividuals();
+		this.classIndex = wd.classIndex;
+	}
+	
 	public WekaDatabase(Instances instances){
-		isTrainingSet = instances;
-		Enumeration<Instance> enDatabase = isTrainingSet.enumerateInstances();
+		trainingSet = instances;
+		Enumeration<Instance> enDatabase = trainingSet.enumerateInstances();
 		while (enDatabase.hasMoreElements()) {
 			Instance i = enDatabase.nextElement();
 			WekaIndividual wi = new WekaIndividual(i);
@@ -44,8 +50,8 @@ public class WekaDatabase extends AbsDatabase {
 		CSVLoader cvsloader = new CSVLoader();
 		try {
 			cvsloader.setSource(file);
-			isTrainingSet = cvsloader.getDataSet();
-			Enumeration<Instance> enDatabase = isTrainingSet.enumerateInstances();
+			trainingSet = cvsloader.getDataSet();
+			Enumeration<Instance> enDatabase = trainingSet.enumerateInstances();
 			while (enDatabase.hasMoreElements()) {
 				Instance i = enDatabase.nextElement();
 				WekaIndividual wi = new WekaIndividual(i);
@@ -60,7 +66,7 @@ public class WekaDatabase extends AbsDatabase {
 	@Override
 	public Object getDatabaseImplementation() {
 		// TODO Auto-generated method stub
-		return isTrainingSet;
+		return trainingSet;
 	}
 
 	@Override
@@ -69,7 +75,7 @@ public class WekaDatabase extends AbsDatabase {
 		CSVLoader cvsloader = new CSVLoader();
 		try {
 			cvsloader.setSource(file);
-			isTrainingSet.addAll(cvsloader.getDataSet());
+			trainingSet.addAll(cvsloader.getDataSet());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +88,7 @@ public class WekaDatabase extends AbsDatabase {
 	public void addAttribute(String name) {
 		// TODO Auto-generated method stub
 		Attribute at = new Attribute(name);
-		isTrainingSet.insertAttributeAt(at, isTrainingSet.numAttributes());
+		trainingSet.insertAttributeAt(at, trainingSet.numAttributes());
 		super.addAttribute(name);
 	}
 	
@@ -116,47 +122,46 @@ public class WekaDatabase extends AbsDatabase {
 	@Override
 	public void setClassIndex(int classIndex) {
 		// TODO Auto-generated method stub
-		((Instances) trainingSet).setClassIndex(classIndex);
+		trainingSet.setClassIndex(classIndex);
 	}
 	@Override
 	public int numAttributes() {
 		// TODO Auto-generated method stub
-		return ((Instances) trainingSet).numAttributes();
+		return trainingSet.numAttributes();
 	}
 	@Override
 	public int numInstances() {
 		// TODO Auto-generated method stub
-		return ((Instances) trainingSet).numInstances();
+		return trainingSet.numInstances();
 	}
 	@Override
-	public Object removeInstances(int first, int last) throws Exception  {
+	public void removeInstances(int first, int last) throws Exception  {
 		// TODO Auto-generated method stub
 		String[] options = new String[2];
 		options[0] = "-R";
 		options[1] = first+"-"+last;
 		RemoveRange remove = new RemoveRange();
-		remove.setInputFormat((Instances) trainingSet );
+		remove.setInputFormat(trainingSet);
 		remove.setOptions(options);
 		remove.getOptions();
-		((Instances) trainingSet).numInstances();
-		Object result = Filter.useFilter((Instances) trainingSet, remove);
-		return result;
+		trainingSet.numInstances();
+		trainingSet = Filter.useFilter(trainingSet, remove);
 	}
 	@Override
 	public Double getInstanceValue(int instance, int classIndex) {
 		// TODO Auto-generated method stub
-		return ((Instances)trainingSet).instance(instance).value(classIndex);
+		return trainingSet.instance(instance).value(classIndex);
 	}
 	@Override
 	public String getAttribute(int attribute) {
 		// TODO Auto-generated method stub
-		return ((Instances) trainingSet).attribute(attribute).name(); 
+		return trainingSet.attribute(attribute).name(); 
 	}
 	
 	@Override
 	public int getClassIndex() {
 		// TODO Auto-generated method stub
-		return ((Instances) trainingSet).classIndex();
+		return trainingSet.classIndex();
 	}
 	@Override
 	public void convertInstancesObject(File fileInstances) throws Exception {
@@ -169,5 +174,14 @@ public class WekaDatabase extends AbsDatabase {
 		// TODO Auto-generated method stub
 		return new WekaDatabase();
 	}
-
+	
+	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
+		WekaDatabase result = (WekaDatabase) newInstance();
+		result.classIndex = this.classIndex;
+		result.trainingSet = this.trainingSet.stringFreeStructure();
+		result.trainingSet.addAll(this.trainingSet);
+		result.removeInstances(first,last);
+		return result;
+	}
+	
 }

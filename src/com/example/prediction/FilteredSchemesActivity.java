@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.example.prediction.logica.Config;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
 
 
 import android.os.Bundle;
@@ -69,7 +69,7 @@ public class FilteredSchemesActivity extends Activity {
        spinner_selectScheme = (Spinner) findViewById(R.id.spinner_selectScheme);
        List<String> list = new ArrayList<String>();
        list.add("Select scheme...");
-       for(AbsClassifier c :info.getBestSchemes()) {
+       for(AbsModeler c :info.getBestSchemes()) {
     	   list.add(c.getName());
        }
        

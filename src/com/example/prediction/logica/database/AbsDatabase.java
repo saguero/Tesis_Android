@@ -70,13 +70,11 @@ public abstract class AbsDatabase implements Cloneable{
 	/*Sil*/
 	
 	int classIndex = 0;
-	Object trainingSet;
+	//Object trainingSet;
 	
 	public AbsDatabase(File file) throws Exception{
 		convertInstancesObject(convertFile(file));
 	}
-	
-	
 	
 	public AbsDatabase newInstance(Object trainingSet){
 		AbsDatabase result = newInstance();
@@ -107,27 +105,19 @@ public abstract class AbsDatabase implements Cloneable{
 		return result;
 	}
 
-	public Object getTrainingSet() {
-		// TODO Auto-generated method stub
-		return trainingSet;
-	}
-	
-	public void setTrainingSet(Object trainingSet){
-		this.trainingSet = trainingSet;
-	}
 	
 	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
 		AbsDatabase result = newInstance();
 		result.classIndex = this.classIndex;
-		result.trainingSet = this.trainingSet;
-		result.trainingSet = result.removeInstances(first,last);
+		result.database = this.getIndividuals();
+		result.database.remove(0);
+		result.database.remove(result.database.size()-1);
 		return result;
-		
 	}
 	
 	public abstract AbsDatabase newInstance();
 	public abstract void convertInstancesObject(File fileInstances) throws Exception;
-	public abstract Object removeInstances(int first, int last) throws Exception;
+	public abstract void removeInstances(int first, int last) throws Exception;
 	public abstract File convertFile(File file) throws Exception;
 	public abstract int getClassIndex();
 	public abstract void setClassIndex(int classIndex);

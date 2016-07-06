@@ -6,7 +6,7 @@ import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.metrics.AbsMetric;
 import com.example.prediction.logica.metrics.AbsMetricsEvaluation;
 import com.example.prediction.logica.metrics.AbsMetricsEvaluation.*;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -134,7 +134,7 @@ public class BarGraphics extends AbsGraphics {
 	 
 	protected  void configureDataset(AbsDatabase trainingSet, AbsEvaluation evaluator) throws Exception{
 		dataset = new DefaultCategoryDataset();
-		Vector<AbsClassifier> axisY = series;										
+		Vector<AbsModeler> axisY = series;										
 		  double value=0;
 		  for(int y=0; y< axisY.size(); y++){	
 			  Object e = evaluator.evaluateUseTrainingSet(trainingSet, axisY.elementAt(y));

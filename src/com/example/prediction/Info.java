@@ -3,6 +3,7 @@ package com.example.prediction;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Vector;
 
 import org.afree.chart.AFreeChart;
@@ -19,7 +20,8 @@ import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.libraries.AbsLibrary;
 import com.example.prediction.logica.libraries.LibrariesCollection;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
+import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.Config;
 
 public class Info {
@@ -44,11 +46,11 @@ public class Info {
 	static AbsLibrary librarySelected;
 	static File fileDatasetSelected;
 	static AbsDatabase trainingSet;
-	static Vector<AbsClassifier> schemesSelected = new Vector<AbsClassifier>();
+	static Vector<AbsModeler> schemesSelected = new Vector<AbsModeler>();
 	static LibrariesCollection classEstructure;
 	
-	static AbsClassifier bestScheme;
-	static Vector<AbsClassifier> filteredBestSchemes = new Vector<AbsClassifier>();
+	static AbsModeler bestScheme;
+	static Vector<AbsModeler> filteredBestSchemes = new Vector<AbsModeler>();
 	
 	public Info() {
 		setLibraries();
@@ -87,10 +89,22 @@ public class Info {
 	}
 	
 	public void setListSchemes(){
-		Vector<AbsClassifier> Listschemes = librarySelected.getListSchemes();
+		Vector<Integer> Listschemes = librarySelected.getAcceptedModelers();
 		schemes = new CharSequence[Listschemes.size()]; 
+		Field[] fields=Config.Modeler.class.getFields();
 		for(int i = 0; i < schemes.length; i++){
-			schemes[i] = Listschemes.elementAt(i).getName();
+			for (Field f:fields){
+				try {
+					if (f.getInt(null)==Listschemes.get(i))
+						schemes[i]=f.getName();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -122,7 +136,7 @@ public class Info {
 	
 	/*	GENERATE IMAGE	*/
 	
-	public Bitmap generateImageLearningCurve(Context context,AbsClassifier scheme) throws Exception {
+	public Bitmap generateImageLearningCurve(Context context,AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub	
 		
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
@@ -148,7 +162,7 @@ public class Info {
 	public Vector<Bitmap> generateImagesSchemesComparator(Context context) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Vector<AbsClassifier> listschemes = getBestSchemes();
+		Vector<AbsModeler> listschemes = getBestSchemes();
 		
 		BarGraphics barchart = new BarGraphics(context);
 		barchart.setSeries(listschemes);
@@ -263,10 +277,7 @@ public class Info {
 	
 	public void setSchemesSelected(Vector<Integer> schemes){
 		schemesSelected.removeAllElements();
-		Vector<AbsClassifier> aux = librarySelected.getListSchemes();
-		for(Integer s:schemes)
-			schemesSelected.add(aux.elementAt(s));
-		
+		schemesSelected = librarySelected.getModelers(schemes, attributeSelected);
 	}
 	
 	/*	GET OPTIONS SELECTED	*/
@@ -287,7 +298,7 @@ public class Info {
 		return attributeSelected;
 	}
 	
-	public Vector<AbsClassifier> getListSchemesSelected(){
+	public Vector<AbsModeler> getListSchemesSelected(){
 		return schemesSelected;
 	}
 
@@ -298,15 +309,15 @@ public class Info {
 		filteredBestSchemes = this.getListSchemesSelected();
 	}
 	
-	public Vector<AbsClassifier> getBestSchemes(){
+	public Vector<AbsModeler> getBestSchemes(){
 		return filteredBestSchemes;
 	}
 	
-	public void setBestScheme(AbsClassifier scheme){
+	public void setBestScheme(AbsModeler scheme){
 		bestScheme = scheme;
 	}
 
-	public AbsClassifier getBestScheme() {				//AL CUAL SE LE APLICA LA OPTIMIZACION DE LOS PARAMETROS
+	public AbsModeler getBestScheme() {				//AL CUAL SE LE APLICA LA OPTIMIZACION DE LOS PARAMETROS
 		// TODO Auto-generated method stub
 		return bestScheme;
 	}

@@ -21,7 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import com.example.prediction.logica.*;
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
 
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
@@ -108,7 +108,7 @@ public class LineGraphics extends AbsGraphics {
 	    	  max = Math.max(max,actualValue);
   	    	  min = Math.min(min, actualValue);
 		}
-		for(AbsClassifier scheme:series){
+		for(AbsModeler scheme:series){
 			
 			predicted = evaluator.getPredictedValues(trainingSet,scheme);
       		for(Integer v=1; v <= instances; v++){
@@ -125,7 +125,7 @@ public class LineGraphics extends AbsGraphics {
 		
 	}
 	
-	private void configureLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
+	private void configureLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsModeler scheme) throws Exception {
 		dataset = new DefaultCategoryDataset();
 		int groupInstances = Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
 		int instances = (trainingSet.numInstances() / groupInstances);
@@ -155,7 +155,7 @@ public class LineGraphics extends AbsGraphics {
 		}	
 	}
 	
-	public AFreeChart graphedLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsClassifier scheme) throws Exception {
+	public AFreeChart graphedLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsModeler scheme) throws Exception {
 		configureLearningCurve(trainingSet,evaluator, scheme);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_LC;
 		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC,

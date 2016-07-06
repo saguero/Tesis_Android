@@ -5,17 +5,16 @@ import java.util.Vector;
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.metrics.AbsMetricsEvaluation;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsLibrary {
 	
-	String ID;											
+	private String ID;											
 	
-	AbsDatabase trainingSet;
-	AbsEvaluation evaluator;					
-	AbsMetricsEvaluation metricsEvaluation;	
-	AbsClassifier scheme;
-	Vector<AbsClassifier> listSchemes;								
+	protected AbsDatabase trainingSet;
+	protected AbsEvaluation evaluator;					
+	protected AbsMetricsEvaluation metricsEvaluation;	
+	protected Vector<Integer> acceptedModelers = new Vector<Integer>();								
 	
 	public AbsLibrary(String ID){
 		this.ID =ID;
@@ -37,21 +36,17 @@ public abstract class AbsLibrary {
 		return metricsEvaluation;
 	}
 	
-	public Vector<AbsClassifier> getListSchemes(){
-		return listSchemes;
-	}
-	
-	public AbsClassifier getSchemeObject(){
-		return scheme;
+	public Vector<Integer> getAcceptedModelers(){
+		return acceptedModelers;
 	}
 	
 	
 	public abstract void setDatasetObject();
 	public abstract void setEvaluationObject();
 	public abstract void setMetricsEvaluationObject();
-	public abstract void setSchemeObject();
-	public abstract void setListSchemes();
+	public abstract void setAcceptedModelers();
 	
+	public abstract Vector<AbsModeler> getModelers(Vector<Integer> selectedModels, int index);
 
 	public abstract Double calculateCC(Object evaluation) throws Exception;
 	public abstract Double calculateRMSE(Object evaluation) throws Exception;
