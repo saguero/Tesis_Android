@@ -7,9 +7,10 @@ import java.util.Vector;
 import com.example.prediction.logica.individual.Individual;
 
 
-public abstract class AbsDatabase implements Cloneable{
+public abstract class AbsDatabase implements Cloneable{		//Database general - se puede reescribir si se quiere utilizar una representación específica como Weka - Instances
 	
 	protected Vector<Individual> database;
+	protected int classIndex = 0;
 	
 	public AbsDatabase(){
 		database=new Vector<Individual>();
@@ -20,7 +21,7 @@ public abstract class AbsDatabase implements Cloneable{
 	}
 	
 	public Object getDatabaseImplementation(){
-		return database; ////Puede ser override si se tiene una representación interna (Por ejemplo weka - Instances)
+		return database; 
 	}
 	
 	public void addAttribute(String name){		//Numeric attribute
@@ -64,18 +65,13 @@ public abstract class AbsDatabase implements Cloneable{
 		return b;
 		
 	}
-	
-	public abstract void parseFile(File file);	//Parsing del archivo
 
 	/*Sil*/
 	
-	int classIndex = 0;
-	//Object trainingSet;
-	
 	public AbsDatabase(File file) throws Exception{
-		convertInstancesObject(convertFile(file));
+		newInstanceFromARFF(saveFile(file));
 	}
-	
+
 	public AbsDatabase newInstance(Object trainingSet){
 		AbsDatabase result = newInstance();
 		result.setPredictedAtt(this.classIndex);
@@ -104,7 +100,6 @@ public abstract class AbsDatabase implements Cloneable{
 		}
 		return result;
 	}
-
 	
 	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
 		AbsDatabase result = newInstance();
@@ -115,15 +110,41 @@ public abstract class AbsDatabase implements Cloneable{
 		return result;
 	}
 	
+	public int getClassIndex(){
+		return classIndex;
+	}
+	
+	public void setClassIndex(int classIndex){
+		this.classIndex=classIndex;
+	}
+	
+
+	public int numInstances(){
+		return database.size();
+	}
+	
+	public int numAttributes(){
+		return database.get(0).getIndividualAttributes().size();
+	}
+	
+	public void removeInstances(int first, int last) throws Exception{
+		if (database.size()>2){
+			database.remove(first);
+			database.remove(last);
+		}
+	}
+	
+	public Double getInstanceValue(int instance, Object att){
+		return database.get(instance).getIndividualAttributes().get((String)att);
+	}
+	
+	public String getAttribute(int attribute){
+		return (String) database.get(0).getIndividualAttributes().keySet().toArray()[attribute];
+	}
+	
 	public abstract AbsDatabase newInstance();
-	public abstract void convertInstancesObject(File fileInstances) throws Exception;
-	public abstract void removeInstances(int first, int last) throws Exception;
-	public abstract File convertFile(File file) throws Exception;
-	public abstract int getClassIndex();
-	public abstract void setClassIndex(int classIndex);
-	public abstract int numAttributes();
-	public abstract int numInstances();
-	public abstract Double getInstanceValue(int instance, int classIndex); 
-	public abstract String getAttribute(int attribute);
+	public abstract File saveFile(File file) throws Exception;						//Ver como se va a almacenar el file
+	public abstract void newInstanceFromARFF(File saveFile) throws Exception;		//Replace with default save format
+	public abstract void parseFile(File file);	//Parsing del archivo
 	
 }

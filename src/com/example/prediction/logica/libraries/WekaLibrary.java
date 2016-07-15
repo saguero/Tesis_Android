@@ -3,11 +3,9 @@ package com.example.prediction.logica.libraries;
 import java.util.Vector;
 
 import com.example.prediction.logica.Config;
-import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.database.WekaDatabase;
-import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.evaluation.EvaluationWeka;
-import com.example.prediction.logica.metrics.WekaMetricEvaluation;
+import com.example.prediction.logica.metrics.collection.WekaMetricsCollection;
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.models.LinearRegClassifier;
 import com.example.prediction.logica.models.MultilayerPerceptronClassifier;
@@ -20,7 +18,6 @@ import com.example.prediction.logica.parameters.AbsWekaParameter;
 import com.example.prediction.logica.parameters.WekaKernelParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
-import weka.classifiers.Evaluation;
 import weka.core.OptionHandler;
 import weka.core.Utils;
 
@@ -87,30 +84,24 @@ public class WekaLibrary extends AbsLibrary{
 	public WekaLibrary(String ID) {
 		super(ID);
 		// TODO Auto-generated constructor stub
-		setDatasetObject();
-		setEvaluationObject();
-		setMetricsEvaluationObject();
-		setAcceptedModelers();
 	}
 
 	@Override
-	public void setDatasetObject() {
+	public void createDatabase() {
 		// TODO Auto-generated method stub
 		this.trainingSet = new WekaDatabase();
 	}
 
 	@Override
-	public void setEvaluationObject() {
+	public void createEvaluator() {
 		// TODO Auto-generated method stub
 		this.evaluator = new EvaluationWeka();
 	}
 
 	@Override
-	public void setMetricsEvaluationObject() {
+	public void createMetricsEvaluation() {
 		// TODO Auto-generated method stub
-		AbsDatabase d = getDatasetObject();
-		AbsEvaluation e = getEvaluationObject();
-		this.metricsEvaluation = new WekaMetricEvaluation(d, e, this);
+		this.metricsEvaluation = new WekaMetricsCollection();
 	}
 
 	@Override
@@ -123,64 +114,9 @@ public class WekaLibrary extends AbsLibrary{
 		acceptedModelers.add(Config.Modeler.STOCHASTIC_GRADIENT_DESCENT_REGRESSION);
 		acceptedModelers.add(Config.Modeler.SUPPORT_VECTOR_MACHINE_REGRESSION);
 	}
-	
-	@Override
-	public Double calculateMAE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).meanAbsoluteError();
-		 
-	}
 
 	@Override
-	public Double calculateRMSE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).rootMeanSquaredError();
-	}
-
-	@Override
-	public Double calculateRAE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).relativeAbsoluteError();
-	}
-
-	@Override
-	public Double calculateRRSE(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).rootRelativeSquaredError();
-	}
-
-	@Override
-	public Double calculateCC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return  ((Evaluation) evaluation).correlationCoefficient();
-	}
-
-	@Override
-	public Double calculateACC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).precision(trainingSet.getClassIndex());
-	}
-
-	@Override
-	public Double calculateKAP(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).kappa();
-	}
-
-	@Override
-	public Double calculateROC(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).areaUnderROC(trainingSet.getClassIndex());
-	}
-
-	@Override
-	public Double calculateRECALL(Object evaluation) throws Exception {
-		// TODO Auto-generated method stub
-		return ((Evaluation) evaluation).recall(trainingSet.getClassIndex());
-	}
-
-	@Override
-	public Vector<AbsModeler> getModelers(Vector<Integer> selectedModels, int index) {
+	public Vector<AbsModeler> createModelers(Vector<Integer> selectedModels, int index) {
 		// TODO Auto-generated method stub
 		Vector<AbsModeler> ret=new Vector<AbsModeler>();
 		for (Integer sel:selectedModels){ 
@@ -191,7 +127,7 @@ public class WekaLibrary extends AbsLibrary{
 				ret.add(new MultilayerPerceptronClassifier(index));
 			}
 			if (sel.equals(Config.Modeler.SIMPLE_K_CLUSTERER)){
-				ret.add(new SimpleKClusterer());
+				ret.add(new SimpleKClusterer(index));
 			}
 			if (sel.equals(Config.Modeler.SIMPLE_LINEAR_REGRESSION)){
 				ret.add(new SimpleLinearRegClassifier(index));

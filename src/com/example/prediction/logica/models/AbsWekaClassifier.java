@@ -1,6 +1,7 @@
 package com.example.prediction.logica.models;
 
-import com.example.prediction.logica.database.WekaDatabase;
+import com.example.prediction.logica.individual.Individual;
+import com.example.prediction.logica.individual.WekaIndividual;
 import com.example.prediction.logica.libraries.WekaLibrary;
 import com.example.prediction.logica.optimization.AbsWekaOptimizer;
 
@@ -9,18 +10,18 @@ import weka.attributeSelection.ExhaustiveSearch;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.AttributeSelectedClassifier;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionHandler;
 
 public abstract class AbsWekaClassifier extends AbsClassifier{
 	protected AbstractClassifier classifier;
 	protected AbsWekaOptimizer optimizer;
-	private int index;
+	protected int index =0;
 	
 	//--Public methods
 	/**/
 	public AbsWekaClassifier(AbstractClassifier clas, AbsWekaOptimizer optimizer, int index){
-		database_=new WekaDatabase();
 		this.index=index;
 		classifier=clas;
 		this.optimizer=optimizer;
@@ -40,8 +41,8 @@ public abstract class AbsWekaClassifier extends AbsClassifier{
 	}
 
 	@Override
-	public AbsModeler getModel(){
-		setIndexAttribute(index);
+	public void getModel(){
+		database_.setClassIndex(index);
 		selectBestAttributes();
 		optimizer.optimiceParams(this);
 		try {
@@ -50,11 +51,6 @@ public abstract class AbsWekaClassifier extends AbsClassifier{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return this;
-	}
-	
-	public void setIndexAttribute(int index){
-		((Instances)database_.getDatabaseImplementation()).setClassIndex(index);
 	}
 	
 	public void selectBestAttributes(){
@@ -73,6 +69,11 @@ public abstract class AbsWekaClassifier extends AbsClassifier{
 		    WekaLibrary.parseOptions(((OptionHandler)asc.getClassifier()).getOptions(), this);
 	}
 	
+	public Double predictIndividualValue(Individual ind) throws Exception{
+		return classifier.classifyInstance((Instance) ((WekaIndividual)ind).getIndividualRepresentation());
+	}
+	
 	//--Abstract methods
 	public abstract String getName();
+	
 }

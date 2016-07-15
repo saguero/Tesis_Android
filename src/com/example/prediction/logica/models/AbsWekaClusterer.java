@@ -8,19 +8,20 @@ import weka.core.Instances;
 public abstract class AbsWekaClusterer extends AbsClusterer {
 	
 	protected Clusterer clusterer_;
+	protected int index;
 	
 	//--Public methods
 	
-	public AbsWekaClusterer(Clusterer clusterer){
+	public AbsWekaClusterer(Clusterer clusterer, int index){
 		database_=new WekaDatabase();
+		this.index=index;
 		clusterer_=clusterer;
 	}
 
 	@Override
-	protected AbsModeler getModel() {
+	protected void getModel() {
 		// TODO Auto-generated method stub
 		getClusterer((Instances)database_.getDatabaseImplementation());
-		return this;
 	}
 
 	@Override

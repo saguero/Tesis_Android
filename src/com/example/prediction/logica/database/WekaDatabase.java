@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Vector;
 
 import com.example.prediction.logica.Config;
-import com.example.prediction.logica.individual.Individual;
 import com.example.prediction.logica.individual.WekaIndividual;
 
 import weka.core.Attribute;
@@ -25,7 +23,7 @@ public class WekaDatabase extends AbsDatabase {
 
 	public WekaDatabase() {
 		// TODO Auto-generated constructor stub
-		database = new Vector<Individual>();
+		super();
 	}
 	
 	public WekaDatabase(WekaDatabase wd){
@@ -99,7 +97,7 @@ public class WekaDatabase extends AbsDatabase {
 		super(file);
 	}
 
-	public File convertFile(File file) throws Exception {
+	public File saveFile(File file) throws Exception {
 		// TODO Auto-generated method stub
 		Instances data = null;
 		if(file.exists()){
@@ -122,6 +120,7 @@ public class WekaDatabase extends AbsDatabase {
 	@Override
 	public void setClassIndex(int classIndex) {
 		// TODO Auto-generated method stub
+		super.setClassIndex(classIndex);
 		trainingSet.setClassIndex(classIndex);
 	}
 	@Override
@@ -131,12 +130,10 @@ public class WekaDatabase extends AbsDatabase {
 	}
 	@Override
 	public int numInstances() {
-		// TODO Auto-generated method stub
 		return trainingSet.numInstances();
 	}
 	@Override
 	public void removeInstances(int first, int last) throws Exception  {
-		// TODO Auto-generated method stub
 		String[] options = new String[2];
 		options[0] = "-R";
 		options[1] = first+"-"+last;
@@ -148,9 +145,9 @@ public class WekaDatabase extends AbsDatabase {
 		trainingSet = Filter.useFilter(trainingSet, remove);
 	}
 	@Override
-	public Double getInstanceValue(int instance, int classIndex) {
+	public Double getInstanceValue(int instance, Object att) {
 		// TODO Auto-generated method stub
-		return trainingSet.instance(instance).value(classIndex);
+		return trainingSet.instance(instance).value((Integer)att);
 	}
 	@Override
 	public String getAttribute(int attribute) {
@@ -164,7 +161,7 @@ public class WekaDatabase extends AbsDatabase {
 		return trainingSet.classIndex();
 	}
 	@Override
-	public void convertInstancesObject(File fileInstances) throws Exception {
+	public void newInstanceFromARFF(File fileInstances) throws Exception{
 		// TODO Auto-generated method stub
 		trainingSet = new Instances(new FileReader(fileInstances));
 	}

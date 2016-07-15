@@ -21,311 +21,304 @@ import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.libraries.AbsLibrary;
 import com.example.prediction.logica.libraries.LibrariesCollection;
 import com.example.prediction.logica.models.AbsModeler;
-import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.Config;
 
 public class Info {
 	static int IMG_LC_serialId = 0;
 	static int IMG_EP_serialId = 0;
 	static int IMG_SC_serialId = 0;
-	
+
 	static Vector<Bitmap> images_learningCurve = new Vector<Bitmap>();
 	static Vector<Bitmap> images_errorPrediction = new Vector<Bitmap>();
 	static Vector<Bitmap> images_schemesComparator = new Vector<Bitmap>();
-	
-	static CharSequence[] atts; 
+
+	static CharSequence[] atts;
 	static CharSequence[] libs;
 	static CharSequence[] filesDataset;
-	static CharSequence[] schemes;								//VER ESTO!!
-	static String[] configureItems = {	"Select library",
-										"Select File Dataset",
-										"Select predicted attribute",
-										"Select schemes"};
-	
+	static CharSequence[] schemes; // VER ESTO!!
+	static String[] configureItems = { "Select library", "Select File Dataset", "Select predicted attribute",
+			"Select schemes" };
+
 	static int attributeSelected;
 	static AbsLibrary librarySelected;
 	static File fileDatasetSelected;
 	static AbsDatabase trainingSet;
 	static Vector<AbsModeler> schemesSelected = new Vector<AbsModeler>();
 	static LibrariesCollection classEstructure;
-	
+
 	static AbsModeler bestScheme;
 	static Vector<AbsModeler> filteredBestSchemes = new Vector<AbsModeler>();
-	
+
 	public Info() {
 		setLibraries();
 		setListFilesDataset();
 	}
-	
 
-	/*	SET OPTIONS TO SELECT	*/
-	
-	public void setLibraries(){
+	/* SET OPTIONS TO SELECT */
+
+	public void setLibraries() {
 		classEstructure = new LibrariesCollection();
 		libs = classEstructure.getListLibraries();
 	}
-	
-	public void setListFilesDataset(){
+
+	public void setListFilesDataset() {
 		File dir = Environment.getExternalStorageDirectory();
-        File[] files =  dir.listFiles();
-        Vector<CharSequence> aux = new Vector<CharSequence>();
-        for (int f = 0; f < files.length; f++) {
-        	if(files[f].isFile() && files[f].getAbsolutePath().contains(Config.EXTENSION_DATASET))
-        		aux.add(files[f].getName());
-        }
-        filesDataset = new CharSequence[aux.size()];
-        int index=0;
-        for(CharSequence cs:aux){
-        	filesDataset[index]=cs;
-        	index++;
-        }
+		File[] files = dir.listFiles();
+		Vector<CharSequence> aux = new Vector<CharSequence>();
+		for (int f = 0; f < files.length; f++) {
+			if (files[f].isFile() && files[f].getAbsolutePath().contains(Config.EXTENSION_DATASET))
+				aux.add(files[f].getName());
+		}
+		filesDataset = new CharSequence[aux.size()];
+		int index = 0;
+		for (CharSequence cs : aux) {
+			filesDataset[index] = cs;
+			index++;
+		}
 	}
-	
-	public void setListAttributes(AbsDatabase trainingSet){
+
+	public void setListAttributes(AbsDatabase trainingSet) {
 		Vector<String> aux = trainingSet.getNamesAttributes();
 		atts = new CharSequence[aux.size()];
-		for(int index = 0; index < aux.size(); index++)
+		for (int index = 0; index < aux.size(); index++)
 			atts[index] = aux.elementAt(index);
 	}
-	
-	public void setListSchemes(){
+
+	public void setListSchemes() {
 		Vector<Integer> Listschemes = librarySelected.getAcceptedModelers();
-		schemes = new CharSequence[Listschemes.size()]; 
-		Field[] fields=Config.Modeler.class.getFields();
-		for(int i = 0; i < schemes.length; i++){
-			for (Field f:fields){
-				try {
-					if (f.getInt(null)==Listschemes.get(i))
-						schemes[i]=f.getName();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		schemes = new CharSequence[Listschemes.size()];
+		Field[] fields = Config.Modeler.class.getFields();
+		int j = 0;
+		for (Field f : fields) {
+			try {
+				if (Listschemes.contains(f.getInt(null))) {
+					schemes[j] = f.getName();
+					j++;
 				}
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
-	
-	
-	/*	GET OPTIONS TO SELECT	*/
-	
-	public String[] getConfigureItems(){
+
+	/* GET OPTIONS TO SELECT */
+
+	public String[] getConfigureItems() {
 		return configureItems;
 	}
-	
-	public CharSequence[] getListLibraries(){
+
+	public CharSequence[] getListLibraries() {
 		return libs;
 	}
-	
-	public CharSequence[] getListFilesDataset(){
+
+	public CharSequence[] getListFilesDataset() {
 		return filesDataset;
 	}
-	
-	public CharSequence[] getListAttributes(){
+
+	public CharSequence[] getListAttributes() {
 		return atts;
 	}
-	
-	public CharSequence[] getListSchemes(){
+
+	public CharSequence[] getListSchemes() {
 		return schemes;
 	}
 
-	
-										/*	GRAPHIC IMAGES	*/
-	
-	/*	GENERATE IMAGE	*/
-	
-	public Bitmap generateImageLearningCurve(Context context,AbsModeler scheme) throws Exception {
-		// TODO Auto-generated method stub	
-		
-		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
-		
+	/* GRAPHIC IMAGES */
+
+	/* GENERATE IMAGE */
+
+	public Bitmap generateImageLearningCurve(Context context, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+
+		Vector<AbsModeler> schemes = new Vector<AbsModeler>();
+		schemes.add(this.getBestScheme());
+
 		LineGraphics linechart = new LineGraphics(context);
-		AFreeChart chart = linechart.graphedLearningCurve(trainingSet, evaluator, scheme);
-        ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
-        chartView.drawChart(chart);
-        return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
+		AFreeChart chart = linechart.graphedLearningCurve(trainingSet, schemes);
+		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart);
+		chartView.drawChart(chart);
+		return ((BitmapDrawable) chartView.getDrawable()).getBitmap();
 	}
-	
+
 	public Bitmap generateImageErrorPrediction(Context context) throws Exception {
 		// TODO Auto-generated method stub
-		
-		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
+
+		Vector<AbsModeler> schemes = new Vector<AbsModeler>();
+		schemes.add(this.getBestScheme());
+
 		LineGraphics linechart = new LineGraphics(context);
-		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, evaluator);
-        ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
-        chartView.drawChart(chart);
-        return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
+		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, schemes);
+		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart);
+		chartView.drawChart(chart);
+		return ((BitmapDrawable) chartView.getDrawable()).getBitmap();
 	}
 
 	public Vector<Bitmap> generateImagesSchemesComparator(Context context) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		Vector<AbsModeler> listschemes = getBestSchemes();
-		
+
 		BarGraphics barchart = new BarGraphics(context);
 		barchart.setSeries(listschemes);
-		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), getLibrarySelected().getEvaluationObject(),
-				getLibrarySelected().getMetricsEvaluationObject());
-		
-		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart1 );
-        chartView.drawChart(chart1);
-        
-        chartView.measure(chartView.getWidth(), chartView.getHeight());
-        chartView.setDrawingCacheEnabled(true);
-        chartView.buildDrawingCache();
-        images_schemesComparator.add( ((BitmapDrawable) chartView.getDrawable()).getBitmap() );
-	
-		
-		AFreeChart chart2 = barchart.graphedErrorPredictionScale(getDatasetSelected(), getLibrarySelected().getEvaluationObject(),
-				getLibrarySelected().getMetricsEvaluationObject());
-		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart2 );
-        chartView.drawChart(chart2);
-        chartView.buildDrawingCache();
-        images_schemesComparator.add( ((BitmapDrawable) chartView.getDrawable()).getBitmap() );	 
-	
-		AFreeChart chart3 = barchart.graphedRelationData(getDatasetSelected(), getLibrarySelected().getEvaluationObject(),
-				getLibrarySelected().getMetricsEvaluationObject());
-		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart3 );
-        chartView.drawChart(chart3);
-        chartView.buildDrawingCache();
-        images_schemesComparator.add( ((BitmapDrawable) chartView.getDrawable()).getBitmap() );	 
-	
+		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+
+		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart1);
+		chartView.drawChart(chart1);
+
+		chartView.measure(chartView.getWidth(), chartView.getHeight());
+		chartView.setDrawingCacheEnabled(true);
+		chartView.buildDrawingCache();
+		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
+
+		AFreeChart chart2 = barchart.graphedErrorPredictionScale(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart2);
+		chartView.drawChart(chart2);
+		chartView.buildDrawingCache();
+		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
+
+		AFreeChart chart3 = barchart.graphedRelationData(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart3);
+		chartView.drawChart(chart3);
+		chartView.buildDrawingCache();
+		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
+
 		return images_schemesComparator;
 	}
-	
-	/* SAVE IMAGES	*/
-	
-	private boolean persist(Bitmap bitmap, String name){
-		
+
+	/* SAVE IMAGES */
+
+	private boolean persist(Bitmap bitmap, String name) {
+
 		boolean result = false;
-		String path = Config.DIR_EXTERNAL_STORAGE  + name;
-		
+		String path = Config.DIR_EXTERNAL_STORAGE + name;
+
 		FileOutputStream out = null;
 		try {
-		    out = new FileOutputStream(path);
-		    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-		    result = true;  
-		} 
-		catch (Exception e) {  }
-		finally {
-		    try  {
-		        if (out != null) 
-		            out.close(); 
-		    } 
-		    catch (IOException e) { }
+			out = new FileOutputStream(path);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+			result = true;
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (out != null)
+					out.close();
+			} catch (IOException e) {
+			}
 		}
 		return result;
 	}
-	
-	public void saveLearningCurveImage(Bitmap img){
-		images_learningCurve.add(0,img);
+
+	public void saveLearningCurveImage(Bitmap img) {
+		images_learningCurve.add(0, img);
 		String name = "learning_curve" + IMG_LC_serialId;
-		if(persist(img, name))
-			IMG_LC_serialId++;		
+		if (persist(img, name))
+			IMG_LC_serialId++;
 	}
-	
-	public void saveErrorPredictionImage(Bitmap img){
-		images_errorPrediction.add(0,img);
+
+	public void saveErrorPredictionImage(Bitmap img) {
+		images_errorPrediction.add(0, img);
 		String name = "error_prediction" + IMG_EP_serialId;
-		if(persist(img, name))
-			IMG_EP_serialId++;		
+		if (persist(img, name))
+			IMG_EP_serialId++;
 	}
-	
-	public void saveSchemesComparatorImage(Bitmap img){
-		images_schemesComparator.add(0,img);
+
+	public void saveSchemesComparatorImage(Bitmap img) {
+		images_schemesComparator.add(0, img);
 		String name = "schemes_comparator" + IMG_SC_serialId;
-		if(persist(img, name))
-			IMG_SC_serialId++;		
+		if (persist(img, name))
+			IMG_SC_serialId++;
 	}
-	
-	/*	GET IMAGES		*/
-	
-	public Vector<Bitmap> getSchemesComparatorImages(){
+
+	/* GET IMAGES */
+
+	public Vector<Bitmap> getSchemesComparatorImages() {
 		return images_schemesComparator;
 	}
-	
-	public Vector<Bitmap> getLearningCurveImages(){
+
+	public Vector<Bitmap> getLearningCurveImages() {
 		return images_learningCurve;
 	}
-	
-	public Vector<Bitmap> getErrorPredictionImages(){
+
+	public Vector<Bitmap> getErrorPredictionImages() {
 		return images_errorPrediction;
 	}
-	
-	
-												/*	OPTIONS SELECTED	*/
-	/*	SET OPTIONS SELECTED	*/
-	
-	public void setLibrarySelected(String ID){
+
+	/* OPTIONS SELECTED */
+	/* SET OPTIONS SELECTED */
+
+	public void setLibrarySelected(String ID) {
 		librarySelected = classEstructure.getLibrary(ID);
 	}
-	
-	public void setFileDatasetSelected(String name) throws Exception{			
+
+	public void setFileDatasetSelected(String name) throws Exception {
 		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
 		trainingSet = getLibrarySelected().getDatasetObject();
-		File aux = trainingSet.convertFile(fileDatasetSelected);
-		trainingSet.convertInstancesObject(aux);
+		File aux = trainingSet.saveFile(fileDatasetSelected);
+		trainingSet.newInstanceFromARFF(aux);
+		trainingSet.parseFile(fileDatasetSelected);
 		setListAttributes(trainingSet);
 	}
-	
-	public void setAttributeSelected(int att){
+
+	public void setAttributeSelected(int att) {
 		attributeSelected = att;
 		trainingSet.setPredictedAtt(attributeSelected);
 	}
-	
-	public void setSchemesSelected(Vector<Integer> schemes){
+
+	public void setSchemesSelected(Vector<Integer> schemes) {
 		schemesSelected.removeAllElements();
-		schemesSelected = librarySelected.getModelers(schemes, attributeSelected);
+		schemesSelected = librarySelected.createModelers(schemes, attributeSelected);
 	}
-	
-	/*	GET OPTIONS SELECTED	*/
-	
-	public AbsLibrary getLibrarySelected(){		
+
+	/* GET OPTIONS SELECTED */
+
+	public AbsLibrary getLibrarySelected() {
 		return librarySelected;
 	}
-	
-	public File getFileDatasetSelected(){
+
+	public File getFileDatasetSelected() {
 		return fileDatasetSelected;
 	}
-	
-	public AbsDatabase getDatasetSelected(){
+
+	public AbsDatabase getDatasetSelected() {
 		return trainingSet;
 	}
-	
-	public int getAttributeSelected(){
+
+	public int getAttributeSelected() {
 		return attributeSelected;
 	}
-	
-	public Vector<AbsModeler> getListSchemesSelected(){
+
+	public Vector<AbsModeler> getListSchemesSelected() {
 		return schemesSelected;
 	}
 
-	
-											/* PROCESSING	*/
-	
-	public void setFilteredBestSchemes(){							//MODIFICAR!!!!!!!!!
+	/* PROCESSING */
+
+	public void setFilteredBestSchemes() { // MODIFICAR!!!!!!!!!
 		filteredBestSchemes = this.getListSchemesSelected();
 	}
-	
-	public Vector<AbsModeler> getBestSchemes(){
+
+	public Vector<AbsModeler> getBestSchemes() {
 		return filteredBestSchemes;
 	}
-	
-	public void setBestScheme(AbsModeler scheme){
+
+	public void setBestScheme(AbsModeler scheme) {
 		bestScheme = scheme;
 	}
 
-	public AbsModeler getBestScheme() {				//AL CUAL SE LE APLICA LA OPTIMIZACION DE LOS PARAMETROS
+	public AbsModeler getBestScheme() { // AL CUAL SE LE APLICA LA OPTIMIZACION
+										// DE LOS PARAMETROS
 		// TODO Auto-generated method stub
 		return bestScheme;
 	}
-	
 
 	/*
-	 * DEBERIAN ESTAR LAS SUGERENCIAS, AYUDAS ...
-	 * ESTO ES RESPECTO A LOS SCHEMES, LOS PARAMETROS (LEARNING CURVE) --> FALTA LA ACTIVIDAD DE LA AYUDA SOBRE LEARNING CURVE
+	 * DEBERIAN ESTAR LAS SUGERENCIAS, AYUDAS ... ESTO ES RESPECTO A LOS
+	 * SCHEMES, LOS PARAMETROS (LEARNING CURVE) --> FALTA LA ACTIVIDAD DE LA
+	 * AYUDA SOBRE LEARNING CURVE
 	 * 
 	 */
 

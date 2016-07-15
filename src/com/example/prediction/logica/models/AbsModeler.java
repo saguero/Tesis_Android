@@ -3,6 +3,7 @@ package com.example.prediction.logica.models;
 import java.util.Vector;
 
 import com.example.prediction.logica.database.AbsDatabase;
+import com.example.prediction.logica.individual.Individual;
 import com.example.prediction.logica.parameters.AbsParameter;
 
 public abstract class AbsModeler {
@@ -38,18 +39,33 @@ public abstract class AbsModeler {
 	}
 	
 
-	public AbsModeler calculateModeler(AbsDatabase database){
+	public void calculateModeler(AbsDatabase database){
 		database_=database;
-		return getModel();
+		getModel();
 	}
 	
 	public AbsDatabase getDatabase(){
 		return database_;
 	}
 	
+	public void setIndexAttribute(int index){
+		database_.setClassIndex(index);
+	}
+	
+
+	public Vector<Double> getPredictedValue(AbsDatabase database) throws Exception{
+		Vector<Double> r=new Vector<Double>();
+		for (Individual i:database.getIndividuals()){
+			r.add(predictIndividualValue(i));
+		}
+		return r;
+	}
+	
 	//--Abstract methods
 	
-	protected abstract AbsModeler getModel();
+	protected abstract void getModel();
 	public abstract String getName();
 	public abstract String toString();
+	
+	public abstract Double predictIndividualValue(Individual ind) throws Exception;
 }

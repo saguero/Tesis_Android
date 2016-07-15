@@ -2,42 +2,112 @@ package com.example.prediction.logica.evaluation;
 
 import java.util.Random;
 
-import weka.classifiers.Classifier;
+import com.example.prediction.logica.database.AbsDatabase;
+import com.example.prediction.logica.models.AbsModeler;
+import com.example.prediction.logica.models.AbsWekaClassifier;
+
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
 
 public class EvaluationWeka extends AbsEvaluation {
 
-	@Override
-	public void buildClassifier(Object trainingSet, Object scheme) throws Exception {
-		// TODO Auto-generated method stub 
-		((Classifier) scheme).buildClassifier( (Instances) trainingSet);
+	private Evaluation test;
+	
+	public EvaluationWeka(){
 	}
 
 	@Override
-	public Object testTrainingSet(Object dataset, Object scheme) throws Exception {
+	public void testTrainingSet(AbsDatabase dataset, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub 
-		Evaluation test = new Evaluation((Instances) dataset);
-		test.evaluateModel((Classifier) scheme, (Instances) dataset);
+		test.evaluateModel(((AbsWekaClassifier) scheme).getClassifier(), (Instances)dataset.getDatabaseImplementation());
+	}
+
+	@Override
+	public void testCV(AbsDatabase dataset, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		test.crossValidateModel(((AbsWekaClassifier) scheme).getClassifier(), (Instances)dataset.getDatabaseImplementation(),10, new Random(1));		
+	}
+
+	@Override
+	public Double getErrorEvaluation(){
+		return test.errorRate();
+	}
+
+	@Override
+	public double[] distributionForInstance(AbsDatabase trainingSet, AbsModeler scheme, int classIndex) throws Exception {
+		// TODO Auto-generated method stub
+		return (((AbsWekaClassifier) scheme).getClassifier()).distributionForInstance(((Instances)trainingSet.getDatabaseImplementation()).instance(classIndex));
+	}
+
+	@Override
+	public Object getEvaluationImplementation() {
+		// TODO Auto-generated method stub
 		return test;
 	}
-
+	
 	@Override
-	public Object testCV(Object dataset, Object scheme) throws Exception {
+	public Double calculateMAE(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub
-		Evaluation test = new Evaluation((Instances) dataset);
-		test.crossValidateModel((Classifier) scheme, (Instances) dataset,10, new Random(1));		
-		return test;
+		return test.meanAbsoluteError();
+		 
 	}
 
 	@Override
-	public Double getErrorEvaluation(Object evaluation){
-		return ((Evaluation) evaluation).errorRate();
+	public Double calculateRMSE(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.rootMeanSquaredError();
 	}
 
 	@Override
-	public double[] distributionForInstance(Object trainingSet, Object scheme, int classIndex) throws Exception {
+	public Double calculateRAE(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub
-		return ((Classifier)scheme).distributionForInstance(((Instances) trainingSet).instance(classIndex));
+		return test.relativeAbsoluteError();
+	}
+
+	@Override
+	public Double calculateRRSE(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.rootRelativeSquaredError();
+	}
+
+	@Override
+	public Double calculateCC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return  test.correlationCoefficient();
+	}
+
+	@Override
+	public Double calculateACC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.precision(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public Double calculateKAP(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.kappa();
+	}
+
+	@Override
+	public Double calculateROC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.areaUnderROC(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public Double calculateRECALL(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
+		// TODO Auto-generated method stub
+		return test.recall(trainingSet.getClassIndex());
+	}
+
+	@Override
+	public void configEvaluation(AbsDatabase trainingSet, AbsModeler scheme) {
+		// TODO Auto-generated method stub
+		try {
+			test = new Evaluation((Instances) trainingSet.getDatabaseImplementation());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

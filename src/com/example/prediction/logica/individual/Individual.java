@@ -21,5 +21,9 @@ public class Individual {
 	public void setAttributeValue(String name, Double value){
 		attributes.put(name, (Double)value);
 	}
+	
+	public double getValueAttribute(int att){
+		return attributes.get(attributes.keySet().toArray()[att]);
+	}
 
 }

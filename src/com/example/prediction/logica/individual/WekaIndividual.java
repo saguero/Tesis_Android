@@ -38,5 +38,10 @@ public class WekaIndividual extends Individual{
 		individual.setValue(atindex, (double)value);
 		super.setAttributeValue(name, value);
 	}
+	
+	@Override
+	public double getValueAttribute(int att){
+		return individual.value(att);
+	}
 
 }

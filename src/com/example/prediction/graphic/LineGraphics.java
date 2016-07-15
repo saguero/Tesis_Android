@@ -18,9 +18,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 
-import com.example.prediction.logica.*;
+import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.evaluation.AbsEvaluation;
+import com.example.prediction.logica.metrics.evaluation_metric.RAEMetric;
 import com.example.prediction.logica.models.AbsModeler;
 
 public class LineGraphics extends AbsGraphics {
@@ -86,7 +86,7 @@ public class LineGraphics extends AbsGraphics {
 		yAxis.setRange(min - factorRange, max + factorRange); 	
 	}
 	
-	private void configureErrorPrediction(AbsDatabase trainingSet, AbsEvaluation evaluator) throws Exception {
+	private void configureErrorPrediction(AbsDatabase trainingSet) throws Exception {
 		// TODO Auto-generated method stub
 		min = Double.MAX_VALUE;
 		max = Double.MIN_VALUE;
@@ -100,73 +100,80 @@ public class LineGraphics extends AbsGraphics {
 			instances = limit;
 		Vector<Double> predicted = null;
 		
-		for(int v=0; v < instances; v++){
-	    	  Integer index = v+1;
-	    	  //REAL VALUE:
-	    	  double actualValue = actual.elementAt(v);
-	    	  dataset.addValue( actualValue , Config.Graphic.GRAPHIC_LINE_LABEL_REALVALUES , index);
-	    	  max = Math.max(max,actualValue);
-  	    	  min = Math.min(min, actualValue);
-		}
-		for(AbsModeler scheme:series){
+		for(AbsModeler scheme: series){
+			for(int v=0; v < instances; v++){
+		    	  Integer index = v+1;
+		    	  //REAL VALUE:
+		    	  double actualValue = actual.elementAt(v);
+		    	  dataset.addValue( actualValue , Config.Graphic.GRAPHIC_LINE_LABEL_REALVALUES , index);
+		    	  max = Math.max(max,actualValue);
+	  	    	  min = Math.min(min, actualValue);
+			}
 			
-			predicted = evaluator.getPredictedValues(trainingSet,scheme);
-      		for(Integer v=1; v <= instances; v++){
-      			Integer index = v+1;
-      			
-      			//PREDICTED VALUE:
-      			double predictedValue = predicted.elementAt(v);
-      			dataset.addValue( predictedValue , "Prediction - " + scheme.getName() , index );
-  	    	  
-      			max = Math.max(max,predictedValue);
-      			min = Math.min(min, predictedValue);
-      		}
-		}
-		
+			predicted = scheme.getPredictedValue(trainingSet);
+	      	for(Integer v=0; v < instances; v++){
+	      		Integer index = v+1;
+	      			
+	      		//PREDICTED VALUE:
+	      		double predictedValue = predicted.elementAt(v);
+	      		dataset.addValue( predictedValue , "Prediction - " + scheme.getName() , index );
+	  	    	  
+	      		max = Math.max(max,predictedValue);
+	      		min = Math.min(min, predictedValue);
+	      	}
+		}	
 	}
 	
-	private void configureLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsModeler scheme) throws Exception {
+	private void configureLearningCurve(AbsDatabase trainingSet) throws Exception {
 		dataset = new DefaultCategoryDataset();
 		int groupInstances = Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
 		int instances = (trainingSet.numInstances() / groupInstances);
 		int last = trainingSet.numInstances();
 		AbsDatabase newTrainingSet = null;
-		for(int i=1; i<=instances; i++){
-			Integer cantInstances = groupInstances * i; 
-			int first = cantInstances+1;
-			if(i == instances)
-				newTrainingSet =  trainingSet;
-			else
-				newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
-			
-			Object et = evaluator.evaluateUseTrainingSet(newTrainingSet, scheme);
-			Double value = evaluator.getErrorEvaluation(et);
-			dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
-			
-			max = Math.max(max,value);
-	    	min = Math.min(min, value);
-			
-			Object ecv = evaluator.evaluateUseCrossValidation(newTrainingSet, scheme);
-			value = evaluator.getErrorEvaluation(ecv);
-			dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_CROSSVALIDATION, cantInstances );
-			
-			max = Math.max(max,value);
-	    	min = Math.min(min, value);
-		}	
+		
+		for(AbsModeler scheme: series){
+			for(int i=1; i<=instances; i++){
+				Integer cantInstances = groupInstances * i; 
+				int first = cantInstances+1;
+				if(i == instances)
+					newTrainingSet =  trainingSet;
+				else
+					newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
+				double value=2.5;															//////AGREGAR ERROR RATE COMO METRIC
+				
+				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
+				
+				max = Math.max(max,value);
+		    	min = Math.min(min, value);
+		    	
+		    	RAEMetric rae=new RAEMetric();
+		    	rae.configMetricModes(newTrainingSet, scheme);
+		    	value = rae.calculate(Config.TrainingMode.CROSS_VALIDATION_MODE);
+				
+				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_CROSSVALIDATION, cantInstances );
+				
+				max = Math.max(max,value);
+		    	min = Math.min(min, value);
+			}	
+		}
+		
+		
 	}
 	
-	public AFreeChart graphedLearningCurve(AbsDatabase trainingSet, AbsEvaluation evaluator, AbsModeler scheme) throws Exception {
-		configureLearningCurve(trainingSet,evaluator, scheme);
+	public AFreeChart graphedLearningCurve(AbsDatabase trainingSet, Vector<AbsModeler> schemes) throws Exception {
+		setSeries(schemes);
+		configureLearningCurve(trainingSet);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_LC;
 		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC,
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISX,
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISY);
 	}
 	
-	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, AbsEvaluation evaluator) throws Exception{
-		configureErrorPrediction(trainingSet,evaluator);
+	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, Vector<AbsModeler> schemes) throws Exception{
+		setSeries(schemes);
+		configureErrorPrediction(trainingSet);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_EP;
-		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC,
+		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP,
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISX,
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISY);
 	}

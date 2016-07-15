@@ -90,4 +90,9 @@ public class Config {
 		
 	}
 	
+	public class TrainingMode{
+		public final static int TRAINING_MODE=0;
+		public final static int CROSS_VALIDATION_MODE=1;
+	}
+	
 }

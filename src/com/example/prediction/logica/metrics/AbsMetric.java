@@ -2,11 +2,12 @@ package com.example.prediction.logica.metrics;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.libraries.AbsLibrary;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Info;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Representation;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Required;
-import com.example.prediction.logica.metrics.AbsMetricsEvaluation.Type;
+import com.example.prediction.logica.database.AbsDatabase;
+import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Info;
+import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Representation;
+import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Required;
+import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Type;
+import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsMetric {
 	
@@ -16,27 +17,36 @@ public abstract class AbsMetric {
 		private Type type;
 		private Info info;
 		private boolean accept=false;
+		private String name;
 		
-		protected AbsLibrary library;
+		protected AbsDatabase database;
+		protected AbsModeler modeler;
 
-		AbsMetric(int ID, Required req, Representation rep, Type t, Info i, AbsLibrary lib) {
+		AbsMetric(int ID, Required req, Representation rep, Type t, Info i, String name) {
 			this.ID = ID;
 			required = req;
 			representation = rep;
 			type = t; 
 			info = i;
-			library = lib;
+			this.name = name;
+		}
+		
+		public void configMetricModes(AbsDatabase database, AbsModeler modeler){
+			this.database = database;
+			this.modeler = modeler;
+			configurateTrainingMode(database, modeler);
+			configurateCVMode(database, modeler);
 		}
 		
 		 public Required getRequired(){
 			return required;
 		}
 		
-		Representation getRepresentation(){
+		 public Representation getRepresentation(){
 			return representation;
 		}
 		
-		Type getType(){
+		 public Type getType(){
 			return type;
 		}
 		
@@ -44,15 +54,15 @@ public abstract class AbsMetric {
 			return info;
 		}
 		
-		int getId(){
+		public int getId(){
 			return ID;
 		}
 				
-		boolean isRep(Representation rep){	
+		public boolean isRep(Representation rep){	
 			return representation.equals(rep);
 		}
 		
-		boolean isInfo(Info info){
+		public boolean isInfo(Info info){
 			return this.info.equals(info);
 		}
 		
@@ -64,22 +74,18 @@ public abstract class AbsMetric {
 			return type.equals(Type.CLASSIFICATION);
 		}
 		
-		void accept(){
-			accept=true;
-		}
-		
-		public Double calculateNormalized(Object evaluation) throws Exception{
+		public Double calculateNormalized(int mode) throws Exception{
 			
 			if(representation.equals(Representation.PERCENTUAL))
-				return calculate(evaluation)/100;
+				return calculate(mode)/100;
 			if(representation.equals(Representation.NORMALIZED))
-				return calculate(evaluation);
+				return calculate(mode);
 			if(representation.equals(Representation.SCALE))
-				return calculate(evaluation);
+				return calculate(mode);
 			return null;
 		}
 				
-		Vector<AbsMetric> associationRep(Representation rep){	//ESTE METODO SIRVE PARA LAS TRES REP!
+		public Vector<AbsMetric> associationRep(Representation rep){	//ESTE METODO SIRVE PARA LAS TRES REP!
 			Vector<AbsMetric> result = new Vector<AbsMetric>();
 			if(accept && representation.equals(rep))
 				result.add(this);
@@ -87,12 +93,16 @@ public abstract class AbsMetric {
 		}
 		
 		public boolean canBeNormalized(){
-			
 			return representation.equals(Representation.NORMALIZED) ||
 					representation.equals(Representation.PERCENTUAL) ;
 		}
 		
-		abstract Double calculate(Object evaluation) throws Exception;
-		public abstract String getID();
+		public String getID(){
+			return name;
+		}
+		
+		public abstract Double calculate(int mode) throws Exception;
+		public abstract void configurateTrainingMode(AbsDatabase database, AbsModeler scheme);
+		public abstract void configurateCVMode(AbsDatabase database, AbsModeler scheme);
 	
 }

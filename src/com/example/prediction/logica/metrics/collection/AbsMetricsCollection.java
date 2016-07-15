@@ -1,13 +1,10 @@
-package com.example.prediction.logica.metrics;
+package com.example.prediction.logica.metrics.collection;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.evaluation.AbsEvaluation;
-import com.example.prediction.logica.libraries.AbsLibrary;
-import com.example.prediction.logica.models.AbsClassifier;
+import com.example.prediction.logica.metrics.AbsMetric;
 
-public abstract class AbsMetricsEvaluation {
+public abstract class AbsMetricsCollection {
 	public static final int CC = 1;
 	public static final int RMSE = 2;
 	public static final int RRSE = 3;
@@ -27,42 +24,13 @@ public abstract class AbsMetricsEvaluation {
 	public 	Type type = Type.REGRESSION;												//VER DESPUES
 	
 	private Vector<AbsMetric> metricsEvaluation = new Vector<AbsMetric>();
-	public AbsDatabase trainingSet;
-	public AbsEvaluation evaluator;
-	public AbsClassifier scheme;
 	
-	public AbsMetricsEvaluation(AbsDatabase trainingSet, AbsEvaluation eval, AbsLibrary library){
-		CCMetric cc = new CCMetric(library);
-		metricsEvaluation.add(cc);
-		RMSEMetric rmse = new RMSEMetric(library);
-		metricsEvaluation.add(rmse);
-		RRSEMetric rrse = new RRSEMetric(library);
-		metricsEvaluation.add(rrse);
-		MAEMetric mae = new MAEMetric(library);
-		metricsEvaluation.add(mae);
-		RAEMetric rae = new RAEMetric(library);
-		metricsEvaluation.add(rae);
-		COMBMetric comb = new COMBMetric(library);
-		metricsEvaluation.add(comb);
-		ACCMetric acc = new ACCMetric(library);
-		metricsEvaluation.add(acc);
-		KAPMetric kap = new KAPMetric(library);
-		metricsEvaluation.add(kap);
-		ROCMetric roc = new ROCMetric(library);
-		metricsEvaluation.add(roc);
-		RECALLMetric recall = new RECALLMetric(library);
-		metricsEvaluation.add(recall);
-				
-		this.trainingSet = trainingSet;
-		this.evaluator = eval;
-		
+	public AbsMetricsCollection(){
+			
 	}
 	
-	public void acceptMetric(int metric){
-		for(AbsMetric m: metricsEvaluation){
-			if(m.getId() == metric)
-				m.accept();
-		}	
+	public void acceptMetric(AbsMetric metric){
+		metricsEvaluation.add(metric);
 	}
 
 	public Vector<AbsMetric> ErrorPredictionNormalizedMetrics(){

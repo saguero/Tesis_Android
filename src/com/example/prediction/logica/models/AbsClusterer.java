@@ -8,6 +8,6 @@ public abstract class AbsClusterer extends AbsModeler{
 	
 	public abstract int getCluster(Individual individual);
 	
-	public abstract Vector<Individual> getClusterMember(int cluster);
+	public abstract Vector<Individual> getClusterMembers(int cluster);
 
 }

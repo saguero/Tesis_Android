@@ -2,6 +2,8 @@ package com.example.prediction;
 
 import java.util.Vector;
 
+import com.example.prediction.logica.Config;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -17,7 +19,7 @@ public class SelectorMultiItems extends DialogFragment {
 		SelectorMultiItems dialogFragment = new SelectorMultiItems();
 		Bundle bundle = new Bundle();
 		dialogFragment.setArguments(bundle);
-
+		
 		return dialogFragment;
 	}
 
@@ -36,7 +38,13 @@ public class SelectorMultiItems extends DialogFragment {
 					@Override
 					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 						if (isChecked) {
-							mSelectedItems.add(which);
+							String name = (String) info.getListSchemes()[which];
+							try {
+								mSelectedItems.add(Config.Modeler.class.getField(name).getInt(null));
+							} catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						} else if (mSelectedItems.contains(which)) {
 							mSelectedItems.remove(Integer.valueOf(which));
 						}

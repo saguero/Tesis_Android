@@ -1,4 +1,4 @@
-package com.example.prediction.logica;
+/*package com.example.prediction.logica;
 
 import java.io.FileReader;
 import java.util.Random;
@@ -140,11 +140,11 @@ public class MachineLearning {
 		
 		//OPCION 3: CROSS VALIDATION
 		//numFolds: can´t have more folds than instances and greater than 1
-		/*
+		
 		 * For K-fold, you break the data into K-blocks. Then, for K = 1 to X, you make the Kth block the test block 
 		 * and the rest of the data becomes the training data. Train, test, record and then update K. In this case, 
 		 * the standard value for K is 10.
-		 */
+		 
 		eTest.crossValidateModel(lr, trainingSet, 10, null, new Random(1));
 		
 		
@@ -154,11 +154,11 @@ public class MachineLearning {
 		if(!preservedOrder)
 			trainingSet.randomize(new java.util.Random(0));
 		
-	/*	int percent = 60; 
+		int percent = 60; 
 		int trainSize = (int) Math.round(trainingSet.numInstances() * percent / 100);
 		int testSize = trainingSet.numInstances() - trainSize;
 		Instances train = new Instances(trainingSet, 0, trainSize);
-		Instances test = new Instances(trainingSet, trainSize, testSize);*/
+		Instances test = new Instances(trainingSet, trainSize, testSize);
 		
 		
 	}
@@ -190,3 +190,4 @@ public class MachineLearning {
 	
 	
 }
+*/
