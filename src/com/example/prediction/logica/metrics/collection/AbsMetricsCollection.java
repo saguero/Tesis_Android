@@ -15,6 +15,7 @@ public abstract class AbsMetricsCollection {
 	public static final int KAP = 8;
 	public static final int ROC = 9;
 	public static final int RECALL = 10;
+	public static final int ER = 11;
 		
 	public enum Required {MAX, MIN}
 	public enum Representation {NORMALIZED, SCALE, PERCENTUAL}

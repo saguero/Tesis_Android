@@ -2,6 +2,8 @@ package com.example.prediction.logica.database;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import com.example.prediction.logica.individual.Individual;
@@ -10,7 +12,6 @@ import com.example.prediction.logica.individual.Individual;
 public abstract class AbsDatabase implements Cloneable{		//Database general - se puede reescribir si se quiere utilizar una representación específica como Weka - Instances
 	
 	protected Vector<Individual> database;
-	protected int classIndex = 0;
 	
 	public AbsDatabase(){
 		database=new Vector<Individual>();
@@ -71,19 +72,8 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 	public AbsDatabase(File file) throws Exception{
 		newInstanceFromARFF(saveFile(file));
 	}
-
-	public AbsDatabase newInstance(Object trainingSet){
-		AbsDatabase result = newInstance();
-		result.setPredictedAtt(this.classIndex);
-		return result;
-	}
-			
-	public void setPredictedAtt(int classIndex){
-		setClassIndex(classIndex);
-		this.classIndex = classIndex;	
-	}
 	
-	public  Vector<Double> getActualValues(){
+	public  Vector<Double> getActualValues(int classIndex){
 		Vector<Double> actual = new Vector<Double>();
 		for(int instance=0;instance<numInstances();instance++){
 			double valueActual =  getInstanceValue(instance, classIndex);
@@ -102,20 +92,11 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 	}
 	
 	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
-		AbsDatabase result = newInstance();
-		result.classIndex = this.classIndex;
+		AbsDatabase result = newInstance(this);
 		result.database = this.getIndividuals();
 		result.database.remove(0);
 		result.database.remove(result.database.size()-1);
 		return result;
-	}
-	
-	public int getClassIndex(){
-		return classIndex;
-	}
-	
-	public void setClassIndex(int classIndex){
-		this.classIndex=classIndex;
 	}
 	
 
@@ -142,9 +123,38 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 		return (String) database.get(0).getIndividualAttributes().keySet().toArray()[attribute];
 	}
 	
-	public abstract AbsDatabase newInstance();
+	public AbsDatabase subDatabase(int i, int j) {
+		// TODO Auto-generated method stub
+		AbsDatabase result = newInstance(this);
+		result.database=new Vector<Individual>();
+		List<Individual> list=this.getIndividuals().subList(i, j);
+		Iterator<Individual> it=list.iterator();
+		while (it.hasNext()){
+			Individual ind=it.next();
+			result.database.add(ind);
+		}
+		return result;
+	}
+	
+	public AbsDatabase removeSubAbsDatabase(int i, int j) {
+		// TODO Auto-generated method stub
+		AbsDatabase result = newInstance(this);
+		Vector<Individual> copy=new Vector<Individual>();
+		copy.addAll(database);
+		List<Individual> list=this.getIndividuals().subList(i, j);
+		Iterator<Individual> it=list.iterator();
+		while (it.hasNext()){
+			Individual ind=it.next();
+			copy.remove(ind);
+		}
+		result.database=copy;
+		return result;
+	}
+	
+	public abstract AbsDatabase newInstance(AbsDatabase database);
 	public abstract File saveFile(File file) throws Exception;						//Ver como se va a almacenar el file
 	public abstract void newInstanceFromARFF(File saveFile) throws Exception;		//Replace with default save format
 	public abstract void parseFile(File file);	//Parsing del archivo
+
 	
 }

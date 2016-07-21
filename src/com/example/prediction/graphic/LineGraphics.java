@@ -20,7 +20,7 @@ import android.graphics.drawable.BitmapDrawable;
 
 import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.metrics.evaluation_metric.RAEMetric;
+import com.example.prediction.logica.metrics.simple_metrics.SimpleERMetric;
 import com.example.prediction.logica.models.AbsModeler;
 
 public class LineGraphics extends AbsGraphics {
@@ -86,7 +86,7 @@ public class LineGraphics extends AbsGraphics {
 		yAxis.setRange(min - factorRange, max + factorRange); 	
 	}
 	
-	private void configureErrorPrediction(AbsDatabase trainingSet) throws Exception {
+	private void configureErrorPrediction(AbsDatabase trainingSet, int indexClass) throws Exception {
 		// TODO Auto-generated method stub
 		min = Double.MAX_VALUE;
 		max = Double.MIN_VALUE;
@@ -94,7 +94,7 @@ public class LineGraphics extends AbsGraphics {
 		
 		int limit = Config.Graphic.GRAPHIC_LINE_LIMIT_INSTANCES;
 		
-		Vector<Double> actual = trainingSet.getActualValues();
+		Vector<Double> actual = trainingSet.getActualValues(indexClass);
 		int instances = actual.size();
 		if(instances > limit)
 			instances = limit;
@@ -130,23 +130,24 @@ public class LineGraphics extends AbsGraphics {
 		int instances = (trainingSet.numInstances() / groupInstances);
 		int last = trainingSet.numInstances();
 		AbsDatabase newTrainingSet = null;
+		SimpleERMetric rae=new SimpleERMetric();
 		
 		for(AbsModeler scheme: series){
 			for(int i=1; i<=instances; i++){
 				Integer cantInstances = groupInstances * i; 
 				int first = cantInstances+1;
-				if(i == instances)
-					newTrainingSet =  trainingSet;
-				else
-					newTrainingSet =  trainingSet.getNewDatasetByRemove(first, last );
-				double value=2.5;															//////AGREGAR ERROR RATE COMO METRIC
+				//if(i == instances)
+					//newTrainingSet =  trainingSet;
+				//else
+					newTrainingSet =  trainingSet.subDatabase(0, cantInstances);
+				rae.configMetricModes(newTrainingSet, scheme);
+				Double value= rae.calculate(Config.TrainingMode.TRAINING_MODE);
 				
 				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
 				
 				max = Math.max(max,value);
 		    	min = Math.min(min, value);
 		    	
-		    	RAEMetric rae=new RAEMetric();
 		    	rae.configMetricModes(newTrainingSet, scheme);
 		    	value = rae.calculate(Config.TrainingMode.CROSS_VALIDATION_MODE);
 				
@@ -169,9 +170,9 @@ public class LineGraphics extends AbsGraphics {
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISY);
 	}
 	
-	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, Vector<AbsModeler> schemes) throws Exception{
+	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, Vector<AbsModeler> schemes, int indexClass) throws Exception{
 		setSeries(schemes);
-		configureErrorPrediction(trainingSet);
+		configureErrorPrediction(trainingSet, indexClass);
 		image = Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_EP;
 		return getChart(series, Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP,
 				Config.Graphic.GRAPHIC_LINE_TITLE_AXISX,

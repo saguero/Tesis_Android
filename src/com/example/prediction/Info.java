@@ -151,7 +151,7 @@ public class Info {
 		schemes.add(this.getBestScheme());
 
 		LineGraphics linechart = new LineGraphics(context);
-		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, schemes);
+		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, schemes, attributeSelected);
 		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart);
 		chartView.drawChart(chart);
 		return ((BitmapDrawable) chartView.getDrawable()).getBitmap();
@@ -265,7 +265,6 @@ public class Info {
 
 	public void setAttributeSelected(int att) {
 		attributeSelected = att;
-		trainingSet.setPredictedAtt(attributeSelected);
 	}
 
 	public void setSchemesSelected(Vector<Integer> schemes) {

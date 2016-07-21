@@ -56,7 +56,7 @@ public class ConfiguresActivity extends Activity {
                             }
                             info.setFilteredBestSchemes();
                         } catch (Exception e) {
-                             
+                             e.printStackTrace();
                         }
                         progressDialog.dismiss();
                         try {

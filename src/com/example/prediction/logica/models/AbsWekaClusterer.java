@@ -6,22 +6,21 @@ import weka.clusterers.Clusterer;
 import weka.core.Instances;
 
 public abstract class AbsWekaClusterer extends AbsClusterer {
-	
+
 	protected Clusterer clusterer_;
-	protected int index;
-	
-	//--Public methods
-	
-	public AbsWekaClusterer(Clusterer clusterer, int index){
-		database_=new WekaDatabase();
-		this.index=index;
-		clusterer_=clusterer;
+
+	// --Public methods
+
+	public AbsWekaClusterer(Clusterer clusterer, int index) {
+		database_ = new WekaDatabase();
+		indexClass=index;
+		clusterer_ = clusterer;
 	}
 
 	@Override
 	protected void getModel() {
 		// TODO Auto-generated method stub
-		getClusterer((Instances)database_.getDatabaseImplementation());
+		getClusterer((Instances) database_.getDatabaseImplementation());
 	}
 
 	@Override
@@ -29,13 +28,22 @@ public abstract class AbsWekaClusterer extends AbsClusterer {
 		// TODO Auto-generated method stub
 		return clusterer_.toString();
 	}
-	
-	public Clusterer getClusterer(){
+
+	public Clusterer getClusterer() {
 		return clusterer_;
 	}
-	
-	//--Abstract methods
+
+	public void removeIndexClass() {
+		try {
+			Instances copy=new Instances((Instances)database_.getDatabaseImplementation(), ((Instances)database_.getDatabaseImplementation()).size());
+			((Instances) database_.getDatabaseImplementation()).setClassIndex(-1);
+		} catch (IllegalArgumentException e) {
+			System.out.println("Si pusiste clusterer, está todo bien :D");
+		}
+	}
+
+	// --Abstract methods
 
 	protected abstract void getClusterer(Instances instances);
-	
+
 }

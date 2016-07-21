@@ -29,20 +29,14 @@ public class EvaluationWeka extends AbsEvaluation {
 	}
 
 	@Override
-	public Double getErrorEvaluation(){
-		return test.errorRate();
-	}
-
-	@Override
 	public double[] distributionForInstance(AbsDatabase trainingSet, AbsModeler scheme, int classIndex) throws Exception {
 		// TODO Auto-generated method stub
 		return (((AbsWekaClassifier) scheme).getClassifier()).distributionForInstance(((Instances)trainingSet.getDatabaseImplementation()).instance(classIndex));
 	}
-
+	
 	@Override
-	public Object getEvaluationImplementation() {
-		// TODO Auto-generated method stub
-		return test;
+	public Double calculateER(AbsDatabase trainingSet, AbsModeler scheme){
+		return test.errorRate();
 	}
 	
 	@Override
@@ -79,7 +73,7 @@ public class EvaluationWeka extends AbsEvaluation {
 	@Override
 	public Double calculateACC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub
-		return test.precision(trainingSet.getClassIndex());
+		return test.precision(scheme.getIndexAttribute());
 	}
 
 	@Override
@@ -91,13 +85,13 @@ public class EvaluationWeka extends AbsEvaluation {
 	@Override
 	public Double calculateROC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub
-		return test.areaUnderROC(trainingSet.getClassIndex());
+		return test.areaUnderROC(scheme.getIndexAttribute());
 	}
 
 	@Override
 	public Double calculateRECALL(AbsDatabase trainingSet, AbsModeler scheme) throws Exception {
 		// TODO Auto-generated method stub
-		return test.recall(trainingSet.getClassIndex());
+		return test.recall(scheme.getIndexAttribute());
 	}
 
 	@Override

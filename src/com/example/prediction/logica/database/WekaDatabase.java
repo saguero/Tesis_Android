@@ -3,9 +3,14 @@ package com.example.prediction.logica.database;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 import com.example.prediction.logica.Config;
+import com.example.prediction.logica.individual.Individual;
 import com.example.prediction.logica.individual.WekaIndividual;
 
 import weka.core.Attribute;
@@ -27,9 +32,9 @@ public class WekaDatabase extends AbsDatabase {
 	}
 	
 	public WekaDatabase(WekaDatabase wd){
-		this.trainingSet=(Instances)wd.getDatabaseImplementation();
-		this.database = wd.getIndividuals();
-		this.classIndex = wd.classIndex;
+		this.trainingSet=new Instances((Instances)wd.getDatabaseImplementation());
+		this.database = new Vector<Individual>();
+		this.database.addAll(wd.getIndividuals());
 	}
 	
 	public WekaDatabase(Instances instances){
@@ -117,12 +122,7 @@ public class WekaDatabase extends AbsDatabase {
        
        return new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff");
 	}
-	@Override
-	public void setClassIndex(int classIndex) {
-		// TODO Auto-generated method stub
-		super.setClassIndex(classIndex);
-		trainingSet.setClassIndex(classIndex);
-	}
+	
 	@Override
 	public int numAttributes() {
 		// TODO Auto-generated method stub
@@ -156,28 +156,46 @@ public class WekaDatabase extends AbsDatabase {
 	}
 	
 	@Override
-	public int getClassIndex() {
-		// TODO Auto-generated method stub
-		return trainingSet.classIndex();
-	}
-	@Override
 	public void newInstanceFromARFF(File fileInstances) throws Exception{
 		// TODO Auto-generated method stub
 		trainingSet = new Instances(new FileReader(fileInstances));
 	}
 
 	@Override
-	public AbsDatabase newInstance() {
+	public AbsDatabase newInstance(AbsDatabase database) {
 		// TODO Auto-generated method stub
-		return new WekaDatabase();
+		return new WekaDatabase((WekaDatabase) database);
 	}
 	
 	public AbsDatabase getNewDatasetByRemove(int first, int last) throws Exception{
-		WekaDatabase result = (WekaDatabase) newInstance();
-		result.classIndex = this.classIndex;
+		AbsDatabase d=super.getNewDatasetByRemove(first, last);
+		WekaDatabase result = (WekaDatabase) newInstance(this);
+		result.database=d.database;
 		result.trainingSet = this.trainingSet.stringFreeStructure();
 		result.trainingSet.addAll(this.trainingSet);
 		result.removeInstances(first,last);
+		return result;
+	}
+	
+	public AbsDatabase subDatabase(int i, int j) {
+		// TODO Auto-generated method stub
+		AbsDatabase r=super.subDatabase(i, j);
+		WekaDatabase result = (WekaDatabase) newInstance(r);
+		result.database=r.database;
+		result.trainingSet = new Instances(trainingSet, i, j-i);
+		return result;
+	}
+	
+	public AbsDatabase removeSubAbsDatabase(int i, int j) {
+		// TODO Auto-generated method stub
+		AbsDatabase r = super.removeSubAbsDatabase(i, j);
+		WekaDatabase result = (WekaDatabase) newInstance(r);
+		result.database=r.database;
+		Instances copy=new Instances(trainingSet);
+		for (int k=i;k<j;k++){
+			copy.remove(k);
+		}
+		result.trainingSet = new Instances(copy);
 		return result;
 	}
 	

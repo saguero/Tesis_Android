@@ -44,9 +44,7 @@ public abstract class AbsEvaluation {
 	public abstract void configEvaluation(AbsDatabase trainingSet, AbsModeler scheme);
 	public abstract void testTrainingSet(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
 	public abstract void testCV(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
-	public abstract Double getErrorEvaluation();
 	public abstract double[] distributionForInstance(AbsDatabase trainingSet, AbsModeler scheme, int classIndex) throws Exception;
-	public abstract Object getEvaluationImplementation();
 	
 	
 	public abstract Double calculateCC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
@@ -58,6 +56,7 @@ public abstract class AbsEvaluation {
 	public abstract Double calculateKAP(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
 	public abstract Double calculateROC(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
 	public abstract Double calculateRECALL(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
+	public abstract Double calculateER(AbsDatabase trainingSet, AbsModeler scheme);
 	
 	//OTROS METODOS PARA TESTEAR... 
 }

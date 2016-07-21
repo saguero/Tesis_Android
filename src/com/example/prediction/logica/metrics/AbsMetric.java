@@ -102,7 +102,7 @@ public abstract class AbsMetric {
 		}
 		
 		public abstract Double calculate(int mode) throws Exception;
-		public abstract void configurateTrainingMode(AbsDatabase database, AbsModeler scheme);
-		public abstract void configurateCVMode(AbsDatabase database, AbsModeler scheme);
+		public abstract void configurateTrainingMode(AbsDatabase database, AbsModeler scheme);		//El database que le pasamos es el training set
+		public abstract void configurateCVMode(AbsDatabase database, AbsModeler scheme);			//El dataset que le pasamos es el que se usa para hacer CV 
 	
 }

@@ -81,7 +81,7 @@ public class SimpleKClusterer extends AbsWekaClusterer {
 		Vector<Individual> members=getClusterMembers(clu);
 		double r=0;
 		for (Individual i:members){
-			r+=i.getValueAttribute(index);
+			r+=i.getValueAttribute(indexClass);
 		}
 		return r/members.size();
 	}

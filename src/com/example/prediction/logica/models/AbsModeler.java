@@ -10,6 +10,7 @@ public abstract class AbsModeler {
 	
 	protected Vector<AbsParameter> modelParameters_=new Vector<AbsParameter>();
 	protected AbsDatabase database_;
+	protected int indexClass;
 	
 	//--Public methods
 	/**/
@@ -41,6 +42,7 @@ public abstract class AbsModeler {
 
 	public void calculateModeler(AbsDatabase database){
 		database_=database;
+		setIndexAttribute(indexClass);
 		getModel();
 	}
 	
@@ -49,9 +51,12 @@ public abstract class AbsModeler {
 	}
 	
 	public void setIndexAttribute(int index){
-		database_.setClassIndex(index);
+		indexClass=index;
 	}
 	
+	public int getIndexAttribute(){
+		return indexClass;
+	}	
 
 	public Vector<Double> getPredictedValue(AbsDatabase database) throws Exception{
 		Vector<Double> r=new Vector<Double>();

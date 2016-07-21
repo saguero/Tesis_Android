@@ -45,6 +45,9 @@ public class WekaClustererOptimizer extends AbsWekaOptimizer {
 			if (((WekaSimpleParameter) p).getMaxValue()==-1){
 				max+=DEFAULT_CLUSTER_STEPS;
 			}
+			if (max > isTrainingSet.size()){
+				max= (double) isTrainingSet.size();
+			}
 			for (int k = min.intValue(); k < max.intValue(); k++) {
 				double error = 0;
 				double s = 0.0;

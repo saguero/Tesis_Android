@@ -2,12 +2,10 @@ package com.example.prediction.logica.metrics;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Info;
 import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Representation;
 import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Required;
 import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Type;
-import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsCompMetric extends AbsMetric{
 	

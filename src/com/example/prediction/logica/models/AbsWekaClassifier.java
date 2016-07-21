@@ -17,12 +17,11 @@ import weka.core.OptionHandler;
 public abstract class AbsWekaClassifier extends AbsClassifier{
 	protected AbstractClassifier classifier;
 	protected AbsWekaOptimizer optimizer;
-	protected int index =0;
 	
 	//--Public methods
 	/**/
 	public AbsWekaClassifier(AbstractClassifier clas, AbsWekaOptimizer optimizer, int index){
-		this.index=index;
+		this.indexClass=index;
 		classifier=clas;
 		this.optimizer=optimizer;
 	}
@@ -42,7 +41,7 @@ public abstract class AbsWekaClassifier extends AbsClassifier{
 
 	@Override
 	public void getModel(){
-		database_.setClassIndex(index);
+		super.setIndexAttribute(indexClass);
 		selectBestAttributes();
 		optimizer.optimiceParams(this);
 		try {
@@ -71,6 +70,10 @@ public abstract class AbsWekaClassifier extends AbsClassifier{
 	
 	public Double predictIndividualValue(Individual ind) throws Exception{
 		return classifier.classifyInstance((Instance) ((WekaIndividual)ind).getIndividualRepresentation());
+	}
+	
+	public void setIndexClassifier(){
+		((Instances)database_.getDatabaseImplementation()).setClassIndex(indexClass);
 	}
 	
 	//--Abstract methods
