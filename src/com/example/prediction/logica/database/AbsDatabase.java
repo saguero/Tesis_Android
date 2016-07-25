@@ -123,11 +123,11 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 		return (String) database.get(0).getIndividualAttributes().keySet().toArray()[attribute];
 	}
 	
-	public AbsDatabase subDatabase(int i, int j) {
+	public AbsDatabase subDatabase(int i, int d) {
 		// TODO Auto-generated method stub
 		AbsDatabase result = newInstance(this);
 		result.database=new Vector<Individual>();
-		List<Individual> list=this.getIndividuals().subList(i, j);
+		List<Individual> list=this.getIndividuals().subList(i, d);
 		Iterator<Individual> it=list.iterator();
 		while (it.hasNext()){
 			Individual ind=it.next();

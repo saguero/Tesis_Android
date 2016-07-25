@@ -7,6 +7,7 @@ import com.example.prediction.logica.individual.WekaIndividual;
 import com.example.prediction.logica.optimization.WekaClustererOptimizer;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
+import android.util.Log;
 import weka.clusterers.SimpleKMeans;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -32,7 +33,11 @@ public class SimpleKClusterer extends AbsWekaClusterer {
 	protected void getClusterer(Instances dataset) {
 		// TODO Auto-generated method stub
 		WekaClustererOptimizer wco=new WekaClustererOptimizer();
-		wco.optimiceParams(this);
+		try{
+		wco.optimiceParams(this);}
+		catch (Exception e){
+			Log.d("com.example.prediction", "No se pudo optimizar");
+		}
 		try {
 			clusterer_.buildClusterer(dataset);
 		} catch (Exception e) {

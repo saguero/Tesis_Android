@@ -5,7 +5,7 @@ import java.util.Vector;
 import org.afree.chart.AFreeChart;
 import org.afree.data.category.DefaultCategoryDataset;
 
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection;
+import com.example.prediction.logica.metrics.collection.MetricsCollection;
 import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsGraphics {
@@ -16,7 +16,7 @@ public abstract class AbsGraphics {
 	protected int height;
 	protected int width;
 	protected Vector<AbsModeler> series;
-	protected AbsMetricsCollection metricsEvaluation;
+	protected MetricsCollection metricsEvaluation;
 	
 	
 	protected AFreeChart getChart(Vector<AbsModeler> series, String chartTitle, String axisX, String axisY) throws Exception{

@@ -18,9 +18,9 @@ public abstract class AbsEvaluation {
 		testTrainingSet(trainingSet, scheme);
 	}
 	
-	public void evaluateUseCrossValidation(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
+	public void evaluateUseCrossValidation(AbsDatabase trainingSet, AbsModeler scheme, int folds) throws Exception{
 		configEvaluation(trainingSet, scheme);
-		testCV(trainingSet, scheme);
+		testCV(trainingSet, scheme, folds);
 	}
 	
 	public Vector<Double> getPredictedValues(AbsDatabase trainingSet, AbsModeler scheme) throws Exception{
@@ -41,9 +41,10 @@ public abstract class AbsEvaluation {
 	
 	
 	//public abstract void buildClassifier(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
+	
 	public abstract void configEvaluation(AbsDatabase trainingSet, AbsModeler scheme);
 	public abstract void testTrainingSet(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
-	public abstract void testCV(AbsDatabase trainingSet, AbsModeler scheme) throws Exception;
+	public abstract void testCV(AbsDatabase trainingSet, AbsModeler scheme, int folds) throws Exception;
 	public abstract double[] distributionForInstance(AbsDatabase trainingSet, AbsModeler scheme, int classIndex) throws Exception;
 	
 	

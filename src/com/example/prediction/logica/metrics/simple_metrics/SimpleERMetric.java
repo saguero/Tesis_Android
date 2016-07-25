@@ -2,19 +2,19 @@ package com.example.prediction.logica.metrics.simple_metrics;
 
 import java.util.Vector;
 
-import com.example.prediction.logica.metrics.AbsSimpleMetric;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Info;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Representation;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Required;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection.Type;
+import com.example.prediction.logica.metrics.abstracts.AbsSimpleMetric;
+import com.example.prediction.logica.metrics.abstracts.Info;
+import com.example.prediction.logica.metrics.abstracts.Representation;
+import com.example.prediction.logica.metrics.abstracts.Required;
+import com.example.prediction.logica.metrics.abstracts.Type;
+import com.example.prediction.logica.metrics.collection.MetricsCollection;
 
 /*Mean Squared Error*/
 
 public class SimpleERMetric extends AbsSimpleMetric{
 
 	public SimpleERMetric() {
-		super(AbsMetricsCollection.ER, Required.MIN, Representation.PERCENTUAL, Type.REGRESSION, Info.ERROR_PREDICTION, "Error rate");
+		super(MetricsCollection.ER, Required.MIN, Representation.PERCENTUAL, Type.REGRESSION, Info.ERROR_PREDICTION, "Error rate");
 		// TODO Auto-generated constructor stub
 	}
 

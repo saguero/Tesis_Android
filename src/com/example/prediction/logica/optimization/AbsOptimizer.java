@@ -4,6 +4,6 @@ import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsOptimizer {
 	
-	public abstract void optimiceParams(AbsModeler modeler);
+	public abstract void optimiceParams(AbsModeler modeler) throws Exception;
 
 }

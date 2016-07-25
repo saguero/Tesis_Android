@@ -1,24 +1,32 @@
 package com.example.prediction.logica.metrics.collection;
 
 import com.example.prediction.logica.metrics.composite.COMBMetric;
-import com.example.prediction.logica.metrics.evaluation_metric.CCMetric;
-import com.example.prediction.logica.metrics.evaluation_metric.MAEMetric;
-import com.example.prediction.logica.metrics.evaluation_metric.RAEMetric;
-import com.example.prediction.logica.metrics.evaluation_metric.RMSEMetric;
-import com.example.prediction.logica.metrics.evaluation_metric.RRSEMetric;
-import com.example.prediction.logica.metrics.simple_metrics.SimpleMAEMetric;
+import com.example.prediction.logica.metrics.evaluation_metric.WekaCCMetric;
+import com.example.prediction.logica.metrics.evaluation_metric.WekaMAEMetric;
+import com.example.prediction.logica.metrics.evaluation_metric.WekaRMSEMetric;
+import com.example.prediction.logica.metrics.evaluation_metric.WekaRRSEMetric;
+import com.example.prediction.logica.models.AbsModeler;
+import com.example.prediction.logica.models.AbsWekaClassifier;
 
-public class WekaMetricsCollection extends AbsMetricsCollection {
+public class WekaMetricsCollection extends MetricsCollection {
 	
 	public WekaMetricsCollection() {
 		// TODO Auto-generated constructor stub
 		super();
-		//acceptMetric(new CCMetric());
-		//acceptMetric(new COMBMetric());
-		acceptMetric(new SimpleMAEMetric());
-		//acceptMetric(new MAEMetric());
-		//acceptMetric(new RMSEMetric());
-		//acceptMetric(new RRSEMetric());
+		acceptMetric(new WekaCCMetric());
+		acceptMetric(new COMBMetric());
+		acceptMetric(new WekaMAEMetric());
+		acceptMetric(new WekaRMSEMetric());
+		acceptMetric(new WekaRRSEMetric());
+	}
+
+	@Override
+	public boolean aceptModel(AbsModeler model) {
+		// TODO Auto-generated method stub
+		if (model.getClass().isInstance(AbsWekaClassifier.class)){
+			return true;
+		}
+		return false;
 	}
 
 }

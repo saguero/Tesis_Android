@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.evaluation.AbsEvaluation;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection;
+import com.example.prediction.logica.metrics.collection.MetricsCollection;
 import com.example.prediction.logica.models.AbsModeler;
 
 public abstract class AbsLibrary {
@@ -13,7 +13,7 @@ public abstract class AbsLibrary {
 	
 	protected AbsDatabase trainingSet;
 	protected AbsEvaluation evaluator;					
-	protected AbsMetricsCollection metricsEvaluation;	
+	protected MetricsCollection metricsEvaluation;	
 	protected Vector<Integer> acceptedModelers = new Vector<Integer>();								
 	
 	public AbsLibrary(String ID){
@@ -36,7 +36,7 @@ public abstract class AbsLibrary {
 		return evaluator;
 	}
 	
-	public AbsMetricsCollection getMetricsEvaluationObject(){
+	public MetricsCollection getMetricsEvaluationObject(){
 		return metricsEvaluation;
 	}
 	

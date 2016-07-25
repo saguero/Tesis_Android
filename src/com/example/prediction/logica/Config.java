@@ -22,7 +22,7 @@ public class Config {
 		public static final int GRAPHIC_LINE_HEIGHT = 367;
 		public static final int GRAPHIC_LINE_WIDTH = 560;
 		public static final int GRAPHIC_LINE_LIMIT_INSTANCES = 300;
-		public static final int GRAPHIC_LINE_INSTANCES_LEARNING_CURVE = 1;
+		public static final int GRAPHIC_LINE_INSTANCES_LEARNING_CURVE = 10;
 		
 		public static final float GRAPHIC_LINE_STROKE_REALVALUES = 3F;
 		public static final float GRAPHIC_LINE_STROKE_BESTPRED = 3F;

@@ -2,6 +2,7 @@ package com.example.prediction.logica.evaluation;
 
 import java.util.Random;
 
+import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.models.AbsWekaClassifier;
@@ -23,9 +24,9 @@ public class EvaluationWeka extends AbsEvaluation {
 	}
 
 	@Override
-	public void testCV(AbsDatabase dataset, AbsModeler scheme) throws Exception {
+	public void testCV(AbsDatabase dataset, AbsModeler scheme, int folds) throws Exception {
 		// TODO Auto-generated method stub
-		test.crossValidateModel(((AbsWekaClassifier) scheme).getClassifier(), (Instances)dataset.getDatabaseImplementation(),10, new Random(1));		
+		test.crossValidateModel(((AbsWekaClassifier) scheme).getClassifier(), (Instances)dataset.getDatabaseImplementation(),folds, new Random(1));		
 	}
 
 	@Override

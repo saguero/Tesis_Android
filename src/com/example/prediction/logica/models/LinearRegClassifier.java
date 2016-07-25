@@ -19,7 +19,9 @@ public class LinearRegClassifier extends AbsWekaClassifier {
 	/**/
 	public LinearRegClassifier(int index) {
 		super(new LinearRegression(), new WekaClassifierOptimizer(MIN_VALUE, MAX_VALUE), index);
-		addParameter(new WekaSimpleParameter('R', DEFAULT_RIDGE, "R"));	/*No tiene limites - Double*/
+		WekaSimpleParameter wsp=new WekaSimpleParameter('R', DEFAULT_RIDGE, "R");
+		wsp.setMinValor((float) 0.1);
+		addParameter(wsp);	/*No tiene limites - Double*/
 	}
 
 	@Override

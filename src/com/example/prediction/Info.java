@@ -17,9 +17,10 @@ import com.example.prediction.graphic.BarGraphics;
 import com.example.prediction.graphic.ChartView;
 import com.example.prediction.graphic.LineGraphics;
 import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.evaluation.AbsEvaluation;
 import com.example.prediction.logica.libraries.AbsLibrary;
 import com.example.prediction.logica.libraries.LibrariesCollection;
+import com.example.prediction.logica.metrics.collection.MetricsCollection;
+import com.example.prediction.logica.metrics.collection.SimpleMetricsCollection;
 import com.example.prediction.logica.models.AbsModeler;
 import com.example.prediction.logica.Config;
 
@@ -159,12 +160,21 @@ public class Info {
 
 	public Vector<Bitmap> generateImagesSchemesComparator(Context context) throws Exception {
 		// TODO Auto-generated method stub
-
+		
+		MetricsCollection mc=getLibrarySelected().getMetricsEvaluationObject();
+		boolean acept=true;
+		for (AbsModeler model:this.getListSchemesSelected()){
+			acept=acept&&mc.aceptModel(model);
+		}
+		if (acept!=true){
+			mc = new SimpleMetricsCollection();
+		}
+		
 		Vector<AbsModeler> listschemes = getBestSchemes();
 
 		BarGraphics barchart = new BarGraphics(context);
 		barchart.setSeries(listschemes);
-		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), mc);
 
 		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart1);
 		chartView.drawChart(chart1);
@@ -174,13 +184,13 @@ public class Info {
 		chartView.buildDrawingCache();
 		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
 
-		AFreeChart chart2 = barchart.graphedErrorPredictionScale(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+		AFreeChart chart2 = barchart.graphedErrorPredictionScale(getDatasetSelected(), mc);
 		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart2);
 		chartView.drawChart(chart2);
 		chartView.buildDrawingCache();
 		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
 
-		AFreeChart chart3 = barchart.graphedRelationData(getDatasetSelected(), getLibrarySelected().getMetricsEvaluationObject());
+		AFreeChart chart3 = barchart.graphedRelationData(getDatasetSelected(), mc);
 		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart3);
 		chartView.drawChart(chart3);
 		chartView.buildDrawingCache();

@@ -2,9 +2,9 @@ package com.example.prediction.graphic;
 
 import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
-import com.example.prediction.logica.evaluation.AbsEvaluation;
-import com.example.prediction.logica.metrics.AbsMetric;
-import com.example.prediction.logica.metrics.collection.AbsMetricsCollection;
+import com.example.prediction.logica.metrics.abstracts.AbsMetric;
+import com.example.prediction.logica.metrics.abstracts.Required;
+import com.example.prediction.logica.metrics.collection.MetricsCollection;
 import com.example.prediction.logica.models.AbsModeler;
 
 import java.text.DecimalFormat;
@@ -94,7 +94,7 @@ public class BarGraphics extends AbsGraphics {
 		Vector<Double> auxValues = new Vector<Double>();
 																							//row = serie
 		for(int column=0; column < dataset.getColumnCount(); column++){						//column = category
-			AbsMetricsCollection.Required req = categorys[column].getRequired();
+			Required req = categorys[column].getRequired();
 			for(int row=0; row < dataset.getRowCount(); row++) {
 				value = dataset.getValue(row, column).doubleValue();
 				values.add(value);
@@ -105,7 +105,7 @@ public class BarGraphics extends AbsGraphics {
 					max = value;	
 			}
 			Collections.sort(auxValues);
-			if(req.equals(AbsMetricsCollection.Required.MAX)){
+			if(req.equals(Required.MAX)){
 				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	//PLANTEAR EXCEPCION SI SOLO TENGO UN SCHEME
 				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));
 			}
@@ -137,8 +137,7 @@ public class BarGraphics extends AbsGraphics {
 		  double value=0;
 		  for(int y=0; y< axisY.size(); y++){	
 			  for(int x=0; x< categorys.length; x++){
-				  categorys[x].configMetricModes(trainingSet, axisY.elementAt(y));
-				  value = categorys[x].calculateNormalized(Config.TrainingMode.TRAINING_MODE);								
+				  value = categorys[x].calculateNormalized(trainingSet, axisY.elementAt(y));			//Training without CV					
 				  dataset.addValue(value, axisY.elementAt(y).getName(), categorys[x].getID()); 
 			  }
 		  }
@@ -183,17 +182,17 @@ public class BarGraphics extends AbsGraphics {
 	    yAxis.setRange(min, max);  	    
 	}
 
-	public AFreeChart graphedErrorPredictionNormalized(AbsDatabase trainingSet, AbsMetricsCollection metricsEvaluation) throws Exception{
+	public AFreeChart graphedErrorPredictionNormalized(AbsDatabase trainingSet, MetricsCollection metricsEvaluation) throws Exception{
 		Vector<AbsMetric> metrics = metricsEvaluation.ErrorPredictionNormalizedMetrics();
 		return graphed(metrics, trainingSet);	
 	}
 	
-	public AFreeChart graphedErrorPredictionScale(AbsDatabase trainingSet, AbsMetricsCollection metricsEvaluation) throws Exception{
+	public AFreeChart graphedErrorPredictionScale(AbsDatabase trainingSet, MetricsCollection metricsEvaluation) throws Exception{
 		Vector<AbsMetric> metrics = metricsEvaluation.ErrorPredictionScaleMetrics();
 		return graphed(metrics, trainingSet);	
 	}
 	
-	public AFreeChart graphedRelationData(AbsDatabase trainingSet, AbsMetricsCollection metricsEvaluation) throws Exception{
+	public AFreeChart graphedRelationData(AbsDatabase trainingSet, MetricsCollection metricsEvaluation) throws Exception{
 		Vector<AbsMetric> metrics = metricsEvaluation.RelationDataMetrics();
 		return graphed(metrics, trainingSet);
 	}

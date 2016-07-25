@@ -14,7 +14,7 @@ import weka.core.Instances;
 public class WekaClassifierOptimizer extends AbsWekaOptimizer {
 
 	private static final int FOLDS = 5;
-	private static final double DEFAULT_CLASSIFIER_STEPS = 5;
+	private static final int DEFAULT_CLASSIFIER_STEPS = 6;
 	
 	public WekaClassifierOptimizer(double min, double max){
 		minValue=min;
@@ -22,25 +22,27 @@ public class WekaClassifierOptimizer extends AbsWekaOptimizer {
 	}
 
 	@Override
-	public void optimiceParams(AbsModeler modeler, Instances isTrainingSet) {
+	public void optimiceParams(AbsModeler modeler, Instances isTrainingSet) throws Exception {
 		// TODO Auto-generated method stub
-		try {
 			Vector<AbsParameter> parameters = modeler.getParameters();
 			CVParameterSelection cvps = new CVParameterSelection();
-
+			double max=0;
+			double min=0;
+			double d=0;
+			Double minInt=Double.valueOf(min);
+			Double maxInt=Double.valueOf(max);
 			for (AbsParameter p : parameters) {
-				WekaSimpleParameter wsp = (WekaSimpleParameter) p;
 				String val = new String();
-				double max=wsp.getLastValue(maxValue);
-				double min=wsp.getFirstValue(minValue);
-				double d = wsp.getValue() % 1;
+				max=((WekaSimpleParameter) p).getLastValue(maxValue);
+				min=((WekaSimpleParameter) p).getFirstValue(minValue);
+				d = ((WekaSimpleParameter) p).getValue() % 1;
 				if (d == 0) {
-					Double minInt = Double.valueOf(min);
-					Double maxInt = Double.valueOf(max);
-					val = wsp.getParameterString().charAt(1) + " " + minInt.intValue() + " " + maxInt.intValue() + " "
+					minInt = Double.valueOf(min);
+					maxInt = Double.valueOf(max);
+					val = ((WekaSimpleParameter) p).getParameterString().charAt(1) + " " + minInt.intValue() + " " + maxInt.intValue() + " "
 							+ DEFAULT_CLASSIFIER_STEPS;
 				} else {
-					val = wsp.getParameterString().charAt(1) + " " + wsp.getMinValor() + " " + max + " "
+					val = ((WekaSimpleParameter) p).getParameterString().charAt(1) + " " + ((WekaSimpleParameter) p).getMinValor() + " " + max + " "
 							+ DEFAULT_CLASSIFIER_STEPS;
 				}
 				cvps.addCVParameter(val);
@@ -49,9 +51,6 @@ public class WekaClassifierOptimizer extends AbsWekaOptimizer {
 			cvps.setClassifier(((AbsWekaClassifier) modeler).getClassifier());
 			cvps.buildClassifier(isTrainingSet);
 			WekaLibrary.parseOptions(cvps.getBestClassifierOptions(), modeler);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -18,9 +18,9 @@ public abstract class AbsWekaOptimizer extends AbsOptimizer {
 	}
 
 	@Override
-	public void optimiceParams(AbsModeler modeler) {
+	public void optimiceParams(AbsModeler modeler) throws Exception {
 		optimiceParams(modeler, (Instances)modeler.getDatabase().getDatabaseImplementation());
 	}
 
-	protected abstract void optimiceParams(AbsModeler modeler, Instances isTrainingSet);
+	protected abstract void optimiceParams(AbsModeler modeler, Instances isTrainingSet) throws Exception;
 }

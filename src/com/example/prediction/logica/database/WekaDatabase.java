@@ -3,10 +3,7 @@ package com.example.prediction.logica.database;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Vector;
 
 import com.example.prediction.logica.Config;
@@ -192,8 +189,9 @@ public class WekaDatabase extends AbsDatabase {
 		WekaDatabase result = (WekaDatabase) newInstance(r);
 		result.database=r.database;
 		Instances copy=new Instances(trainingSet);
-		for (int k=i;k<j;k++){
+		for (int k=j-1;k>=i;k--){
 			copy.remove(k);
+			System.out.print(k);
 		}
 		result.trainingSet = new Instances(copy);
 		return result;

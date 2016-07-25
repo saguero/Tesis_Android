@@ -126,32 +126,60 @@ public class LineGraphics extends AbsGraphics {
 	
 	private void configureLearningCurve(AbsDatabase trainingSet) throws Exception {
 		dataset = new DefaultCategoryDataset();
-		int groupInstances = Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
-		int instances = (trainingSet.numInstances() / groupInstances);
-		int last = trainingSet.numInstances();
-		AbsDatabase newTrainingSet = null;
+		int groupInstances = 1;//Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
+		//int last = trainingSet.numInstances();
 		SimpleERMetric rae=new SimpleERMetric();
+		int traininglimit=(int) Math.ceil(trainingSet.numInstances()*0.6);
+		int CVlimit = (int) Math.ceil(trainingSet.numInstances()*0.8);
+		AbsDatabase newTrainingSet = trainingSet.subDatabase(0, traininglimit);
+		AbsDatabase CVSet = trainingSet.subDatabase(traininglimit, CVlimit);
+		
+		int trainingNum = (newTrainingSet.numInstances() / groupInstances);
+		int cvNum = CVSet.numInstances() / groupInstances;
+		int instances = trainingNum;
+		if (trainingNum>cvNum){
+			instances=cvNum;
+		}
+		
 		
 		for(AbsModeler scheme: series){
 			for(int i=1; i<=instances; i++){
 				Integer cantInstances = groupInstances * i; 
-				int first = cantInstances+1;
+				//int first = cantInstances+1;
 				//if(i == instances)
 					//newTrainingSet =  trainingSet;
 				//else
-					newTrainingSet =  trainingSet.subDatabase(0, cantInstances);
-				rae.configMetricModes(newTrainingSet, scheme);
-				Double value= rae.calculate(Config.TrainingMode.TRAINING_MODE);
 				
-				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
+				/*Si se quiere hacer CVvalidation tenemos que:
+				 * iterar k veces:
+				 * 		Mezclar los instances
+				 * 		Obtener training y CV
+				 * 		scheme.calculatemodel(training.subDatabase(0, cantInstances));
+				 * 		training : value+calculate(training.subDatabase(0, cantInstances), scheme);
+				 * 		CV : value + calculate(CVSet, scheme);
+				 * value/k;
+				 * 
+				 * 		
+				 */
+				
+				
+				AbsDatabase mTDataset =  newTrainingSet.subDatabase(0, cantInstances);
+				//AbsDatabase mCVDatabase = CVSet.subDatabase(0, cantInstances);
+				
+				//Double value= rae.calculate(mTDataset, scheme,5);	//CV con fold=5
+				
+				scheme.calculateModeler(mTDataset);
+				Double value = rae.calculate(mTDataset, scheme);
+				
+				dataset.addValue(value/5, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
 				
 				max = Math.max(max,value);
 		    	min = Math.min(min, value);
 		    	
-		    	rae.configMetricModes(newTrainingSet, scheme);
-		    	value = rae.calculate(Config.TrainingMode.CROSS_VALIDATION_MODE);
+		    	//value = rae.calculate(mCVDatabase, scheme,5);
+		    	value=rae.calculate(CVSet, scheme);
 				
-				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_CROSSVALIDATION, cantInstances );
+				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_CROSSVALIDATION, cantInstances);
 				
 				max = Math.max(max,value);
 		    	min = Math.min(min, value);

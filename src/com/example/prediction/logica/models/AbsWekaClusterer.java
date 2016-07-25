@@ -35,7 +35,6 @@ public abstract class AbsWekaClusterer extends AbsClusterer {
 
 	public void removeIndexClass() {
 		try {
-			Instances copy=new Instances((Instances)database_.getDatabaseImplementation(), ((Instances)database_.getDatabaseImplementation()).size());
 			((Instances) database_.getDatabaseImplementation()).setClassIndex(-1);
 		} catch (IllegalArgumentException e) {
 			System.out.println("Si pusiste clusterer, está todo bien :D");
