@@ -27,5 +27,11 @@ public class Smoreg extends AbsClassifier {
 		return null;
 	}
 	
+	@Override
+	public boolean handles(AbsDataset dataset) {
+		// TODO Auto-generated method stub
+		return scheme.getCapabilities().test((Instances) dataset.getTrainingSet());		
+	}
+	
 	
 }

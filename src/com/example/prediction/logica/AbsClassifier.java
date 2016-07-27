@@ -1,6 +1,7 @@
 package com.example.prediction.logica;
 
 import java.util.Vector;
+
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.MultiScheme;
 import weka.core.Instances;
@@ -8,6 +9,8 @@ import weka.core.Instances;
 public abstract class AbsClassifier {
 	protected static Vector<AbsClassifier> classifiers = new Vector<AbsClassifier>();
 	protected Classifier scheme;
+	
+	
 	
 	public AbsClassifier(){
 		classifiers.add(this);
@@ -48,6 +51,11 @@ public abstract class AbsClassifier {
 	public abstract String getName();
 	public abstract Classifier[] bestClassifiers(Instances dataset) throws Exception;
 	public abstract String globalInfo();
+	
+	
+	
+	public abstract boolean handles(AbsDataset trainingSet);
+	
 	
 
 	

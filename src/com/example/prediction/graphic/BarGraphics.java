@@ -1,5 +1,6 @@
 package com.example.prediction.graphic;
 
+
 import com.example.prediction.logica.*;
 import com.example.prediction.logica.AbsMetricsEvaluation.*;
 
@@ -23,15 +24,14 @@ import org.afree.graphics.SolidColor;
 import org.afree.ui.RectangleInsets;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 
 public class BarGraphics extends AbsGraphics {
-	private Vector<Integer> bestResults = new Vector<Integer>();
+	private Vector<Integer> bestResults;
 	private Metric[] categorys;
-	Context context;
+	private BitmapDrawable image;
+	private Context context;
 	
 	class CustomRenderer extends BarRenderer{
 		private static final long serialVersionUID = 1L;
@@ -63,8 +63,9 @@ public class BarGraphics extends AbsGraphics {
 		} 
 	}
 	
-	public BarGraphics(Context context) {
+	public BarGraphics(Context context,BitmapDrawable image) {
 		this.context = context;
+		this.image = image;
 	}
 
 	//DEFINE EL ANCHO DE LAS BARRAS 
@@ -83,6 +84,7 @@ public class BarGraphics extends AbsGraphics {
 	}
 
 	private void settings(){
+		bestResults = new Vector<Integer>();
 		min = Double.MAX_VALUE;
 		max = Double.MIN_VALUE;
 		double value=0;
@@ -103,17 +105,32 @@ public class BarGraphics extends AbsGraphics {
 			Collections.sort(auxValues);
 			if(req.equals(Required.MAX)){
 				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	//PLANTEAR EXCEPCION SI SOLO TENGO UN SCHEME
-				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));
+				if(auxValues.size() > 1)
+					bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));
 			}
 			else {
 				bestResults.add(values.indexOf(auxValues.elementAt(0)));
-				bestResults.add(values.indexOf(auxValues.elementAt(1)));
+				if(auxValues.size() > 1)
+					bestResults.add(values.indexOf(auxValues.elementAt(1)));
 			}
 			auxValues.removeAllElements();
 			values.removeAllElements();
 		}
 		max += max/10;				
 		min = 0;
+	}
+	
+	private AFreeChart graphed(Vector<Metric> metrics, AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception{
+		int index=0;
+		categorys = new Metric[metrics.size()];
+		for(Metric m:metrics){	
+			categorys[index]=m;
+			index++;
+		}
+
+		configureDataset(trainingSet, evaluator);
+		return getChart(series, context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_CHART),
+				context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISX),  context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISY) );	
 	}
 	
 	protected AFreeChart createChart(String chartTitle, String axisX, String axisY) throws Exception{
@@ -148,8 +165,9 @@ public class BarGraphics extends AbsGraphics {
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));	
 		
 		CategoryPlot plot = chart.getCategoryPlot();
-	    Bitmap img = BitmapFactory.decodeResource(context.getResources(),Config.Graphic.GRAPHIC_BAR_BACKGROUND_IMAGE);
-		plot.setBackgroundImage(new BitmapDrawable(context.getResources(),img));
+	  
+		
+		plot.setBackgroundImage(image);
 		plot.setBackgroundAlpha(1);				//VER
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
@@ -179,6 +197,8 @@ public class BarGraphics extends AbsGraphics {
 	    yAxis.setRange(min, max);  	    
 	}
 
+	
+	
 	public AFreeChart graphedErrorPredictionNormalized(AbsDataset trainingSet, AbsEvaluation evaluator, AbsMetricsEvaluation metricsEvaluation) throws Exception{
 		Vector<Metric> metrics = metricsEvaluation.ErrorPredictionNormalizedMetrics();
 		return graphed(metrics, trainingSet, evaluator);	
@@ -194,18 +214,7 @@ public class BarGraphics extends AbsGraphics {
 		return graphed(metrics, trainingSet, evaluator);
 	}
 	
-	private AFreeChart graphed(Vector<Metric> metrics, AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception{
-		int index=0;
-		categorys = new Metric[metrics.size()];
-		for(Metric m:metrics){	
-			categorys[index]=m;
-			index++;
-		}
-
-		configureDataset(trainingSet, evaluator);
-		return getChart(series, Config.Graphic.GRAPHIC_BAR_TITLE_CHART,
-				Config.Graphic.GRAPHIC_BAR_TITLE_AXISX,  Config.Graphic.GRAPHIC_BAR_TITLE_AXISY);	
-	}
+	
 	
 	
 }

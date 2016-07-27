@@ -14,29 +14,32 @@ public class DatasetWeka extends AbsDataset {
 		super();
 	}
 	
-	public DatasetWeka(File file) throws Exception{
-		super(file);
+	public DatasetWeka(File file, String destination) throws Exception{
+		super(file, destination);
 	}
 	
-	public File convertFile(File file) throws Exception {
+	public File convertFile(File file, String destination) throws Exception {
 		// TODO Auto-generated method stub
 		Instances data = null;
 		if(file.exists()){
 			if(file.canRead()){
-				CSVLoader loader = new CSVLoader();	//-M ? -E ",'
+				CSVLoader loader = new CSVLoader();
 				
 				loader.setFieldSeparator(",");
 				loader.setSource(file);
 				data = loader.getDataSet();
 			}
-		}		
+		}	
+		String name = file.getName();
+		name = name.substring(0, name.lastIndexOf(".") );
 		// save ARFF
        ArffSaver saver = new ArffSaver();
        saver.setInstances(data);
-       saver.setFile(new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff"));
+       File f = new File(destination +"/" + name +".arff");
+       saver.setFile(f);
        saver.writeBatch();
        
-       return new File(Config.DIR_EXTERNAL_STORAGE +"/dataset.arff");
+       return f;
 	}
 	@Override
 	public void setClassIndex(int classIndex) {
@@ -72,10 +75,11 @@ public class DatasetWeka extends AbsDataset {
 		// TODO Auto-generated method stub
 		return ((Instances)trainingSet).instance(instance).value(classIndex);
 	}
+	@SuppressWarnings("static-access")
 	@Override
-	public String getAttribute(int attribute) {
+	public String getTypeAttribute(int attribute) {
 		// TODO Auto-generated method stub
-		return ((Instances) trainingSet).attribute(attribute).name(); 
+		return ((Instances) trainingSet).attribute(attribute).typeToString(attribute);
 	}
 	
 	@Override
@@ -93,5 +97,11 @@ public class DatasetWeka extends AbsDataset {
 	public AbsDataset newInstance() {
 		// TODO Auto-generated method stub
 		return new DatasetWeka();
+	}
+
+	@Override
+	public String getNameAttribute(int index) {
+		// TODO Auto-generated method stub
+		return ((Instances) trainingSet).attribute(index).name();
 	}
 }

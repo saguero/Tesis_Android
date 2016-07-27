@@ -31,12 +31,11 @@ public abstract class AbsEvaluation {
 		
 		Object t = trainingSet.getTrainingSet();
 		Object s = scheme.getScheme();
-		int classIndex = trainingSet.getClassIndex();
 		
 		Vector<Double> predicted = new Vector<Double>();
 		for(int instance=0;instance<trainingSet.numInstances();instance++){
 			
-			double[] prediction=distributionForInstance(t, s, classIndex);
+			double[] prediction=distributionForInstance(t, s, instance);
 	        for(int pred=0; pred<prediction.length; pred++)
 	        {
 	        	double valuePred = prediction[pred];
@@ -51,7 +50,7 @@ public abstract class AbsEvaluation {
 	public abstract Object testTrainingSet(Object trainingSet, Object scheme) throws Exception;
 	public abstract Object testCV(Object trainingSet, Object scheme) throws Exception;
 	public abstract Double getErrorEvaluation(Object evaluation);
-	public abstract double[] distributionForInstance(Object trainingSet, Object scheme, int classIndex) throws Exception;
+	public abstract double[] distributionForInstance(Object trainingSet, Object scheme, int instance) throws Exception;
 	
 	//OTROS METODOS PARA TESTEAR... 
 }

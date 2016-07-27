@@ -36,5 +36,11 @@ public class SimpleLinearReg extends AbsClassifier {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public boolean handles(AbsDataset dataset) {
+		// TODO Auto-generated method stub
+		return scheme.getCapabilities().test((Instances) dataset.getTrainingSet());		
+	}
 
 }

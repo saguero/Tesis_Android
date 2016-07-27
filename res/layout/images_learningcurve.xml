@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.7"
+    android:background="@drawable/background_fase3"
+    tools:context=".ImagesLearningCurveActivity" >
+
+    <ImageView
+        android:id="@+id/imageView_images"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        android:layout_below="@+id/button_images_return"
+        android:layout_marginTop="-20dp"
+        android:background="@color/grey"
+        android:contentDescription="@string/configures_dialogok"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/background_fase3" />
+
+    <Button
+        android:id="@+id/button_images_return"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/imageView_images"
+        android:background="@drawable/icon_undo"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_images_next"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/imageView_images"
+        android:layout_below="@+id/imageView_images"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/icon_nextbutton"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_images_previuous"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView_images"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/icon_prevbutton"
+        android:stateListAnimator="@null" />
+
+</RelativeLayout>

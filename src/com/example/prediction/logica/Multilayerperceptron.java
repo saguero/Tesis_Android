@@ -1,9 +1,14 @@
 package com.example.prediction.logica;
 
 import weka.classifiers.Classifier;
+import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instances;
 
 public class Multilayerperceptron extends AbsClassifier {
+	
+	public Multilayerperceptron() {
+		scheme = new MultilayerPerceptron();
+	}
 
 	@Override
 	public String getName() {
@@ -63,4 +68,10 @@ public class Multilayerperceptron extends AbsClassifier {
 		// TODO Auto-generated method stub
 		return null;
 	}*/
+	
+	@Override
+	public boolean handles(AbsDataset dataset) {
+		// TODO Auto-generated method stub
+		return scheme.getCapabilities().test((Instances) dataset.getTrainingSet());		
+	}
 }

@@ -11,8 +11,8 @@ public abstract class AbsDataset {
 		
 	}
 	
-	public AbsDataset(File file) throws Exception{
-		convertInstancesObject(convertFile(file));
+	public AbsDataset(File file, String destination) throws Exception{
+		convertInstancesObject(convertFile(file, destination));
 	}
 	
 	
@@ -40,7 +40,7 @@ public abstract class AbsDataset {
 	public Vector<String> getNamesAttributes(){
 		Vector<String> result = new Vector<String>();
 		for(int i=0; i< numAttributes(); i++){
-			String a = getAttribute(i);
+			String a = getNameAttribute(i);
 			result.add(a);
 		}
 		return result;
@@ -67,11 +67,12 @@ public abstract class AbsDataset {
 	public abstract AbsDataset newInstance();
 	public abstract void convertInstancesObject(File fileInstances) throws Exception;
 	public abstract Object removeInstances(int first, int last) throws Exception;
-	public abstract File convertFile(File file) throws Exception;
+	public abstract File convertFile(File file, String destination) throws Exception;
 	public abstract int getClassIndex();
 	public abstract void setClassIndex(int classIndex);
 	public abstract int numAttributes();
 	public abstract int numInstances();
 	public abstract Double getInstanceValue(int instance, int classIndex); 
-	public abstract String getAttribute(int attribute);
+	public abstract String getNameAttribute(int attribute);
+	public abstract String getTypeAttribute(int index);
 }

@@ -10,7 +10,6 @@ import org.afree.chart.AFreeChart;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Environment;
 
 import com.example.prediction.graphic.BarGraphics;
 import com.example.prediction.graphic.ChartView;
@@ -23,9 +22,10 @@ import com.example.prediction.logica.Config;
 import com.example.prediction.logica.ClassEstructure;
 
 public class Info {
-	static int IMG_LC_serialId = 0;
-	static int IMG_EP_serialId = 0;
-	static int IMG_SC_serialId = 0;
+	static final int defaultValue = 0;
+	static int IMG_LC_serialId = defaultValue;
+	static int IMG_EP_serialId = defaultValue;
+	static int IMG_SC_serialId = defaultValue;
 	
 	static Vector<Bitmap> images_learningCurve = new Vector<Bitmap>();
 	static Vector<Bitmap> images_errorPrediction = new Vector<Bitmap>();
@@ -34,11 +34,8 @@ public class Info {
 	static CharSequence[] atts; 
 	static CharSequence[] libs;
 	static CharSequence[] filesDataset;
-	static CharSequence[] schemes;								//VER ESTO!!
-	static String[] configureItems = {	"Select library",
-										"Select File Dataset",
-										"Select predicted attribute",
-										"Select schemes"};
+	static CharSequence[] schemes;
+	
 	
 	static int attributeSelected;
 	static LibraryClasses librarySelected;
@@ -46,13 +43,15 @@ public class Info {
 	static AbsDataset trainingSet;
 	static Vector<AbsClassifier> schemesSelected = new Vector<AbsClassifier>();
 	static ClassEstructure classEstructure;
+	static int typePrediction;
 	
 	static AbsClassifier bestScheme;
 	static Vector<AbsClassifier> filteredBestSchemes = new Vector<AbsClassifier>();
 	
+	
 	public Info() {
 		setLibraries();
-		setListFilesDataset();
+		setTypePrediction(0);
 	}
 	
 
@@ -63,12 +62,12 @@ public class Info {
 		libs = classEstructure.getListLibraries();
 	}
 	
-	public void setListFilesDataset(){
-		File dir = Environment.getExternalStorageDirectory();
+	public void setListFilesDataset(Context context){
+		File dir = new File(Config.InitialSettings.DIR_WORKING);
         File[] files =  dir.listFiles();
         Vector<CharSequence> aux = new Vector<CharSequence>();
         for (int f = 0; f < files.length; f++) {
-        	if(files[f].isFile() && files[f].getAbsolutePath().contains(Config.EXTENSION_DATASET))
+        	if(files[f].isFile() && files[f].getAbsolutePath().toString().endsWith(context.getString(Config.InitialSettings.getFormatDataset())))
         		aux.add(files[f].getName());
         }
         filesDataset = new CharSequence[aux.size()];
@@ -97,8 +96,8 @@ public class Info {
 	
 	/*	GET OPTIONS TO SELECT	*/
 	
-	public String[] getConfigureItems(){
-		return configureItems;
+	public Integer[] getConfigureItems(){
+		return Config.AppSettings.TITLE_CONFIGURES_ITEMS;
 	}
 	
 	public CharSequence[] getListLibraries(){
@@ -122,35 +121,40 @@ public class Info {
 	
 	/*	GENERATE IMAGE	*/
 	
-	public Bitmap generateImageLearningCurve(Context context,AbsClassifier scheme) throws Exception {
+	public Bitmap generateImageLearningCurve(Context context, BitmapDrawable image) throws Exception {
 		// TODO Auto-generated method stub	
 		
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
+		Vector<AbsClassifier> schemes = new Vector<AbsClassifier>(); 
+		schemes.add(this.getBestScheme());
 		
-		LineGraphics linechart = new LineGraphics(context);
-		AFreeChart chart = linechart.graphedLearningCurve(trainingSet, evaluator, scheme);
+		LineGraphics linechart = new LineGraphics(context,image);
+		AFreeChart chart = linechart.graphedLearningCurve(trainingSet, evaluator, schemes);
         ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
         chartView.drawChart(chart);
         return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
 	}
 	
-	public Bitmap generateImageErrorPrediction(Context context) throws Exception {
+	public Bitmap generateImageErrorPrediction(Context context, BitmapDrawable image) throws Exception {
 		// TODO Auto-generated method stub
 		
 		AbsEvaluation evaluator = this.getLibrarySelected().getEvaluationObject();
-		LineGraphics linechart = new LineGraphics(context);
-		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, evaluator);
+		Vector<AbsClassifier> schemes = new Vector<AbsClassifier>(); 
+		schemes.add(this.getBestScheme());
+		
+		LineGraphics linechart = new LineGraphics(context,image);
+		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, evaluator, schemes);
         ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
         chartView.drawChart(chart);
         return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();	 
 	}
 
-	public Vector<Bitmap> generateImagesSchemesComparator(Context context) throws Exception {
+	public Vector<Bitmap> generateImagesSchemesComparator(Context context, BitmapDrawable image) throws Exception {
 		// TODO Auto-generated method stub
 		
 		Vector<AbsClassifier> listschemes = getBestSchemes();
 		
-		BarGraphics barchart = new BarGraphics(context);
+		BarGraphics barchart = new BarGraphics(context,image);
 		barchart.setSeries(listschemes);
 		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), getLibrarySelected().getEvaluationObject(),
 				getLibrarySelected().getMetricsEvaluationObject());
@@ -183,14 +187,17 @@ public class Info {
 	
 	/* SAVE IMAGES	*/
 	
-	private boolean persist(Bitmap bitmap, String name){
-		
+	private boolean persist(Context context, Bitmap bitmap, String path, String name){
+		File appDirectory = new File(path );
+		if(!appDirectory.exists()){
+			appDirectory.mkdir();
+		}
+		File archivo = new File(path + "/" + name);
 		boolean result = false;
-		String path = Config.DIR_EXTERNAL_STORAGE  + name;
 		
 		FileOutputStream out = null;
 		try {
-		    out = new FileOutputStream(path);
+		    out = new FileOutputStream(archivo);
 		    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 		    result = true;  
 		} 
@@ -205,25 +212,43 @@ public class Info {
 		return result;
 	}
 	
-	public void saveLearningCurveImage(Bitmap img){
+	public void saveLearningCurveImage(Context context, Bitmap img){
 		images_learningCurve.add(0,img);
-		String name = "learning_curve" + IMG_LC_serialId;
-		if(persist(img, name))
+		String name = "LearningCurve_" + getFileDatasetSelected().getName() + "_" + this.getBestScheme().getName() + "_" + IMG_LC_serialId + ".png";
+		
+		String path = 	Config.InitialSettings.DIR_WORKING +
+				context.getString(Config.InitialSettings.SUBDIR_APP) +
+				context.getString(Config.InitialSettings.SUBDIR_OPT_SCHEMES);
+		
+		if(persist(context,img, path, name))
 			IMG_LC_serialId++;		
 	}
 	
-	public void saveErrorPredictionImage(Bitmap img){
+	public void saveErrorPredictionImage(Context context,Bitmap img){
 		images_errorPrediction.add(0,img);
-		String name = "error_prediction" + IMG_EP_serialId;
-		if(persist(img, name))
+		
+		String path = 	Config.InitialSettings.DIR_WORKING +
+				context.getString(Config.InitialSettings.SUBDIR_APP) +
+				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
+		
+		String name = "ErrorPrediction_" + getFileDatasetSelected().getName() + "_" + this.getBestScheme().getName() + "_" + IMG_EP_serialId + ".png";
+		if(persist(context,img, path, name))
 			IMG_EP_serialId++;		
 	}
 	
-	public void saveSchemesComparatorImage(Bitmap img){
+	public boolean saveSchemesComparatorImage(Context context,Bitmap img){
 		images_schemesComparator.add(0,img);
-		String name = "schemes_comparator" + IMG_SC_serialId;
-		if(persist(img, name))
-			IMG_SC_serialId++;		
+		String name = "SchemesComparator_" +  getFileDatasetSelected().getName() + "_" + IMG_SC_serialId + ".png";
+		
+		String path = 	Config.InitialSettings.DIR_WORKING +
+				context.getString(Config.InitialSettings.SUBDIR_APP) +
+				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
+		
+		if(persist(context,img, path, name)) {
+			IMG_SC_serialId++;	
+			return true;
+		}
+		return false;
 	}
 	
 	/*	GET IMAGES		*/
@@ -248,10 +273,10 @@ public class Info {
 		librarySelected = classEstructure.getLibrary(ID);
 	}
 	
-	public void setFileDatasetSelected(String name) throws Exception{			
-		fileDatasetSelected = new File(Config.DIR_EXTERNAL_STORAGE + name);
+	public void setFileDatasetSelected(String name, String destination) throws Exception{			
+		fileDatasetSelected = new File(Config.InitialSettings.DIR_WORKING + name);
 		trainingSet = getLibrarySelected().getDatasetObject();
-		File aux = trainingSet.convertFile(fileDatasetSelected);
+		File aux = trainingSet.convertFile(fileDatasetSelected, destination );
 		trainingSet.convertInstancesObject(aux);
 		setListAttributes(trainingSet);
 	}
@@ -260,6 +285,7 @@ public class Info {
 		attributeSelected = att;
 		trainingSet.setPredictedAtt(attributeSelected);
 	}
+	
 	
 	public void setSchemesSelected(Vector<Integer> schemes){
 		schemesSelected.removeAllElements();
@@ -311,10 +337,45 @@ public class Info {
 		return bestScheme;
 	}
 	
+	public static int getTypePrediction() {
+		// TODO Auto-generated method stub
+		return typePrediction;
+	}
+	
+	public void setTypePrediction(int type){
+		typePrediction = type;
+	}
+	
+	
+	public Vector<Integer> getListSchemesHandlerData(AbsDataset dataset){
+		return librarySelected.getSchemesHandleData(dataset);	
+	}
+	
+	public Vector<Integer> getListAttHandlerPrediction(AbsDataset dataset){
+		Vector<String> types = null;
+		switch(typePrediction){
+		case Config.InitialSettings.REGRESSION:
+			types = librarySelected.getNumericalTypes();
+			break;
+		case Config.InitialSettings.CLASSIFICATION:
+			types = librarySelected.getCategoricalTypes();
+			break;
+		case Config.InitialSettings.CLUSTERING:
+			
+		}
 
+		Vector<Integer> result = new Vector<Integer>();
+		for(int index = 0; index < dataset.numAttributes(); index++){
+			if(types.contains(dataset.getTypeAttribute(index)))
+				result.add(index);		
+		}
+		return result;
+	}
+	
+	
 	/*
 	 * DEBERIAN ESTAR LAS SUGERENCIAS, AYUDAS ...
-	 * ESTO ES RESPECTO A LOS SCHEMES, LOS PARAMETROS (LEARNING CURVE) --> FALTA LA ACTIVIDAD DE LA AYUDA SOBRE LEARNING CURVE
+	 * ESTO ES RESPECTO A LOS SCHEMES
 	 * 
 	 */
 

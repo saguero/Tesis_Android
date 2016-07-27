@@ -36,8 +36,8 @@ public class EvaluationWeka extends AbsEvaluation {
 	}
 
 	@Override
-	public double[] distributionForInstance(Object trainingSet, Object scheme, int classIndex) throws Exception {
+	public double[] distributionForInstance(Object trainingSet, Object scheme, int instance) throws Exception {
 		// TODO Auto-generated method stub
-		return ((Classifier)scheme).distributionForInstance(((Instances) trainingSet).instance(classIndex));
+		return ((Classifier)scheme).distributionForInstance(((Instances) trainingSet).instance(instance));
 	}
 }

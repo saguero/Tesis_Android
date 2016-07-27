@@ -1,32 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    												<!-- Activity Presentation-->
+    <!-- Activity Presentation-->
     
      <string name="presentation_appname">Prediction</string>
-     <string name="presentation_intro">Tecnicas de aprendizaje de maquina para predecir atributos no funcionales en componentes de aplicaciones Android</string>
-     <string name="presentation_start">Start</string>
-    
-   
-    												<!-- Activity Configures-->
+     <string name="presentation_intro">machine learning techniques to predict non-functional attributes in components of android applications</string>
+	 <string name="presentation_selectLang">Select language</string>
+     
+    												<!-- Activity Configures-->											
     <string name="configures_title">Configures</string>
     <string name="configures_selectlibrary">Select library</string>
     <string name="configures_selectdataset">Select File Dataset</string>
     <string name="configures_selectpredAtt">Select Predicted Attribute</string>
     <string name="configures_selectschemes">Select Schemes</string>
+    
     <string name="configures_dialogok">OK</string> 
     <string name="configures_dialogcancel">Cancel</string>
 	<string name="configures_dialogchooseAtt">Choose Predicted Attribute</string>
 	<string name="configures_dialogchooseLibrary">Choose Library</string>
 	<string name="configures_dialogchooseSchemes">Choose Schemes</string>
 	<string name="configures_dialogchooseFileDataset">Choose File Dataset</string>  
-    <string name="configures_makeprediction">Make Prediction!</string>
+	
+	<string name="configures_exception_missinglibrary">Please, select the library before</string>
+	<string name="configures_exception_missingfiledataset">Please, select the file dataset before</string>
+	<string name="configures_exception_missingpredatt">Please, select the predicted attribute before</string>
+	<string name="configures_exception_alreadysaved">Files are already saved</string>
+  	<string name="configures_exception_noLibrary">There are no added libraries</string>
+  	<string name="configures_exception_noFile">No files are found in the working directory. Consider changing the directory or file format</string>
+  	<string name="configures_exception_convertFile">The selected file could not be converted to the appropriate format</string>
+  	<string name="configures_exception_noModels">There are no models belonging to the current library</string>
+	<string name="configures_exception_title">Notification</string>
+	
+	
+    												<!-- Activity Initial Configuration -->
+    <string name="initial_title">Initial Configuration</string>												
+    <string name="initial_optionformatfile1">csv</string>
+    
+    <string name="initial_optiontypeprediction1">Regression</string>
+    
+    <string name="initial_message_selectformatfile">Format file selected: </string>
+    <string name="initial_message_selectstorage">Directory to work: </string>
+    <string name="initial_message_selecttypeprediction">Type of prediction selected: </string>
+    
+    <string name="initial_item_formatfile">Format file</string>
+    <string name="initial_item_storage">Storage</string>
+    <string name="initial_item_typeprediction">Type Prediction</string>
     
     
+    <string name="initial_dialogTitle_formatfile">Choose the file format of the dataset</string>
+    <string name="initial_dialogTitle_storage">Select the directory to work with</string>
+    <string name="initial_dialogTitle_typeprediction">Define the type of prediction to do</string>	
+    
+    										
+    											
     												<!-- Activity Filtered Schemes-->
     <string name="filtered_title">Step 1: Filtered Schemes</string>
     <string name="filtered_scheme">Schemes</string>
     <string name="filtered_metrics">Métrics</string>
+    
+    <string name="filtered_exception_missingscheme">Please, select scheme to continue</string>
     
     												<!-- Activity Optimizing Scheme-->
     <string name="optimizing_title">Step 2: Optimizing scheme</string>
@@ -38,6 +69,7 @@
     <string name="optimizing_subtitle_historial">Historical images of learning curve </string> 
 	<string name="optimizing_subtitle_loading">Loading</string>
 	<string name="optimizing_subtitle_principle">Scheme\'s parameters analysis</string>
+	<string name="optimizing_subtitle_config">Select the button to config parameters</string>
     
      											<!-- Activity Model fit-->
     <string name="title_modelfit">Model Fit</string>
@@ -55,22 +87,33 @@
 	<string name="bias">The bias is error from erroneous assumptions in the algorithm.High bias can cause an algorithm to miss relevant relation between features and target outputs. (underfitting)</string>
 	<string name="var">The variance is error from sensitivity to small fluctuations in the training set. High variance can cause overfitting: modelling the random noise in the training data, rather than the intented output.</string>
     
-   	<string name="ok_entendido">OK, entendido</string>
+   	<string name="ok_entendido">OK, understood</string>
    	
   
-  
+  	
     <string name="missingImg">Missing Image</string>
     
+    											<!-- GRPHICS TITLES-->
+    <string name="graphic_line_label_realvalues">Real values</string>
+    <string name="graphic_line_label_trainingset">TrainingSet</string>
+    <string name="graphic_line_label_cv">Cross Validation</string>
+    <string name="graphic_line_title_ep">Error Prediction</string>
+    <string name="graphic_line_title_lc">Learning Curve</string>
+    <string name="graphic_line_axisx">Instances</string>
+    <string name="graphic_line_axisy">Measure</string>
+   
+    <string name="graphic_bar_title">Schemes Comparator</string>
+    <string name="graphic_bar_axisx">Metrics</string>
+    <string name="graphic_bar_axisy">Measure</string>
     
-  
-	
-	 <!-- Icons Configure Items -->
-	<array name="icons_config_items">
-        <item>@drawable/icon_library</item>
-        <item>@drawable/logo_csv</item>
-        <item>@drawable/icon_attribute</item>
-        <item>@drawable/icon_scheme</item>
-    </array>	 
-	 
-	
+     											<!-- MESSAGES-->
+   	<string name="message_progressDialog_title">Please wait ...</string>
+   	<string name="message_progressDialog_detail">Task in progress...</string>
+   	<string name="message_alertdialog_save">The images will be storage in working directory</string>
+   	<string name="message_alertdialog_historial">All images will be shown</string>
+   	<string name="message_alertdialog_confirmsave_title">Confirm</string>
+   	<string name="message_alertdialog_confirmsave_detail">Task completed successfully</string>
+   	<string name="message_alertdialog_yes">YES</string>
+   	<string name="message_alertdialog_no">NO</string>
+
 </resources>

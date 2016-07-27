@@ -16,10 +16,12 @@ public abstract class AbsMetricsEvaluation {
 		
 	public enum Required {MAX, MIN}
 	public enum Representation {NORMALIZED, SCALE, PERCENTUAL}
-	public enum Type {REGRESSION, CLASSIFICATION}
-	public enum Info {ERROR_PREDICTION, RELATION_DATA}
+	public enum Type {REGRESSION, CLASSIFICATION, CLUSTERING}
+	public enum Info {ERROR_PREDICTION, RELATION_DATA;
+
+	}
 	
-	public 	Type type = Type.REGRESSION;												//VER DESPUES
+	public 	Type typePrediction;
 	
 	public abstract class Metric  {
 		private int ID;
@@ -185,7 +187,7 @@ public abstract class AbsMetricsEvaluation {
 	class COMB extends Metric {
 
 		COMB() {
-			super(COMB,Required.MAX, Representation.NORMALIZED, Type.REGRESSION, Info.ERROR_PREDICTION);	
+			super(COMB,Required.MIN, Representation.NORMALIZED, Type.REGRESSION, Info.ERROR_PREDICTION);	
 		}
 		
 		Double calculate(Object evaluation) throws Exception {
@@ -289,6 +291,7 @@ public abstract class AbsMetricsEvaluation {
 				
 		this.trainingSet = trainingSet;
 		this.evaluator = eval;
+		typePrediction = Type.values()[com.example.prediction.Info.getTypePrediction()];
 		
 	}
 	
@@ -302,7 +305,7 @@ public abstract class AbsMetricsEvaluation {
 	public Vector<Metric> ErrorPredictionNormalizedMetrics(){
 		Vector<Metric> result = new Vector<Metric>();
 		for(Metric m: metricsEvaluation){
-			if(m.getType().equals(type) && m.canBeNormalized() && m.isInfo(Info.ERROR_PREDICTION) )
+			if(m.getType().equals(typePrediction) && m.canBeNormalized() && m.isInfo(Info.ERROR_PREDICTION) )
 				result.add(m);
 		}
 		return result;
@@ -311,7 +314,7 @@ public abstract class AbsMetricsEvaluation {
 	public Vector<Metric> ErrorPredictionScaleMetrics(){
 		Vector<Metric> result = new Vector<Metric>();
 		for(Metric m: metricsEvaluation){
-			if(m.getType().equals(type) && m.isRep(Representation.SCALE) && m.isInfo(Info.ERROR_PREDICTION) )
+			if(m.getType().equals(typePrediction) && m.isRep(Representation.SCALE) && m.isInfo(Info.ERROR_PREDICTION) )
 				result.add(m);
 		}		
 		return result;
@@ -320,7 +323,7 @@ public abstract class AbsMetricsEvaluation {
 	public Vector<Metric> RelationDataMetrics(){
 		Vector<Metric> result = new Vector<Metric>();
 		for(Metric m: metricsEvaluation){
-			if(m.getType().equals(type) && m.canBeNormalized() && m.isInfo(Info.RELATION_DATA) )
+			if(m.getType().equals(typePrediction) && m.canBeNormalized() && m.isInfo(Info.RELATION_DATA) )
 				result.add(m);
 		}		
 		return result;

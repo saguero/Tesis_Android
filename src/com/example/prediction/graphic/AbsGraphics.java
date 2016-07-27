@@ -16,6 +16,7 @@ public abstract class AbsGraphics {
 	protected int height;
 	protected int width;
 	protected Vector<AbsClassifier> series;
+	
 	protected AbsMetricsEvaluation metricsEvaluation;
 	
 	
@@ -24,11 +25,11 @@ public abstract class AbsGraphics {
 		customizeChart(chart);
 		return chart;	
 	}
-		
+	
 	public void setSeries(Vector<AbsClassifier> series){	
 		this.series = series; 
 	}
-
+		
 	/* ABSTRACT METHODS  */
 	protected abstract AFreeChart createChart(String chartTitle, String axisX, String axisY) throws Exception;
 	protected abstract void customizeChart(AFreeChart chart) throws Exception;

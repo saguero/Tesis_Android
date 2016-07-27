@@ -27,4 +27,10 @@ public class ClassifierWeka extends AbsClassifier {
 		return null;
 	}
 
+	@Override
+	public boolean handles(AbsDataset dataset) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

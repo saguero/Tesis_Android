@@ -5,13 +5,11 @@ import org.afree.chart.AFreeChart;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.widget.ImageView;
 
 import org.afree.graphics.geom.RectShape;
 
 import com.example.prediction.logica.Config;
-
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
 
 public class ChartView extends ImageView {
 	
