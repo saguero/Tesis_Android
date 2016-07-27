@@ -109,7 +109,7 @@ public class LineGraphics extends AbsGraphics {
 		    	  max = Math.max(max,actualValue);
 	  	    	  min = Math.min(min, actualValue);
 			}
-			
+			scheme.calculateModeler(trainingSet);
 			predicted = scheme.getPredictedValue(trainingSet);
 	      	for(Integer v=0; v < instances; v++){
 	      		Integer index = v+1;
@@ -171,7 +171,7 @@ public class LineGraphics extends AbsGraphics {
 				scheme.calculateModeler(mTDataset);
 				Double value = rae.calculate(mTDataset, scheme);
 				
-				dataset.addValue(value/5, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
+				dataset.addValue(value, Config.Graphic.GRAPHIC_LINE_LABEL_TRAINING, cantInstances);
 				
 				max = Math.max(max,value);
 		    	min = Math.min(min, value);

@@ -14,7 +14,7 @@ public class WekaMetricsCollection extends MetricsCollection {
 		// TODO Auto-generated constructor stub
 		super();
 		acceptMetric(new WekaCCMetric());
-		acceptMetric(new COMBMetric());
+		//acceptMetric(new COMBMetric());
 		acceptMetric(new WekaMAEMetric());
 		acceptMetric(new WekaRMSEMetric());
 		acceptMetric(new WekaRRSEMetric());
@@ -23,7 +23,7 @@ public class WekaMetricsCollection extends MetricsCollection {
 	@Override
 	public boolean aceptModel(AbsModeler model) {
 		// TODO Auto-generated method stub
-		if (model.getClass().isInstance(AbsWekaClassifier.class)){
+		if (AbsWekaClassifier.class.isAssignableFrom(model.getClass())){
 			return true;
 		}
 		return false;

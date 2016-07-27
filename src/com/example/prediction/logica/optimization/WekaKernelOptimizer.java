@@ -10,6 +10,9 @@ import com.example.prediction.logica.parameters.AbsWekaParameter;
 import com.example.prediction.logica.parameters.WekaKernelParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
 
+import src.weka.classifiers.meta.MultiSearch;
+import src.weka.core.setupgenerator.AbstractParameter;
+import src.weka.core.setupgenerator.MathParameter;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.functions.SMOreg;
 import weka.classifiers.functions.supportVector.NormalizedPolyKernel;
@@ -18,12 +21,9 @@ import weka.classifiers.functions.supportVector.Puk;
 import weka.classifiers.functions.supportVector.RBFKernel;
 import weka.classifiers.meta.GridSearch;
 import weka.classifiers.meta.MultiScheme;
-import weka.classifiers.meta.MultiSearch;
 import weka.core.Instances;
 import weka.core.SelectedTag;
 import weka.core.Utils;
-import weka.core.setupgenerator.AbstractParameter;
-import weka.core.setupgenerator.MathParameter;
 
 public class WekaKernelOptimizer extends AbsWekaOptimizer {
 
