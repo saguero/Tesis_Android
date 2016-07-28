@@ -62,18 +62,6 @@ public class ConfiguresActivity extends Activity {
 	    public int getChecked(){
 	    	return checked;
 	    }
-	    /*
-	    public void setChecked(int checked){
-	    	this.checked = checked;
-	    }
-	    
-	    public void setIcon(int icon){
-	    	this.icon = icon;
-	    }
-	    
-	    public void setTitle(String title){
-	    	this.title = title;
-	    } */
 	}
 
 	public class ItemsAdapter extends ArrayAdapter<RowItems> {
@@ -164,16 +152,16 @@ public class ConfiguresActivity extends Activity {
 		
 		private void config(int type){
 			switch(type){
-			case Config.AppSettings.ITEM_SELECT_LIBRARY:
+			case Config.AppSettings.ITEM_CODE_SELECT_LIBRARY:
 				TitleId = R.string.configures_dialogchooseLibrary;
 				break;
-			case Config.AppSettings.ITEM_SELECT_PREDICTED_ATT:
+			case Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT:
 				TitleId = R.string.configures_dialogchooseAtt;
 				break;
-			case Config.AppSettings.ITEM_SELECT_FILE_DATASET:
+			case Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET:
 				TitleId = R.string.configures_dialogchooseFileDataset;
 				break;
-			case Config.AppSettings.ITEM_SELECT_SCHEMES:
+			case Config.AppSettings.ITEM_CODE_SELECT_SCHEMES:
 				TitleId = R.string.configures_dialogchooseSchemes;
 				break;
 			}
@@ -191,35 +179,35 @@ public class ConfiguresActivity extends Activity {
 						checkedItem = itemSelected;		
 					}
 		    		
-		    }).setPositiveButton(R.string.configures_dialogok, new DialogInterface.OnClickListener() {
+		    }).setPositiveButton(Config.Message.MESSAGE_DIALOG_OK, new DialogInterface.OnClickListener() {
 		            @Override
 		            public void onClick(DialogInterface dialog, int id) {  
 		            	 switch(item){
-							case Config.AppSettings.ITEM_SELECT_LIBRARY:
+							case Config.AppSettings.ITEM_CODE_SELECT_LIBRARY:
 								selectItems[item] = true;
 								controlSelectLibrary(checkedItem, optionsItem[checkedItem].toString());
 								break;
 								
-							case Config.AppSettings.ITEM_SELECT_FILE_DATASET:
+							case Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET:
 								selectItems[item] = true;
 								controlPickFile(checkedItem,optionsItem[checkedItem].toString() );
 								break;
 								
-							case Config.AppSettings.ITEM_SELECT_PREDICTED_ATT:
+							case Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT:
 								selectItems[item] = true;
 								controlSelectPredAtt(checkedItem);	
 							}	
 		            	  dialog.dismiss();
 		                  adapter.showItemChecked(item, parentAdapter);
 		               }
-		    }).setNegativeButton(R.string.configures_dialogcancel, new DialogInterface.OnClickListener() {
+		    }).setNegativeButton(Config.Message.MESSAGE_DIALOG_CANCEL, new DialogInterface.OnClickListener() {
 		            	@Override
 		            	public void onClick(DialogInterface dialog, int id) {
 		            		
 		            	}
 		                   
 		          });
-		    if(item == Config.AppSettings.ITEM_SELECT_PREDICTED_ATT){
+		    if(item == Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT){
 		    	builder.setAdapter(new DialogItemsAdapter(ConfiguresActivity.this,
 		    			optionsItem, info.getListAttHandlerPrediction(info.getDatasetSelected()),
 		    			R.layout.select_dialog_singlechoice_material), new DialogInterface.OnClickListener() {
@@ -254,7 +242,7 @@ public class ConfiguresActivity extends Activity {
 		                	 enabledPositiveButton(false);
 		               }
 		           })
-		   .setPositiveButton(R.string.configures_dialogok, new DialogInterface.OnClickListener() {
+		   .setPositiveButton(Config.Message.MESSAGE_DIALOG_OK, new DialogInterface.OnClickListener() {
 		    	@Override
 		        public void onClick(DialogInterface dialog, int id) {
 		            selectItems[item] = true;
@@ -265,7 +253,7 @@ public class ConfiguresActivity extends Activity {
 		                 
 		               }
 		           })
-		     .setNegativeButton(R.string.configures_dialogcancel, new DialogInterface.OnClickListener() {
+		     .setNegativeButton(Config.Message.MESSAGE_DIALOG_CANCEL, new DialogInterface.OnClickListener() {
 		        @Override
 		        public void onClick(DialogInterface dialog, int id) { 
 		               }
@@ -285,8 +273,6 @@ public class ConfiguresActivity extends Activity {
 		}	
 	}
 	
-	
-	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -299,8 +285,8 @@ public class ConfiguresActivity extends Activity {
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
         		progressDialog = ProgressDialog.show(	ConfiguresActivity.this, 
-        												getString(Config.Message.ITEM_PROGRESSDIALOG_TITLE),
-        												getString(Config.Message.ITEM_PROGRESSDIALOG_DETAIL, true) );
+        												getString(Config.Message.MESSAGE_PROGRESSDIALOG_TITLE),
+        												getString(Config.Message.MESSAGE_PROGRESSDIALOG_DETAIL, true) );
                 progressDialog.setCancelable(false);
                 progressDialog.setIcon(R.drawable.icon_alert_wait);
                 new Thread(new Runnable() {
@@ -349,16 +335,16 @@ public class ConfiguresActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
 				switch(position){
-				case Config.AppSettings.ITEM_SELECT_LIBRARY:
+				case Config.AppSettings.ITEM_CODE_SELECT_LIBRARY:
 					selectLibrary();
 					break;
-				case Config.AppSettings.ITEM_SELECT_FILE_DATASET:
+				case Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET:
 					pickFile();
 					break;
-				case Config.AppSettings.ITEM_SELECT_PREDICTED_ATT:
+				case Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT:
 					selectPredAtt(position);
 					break;
-				case Config.AppSettings.ITEM_SELECT_SCHEMES:
+				case Config.AppSettings.ITEM_CODE_SELECT_SCHEMES:
 					selectSchemes();
 				}	
 			}
@@ -382,7 +368,6 @@ public class ConfiguresActivity extends Activity {
 		for(int index = 0; index<length; index++){
 			configureItems[index] = getString(aux[index]);
 			selectItems[index] = false;
-			lastSelectedItems[index] = null;		//CREO QUE NO ES NECESARIO
 			enableItems[index] = false;
 		}
 		enableItems[0] = true;
@@ -400,7 +385,7 @@ public class ConfiguresActivity extends Activity {
 	    builder.setTitle(R.string.configures_exception_title)
 	    .setMessage(idMessage)
 	    .setIcon(R.drawable.icon_alert_exception)
-	    .setPositiveButton(R.string.configures_dialogok, new DialogInterface.OnClickListener() {
+	    .setPositiveButton(Config.Message.MESSAGE_DIALOG_OK, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int arg1) {
 				// TODO Auto-generated method stub
@@ -411,7 +396,7 @@ public class ConfiguresActivity extends Activity {
 	}
 	
 	private void selectLibrary(){
-		int index = Config.AppSettings.ITEM_SELECT_LIBRARY;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_LIBRARY;
 		CharSequence[] items = info.getListLibraries();
 		if(items.length > 0) {
 			OptionsItemsSelector dialogFrag = new OptionsItemsSelector(index,items , adapter, lvList);
@@ -422,7 +407,7 @@ public class ConfiguresActivity extends Activity {
 	}
 	
 	private void controlSelectLibrary(int itemSelect, String item){
-		int index = Config.AppSettings.ITEM_SELECT_LIBRARY;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_LIBRARY;
 		
 		if(lastSelectedItems[index] == null || lastSelectedItems[index] != itemSelect) {					
 			info.setLibrarySelected(item);
@@ -432,14 +417,14 @@ public class ConfiguresActivity extends Activity {
 			info.getLibrarySelected().setNumericalTypes();
 			info.getLibrarySelected().setCategoricalTypes();	
 			
-			controlReSelect(Config.AppSettings.ITEM_SELECT_FILE_DATASET, true);
-			controlReSelect(Config.AppSettings.ITEM_SELECT_PREDICTED_ATT, false);
-			controlReSelect(Config.AppSettings.ITEM_SELECT_SCHEMES, false);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET, true);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT, false);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, false);
 		}	
 	}
 	
 	private void pickFile(){
-		int index = Config.AppSettings.ITEM_SELECT_FILE_DATASET;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET;
 		if(enableItems[index]){	
 			CharSequence[] items = info.getListFilesDataset();
 			if(items.length > 0) {
@@ -450,14 +435,14 @@ public class ConfiguresActivity extends Activity {
 				showNotification(R.string.configures_exception_noFile);
 		}
 		else
-			Toast.makeText(getApplicationContext(), Config.Exception.MISSING_LIBRARY,Toast.LENGTH_LONG).show(); 	
+			Toast.makeText(getApplicationContext(), Config.Exception.EXCEPTION_MISSING_LIBRARY,Toast.LENGTH_LONG).show(); 	
 	}
 	
 	private void controlPickFile(int itemSelect, String item){
-		int index = Config.AppSettings.ITEM_SELECT_FILE_DATASET;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET;
 		if(lastSelectedItems[index] == null || lastSelectedItems[index] != itemSelect) {					
 			try {
-				info.setFileDatasetSelected(item, 	Config.InitialSettings.DIR_WORKING +
+				info.setFileDatasetSelected(item, 	Config.InitialSettings.getDirWorking() +
 													getString(Config.InitialSettings.SUBDIR_APP) +
 													getString(Config.InitialSettings.SUBDIR_DATABASE));
 			} catch (Exception e) {
@@ -466,13 +451,13 @@ public class ConfiguresActivity extends Activity {
 			}
 			lastSelectedItems[index]=itemSelect;
 			
-			controlReSelect(Config.AppSettings.ITEM_SELECT_PREDICTED_ATT, true);
-			controlReSelect(Config.AppSettings.ITEM_SELECT_SCHEMES, false);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT, true);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, false);
 		}			
 	}
 	
 	private void selectPredAtt(int itemSelect){
-		int index = Config.AppSettings.ITEM_SELECT_PREDICTED_ATT;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT;
 		if(enableItems[index]){
 			CharSequence[] items = info.getListAttributes();
 			if(items.length > 0) {
@@ -483,36 +468,36 @@ public class ConfiguresActivity extends Activity {
 				showNotification(R.string.configures_exception_convertFile);
 		}
 		else
-			Toast.makeText(getApplicationContext(), Config.Exception.MISSING_FILEDATASET,Toast.LENGTH_LONG).show(); 	
+			Toast.makeText(getApplicationContext(), Config.Exception.EXCEPTION_MISSING_FILEDATASET,Toast.LENGTH_LONG).show(); 	
 	}
 		
 	private void controlSelectPredAtt(int itemSelect){
-		int index = Config.AppSettings.ITEM_SELECT_PREDICTED_ATT;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT;
 		if(lastSelectedItems[index] == null || lastSelectedItems[index] != itemSelect) {
 			info.setAttributeSelected(itemSelect);
 			lastSelectedItems[index]=itemSelect;	 
 			
-			controlReSelect(Config.AppSettings.ITEM_SELECT_SCHEMES, true);
+			controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, true);
 		}	
 		
 	}
 	
 	private void selectSchemes() {
-		if(enableItems[Config.AppSettings.ITEM_SELECT_SCHEMES]) {
+		if(enableItems[Config.AppSettings.ITEM_CODE_SELECT_SCHEMES]) {
 			CharSequence[] items = info.getListSchemes();
 			if(items.length > 0) {
-				final OptionsItemsSelector dialogFrag = new OptionsItemsSelector(Config.AppSettings.ITEM_SELECT_SCHEMES, items, adapter, lvList);
+				final OptionsItemsSelector dialogFrag = new OptionsItemsSelector(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, items, adapter, lvList);
 				dialogFrag.showMultiOptionDialog();
 			}
 			else
 				showNotification(R.string.configures_exception_noModels);
 		}
 		else 
-			Toast.makeText(getApplicationContext(),Config.Exception.MISSING_PREDATT,Toast.LENGTH_LONG).show();			
+			Toast.makeText(getApplicationContext(),Config.Exception.EXCEPTION_MISSING_PREDATT,Toast.LENGTH_LONG).show();			
 	}
 	
 	private void controlSelectSchemes(Vector<Integer> schemes) {
-		int index = Config.AppSettings.ITEM_SELECT_SCHEMES;
+		int index = Config.AppSettings.ITEM_CODE_SELECT_SCHEMES;
 		if(selectItems[index]){
 			info.setSchemesSelected(schemes);
 			button_lock.setBackgroundResource(R.drawable.icon_lockopen);

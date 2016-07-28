@@ -17,7 +17,7 @@ public class ImagesLearningCurveActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.images_learningcurve);
+        setContentView(R.layout.activity_imageslearningcurve);
         
         images = OptimizingSchemeActivity.getImages();
         index = 0;
@@ -40,8 +40,8 @@ public class ImagesLearningCurveActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				imageView.setImageBitmap(images.elementAt(index));
 				index = (index+1) % images.size();
+				imageView.setImageBitmap(images.elementAt(index));
 			}
 		});
         
@@ -50,10 +50,10 @@ public class ImagesLearningCurveActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
-				imageView.setImageBitmap(images.elementAt(index));
 				 index = (index-1);
 				 if(index < 0)
 					 index = images.size() - 1;
+				 imageView.setImageBitmap(images.elementAt(index));
 			}
 		});
         

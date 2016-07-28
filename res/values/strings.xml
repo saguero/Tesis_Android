@@ -6,15 +6,12 @@
      <string name="presentation_intro">machine learning techniques to predict non-functional attributes in components of android applications</string>
 	 <string name="presentation_selectLang">Select language</string>
      
-    												<!-- Activity Configures-->											
+    												<!-- Activity Configures-->
     <string name="configures_title">Configures</string>
     <string name="configures_selectlibrary">Select library</string>
     <string name="configures_selectdataset">Select File Dataset</string>
     <string name="configures_selectpredAtt">Select Predicted Attribute</string>
     <string name="configures_selectschemes">Select Schemes</string>
-    
-    <string name="configures_dialogok">OK</string> 
-    <string name="configures_dialogcancel">Cancel</string>
 	<string name="configures_dialogchooseAtt">Choose Predicted Attribute</string>
 	<string name="configures_dialogchooseLibrary">Choose Library</string>
 	<string name="configures_dialogchooseSchemes">Choose Schemes</string>
@@ -23,16 +20,17 @@
 	<string name="configures_exception_missinglibrary">Please, select the library before</string>
 	<string name="configures_exception_missingfiledataset">Please, select the file dataset before</string>
 	<string name="configures_exception_missingpredatt">Please, select the predicted attribute before</string>
-	<string name="configures_exception_alreadysaved">Files are already saved</string>
-  	<string name="configures_exception_noLibrary">There are no added libraries</string>
+	<string name="configures_exception_noLibrary">There are no added libraries</string>
   	<string name="configures_exception_noFile">No files are found in the working directory. Consider changing the directory or file format</string>
   	<string name="configures_exception_convertFile">The selected file could not be converted to the appropriate format</string>
   	<string name="configures_exception_noModels">There are no models belonging to the current library</string>
-	<string name="configures_exception_title">Notification</string>
+  	
+  	<string name="configures_exception_title">Notification</string>
 	
 	
     												<!-- Activity Initial Configuration -->
-    <string name="initial_title">Initial Configuration</string>												
+    <string name="initial_title">Initial configuration</string>												
+    												
     <string name="initial_optionformatfile1">csv</string>
     
     <string name="initial_optiontypeprediction1">Regression</string>
@@ -50,12 +48,17 @@
     <string name="initial_dialogTitle_storage">Select the directory to work with</string>
     <string name="initial_dialogTitle_typeprediction">Define the type of prediction to do</string>	
     
+    <string name="initial_subdirectory_app">Prediction/</string>
+    <string name="initial_subdirectory_optschemes">Optimization Schemes/</string>
+    <string name="initial_subdirectory_optparams">Parameter Optimization/</string>
+    <string name="initial_subdirectory_models">Models/</string>		
+    <string name="initial_subdirectory_trainingSets">Training Sets/</string>	
     										
-    											
     												<!-- Activity Filtered Schemes-->
     <string name="filtered_title">Step 1: Filtered Schemes</string>
     <string name="filtered_scheme">Schemes</string>
-    <string name="filtered_metrics">Métrics</string>
+    <string name="filtered_metrics">Metrics</string>
+    <string name="filtered_selectscheme">Select scheme...</string>
     
     <string name="filtered_exception_missingscheme">Please, select scheme to continue</string>
     
@@ -70,6 +73,7 @@
 	<string name="optimizing_subtitle_loading">Loading</string>
 	<string name="optimizing_subtitle_principle">Scheme\'s parameters analysis</string>
 	<string name="optimizing_subtitle_config">Select the button to config parameters</string>
+	<string name="optimizing_subtitle_model">Select the button to generate model</string>
     
      											<!-- Activity Model fit-->
     <string name="title_modelfit">Model Fit</string>
@@ -90,10 +94,12 @@
    	<string name="ok_entendido">OK, understood</string>
    	
   
+  	<string name="configures_exception_alreadysaved">Files are already saved</string>
   	
     <string name="missingImg">Missing Image</string>
     
-    											<!-- GRPHICS TITLES-->
+    
+    											<!-- GRAPHICS TITLES-->
     <string name="graphic_line_label_realvalues">Real values</string>
     <string name="graphic_line_label_trainingset">TrainingSet</string>
     <string name="graphic_line_label_cv">Cross Validation</string>
@@ -106,7 +112,7 @@
     <string name="graphic_bar_axisx">Metrics</string>
     <string name="graphic_bar_axisy">Measure</string>
     
-     											<!-- MESSAGES-->
+    											<!-- MESSAGES-->
    	<string name="message_progressDialog_title">Please wait ...</string>
    	<string name="message_progressDialog_detail">Task in progress...</string>
    	<string name="message_alertdialog_save">The images will be storage in working directory</string>
@@ -115,5 +121,20 @@
    	<string name="message_alertdialog_confirmsave_detail">Task completed successfully</string>
    	<string name="message_alertdialog_yes">YES</string>
    	<string name="message_alertdialog_no">NO</string>
+   	<string name="message_alert_title">Alert</string>
+   	<string name="message_alertdialog_ok">Ok</string>
+   	<string name="message_alertdialog_cancel">Cancel</string>
+   	
+   	<string name="message_savebefore_detail">Before loading images, do you want to save last images?</string>
+   	<string name="message_savebefore_title">Save</string>
+   	
+   	<string name="message_alertdialog_generatemodel_title">Generate model</string>
+   	<string name="message_alertdialog_generatemodel_detail">To generate the prediction model enter the file name</string>
+   	<string name="message_alertdialog_generatemodel_accept">Generate</string>
+   	<string name="message_alertdialog_generatemodel_cancel">Cancel</string>
+   	<string name="message_alertdialog_generatemodel_introtext">Enter name file here</string>
+   	
+   	<string name="exception_alreadysaved">Images are already saved</string>	
+   	<string name="exception_selectscheme">Please, select a scheme to continue</string>
 
 </resources>

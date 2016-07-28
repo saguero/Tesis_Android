@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 import com.example.prediction.logica.Config;
 
@@ -22,7 +23,7 @@ public class InitialConfigurationActivity extends Activity {
     private HashMap<String, List<String>> listDataChild;
     private TextView textInfo;
     private Info info = new Info();
-    private Integer[] lastOptionSelect;
+    private static Vector<Integer> lastOptionSelect = new Vector<Integer>();
     
 
 	@Override
@@ -47,32 +48,32 @@ public class InitialConfigurationActivity extends Activity {
 					int groupPosition, int childPosition, long id) {
 				// TODO Auto-generated method stub
 				
-				if(lastOptionSelect[groupPosition] != childPosition){
+				if(lastOptionSelect.elementAt(groupPosition) == null || lastOptionSelect.elementAt(groupPosition) != childPosition){
 					String itemSelected = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
 					
 					switch(groupPosition){
 					
-					case Config.InitialSettings.ITEM_FORMATFILE:
+					case Config.InitialSettings.ITEM_CODE_FORMATFILE:
 						Config.InitialSettings.setFormatDataset(Config.InitialSettings.getOptionsDatasetFormat()[childPosition]);
 						configFileDatasetOptions();
-						Toast.makeText(InitialConfigurationActivity.this,  getString(Config.Message.SELECT_FORMATFILE) + itemSelected , Toast.LENGTH_LONG).show();			
+						Toast.makeText(InitialConfigurationActivity.this,  getString(Config.Message.MESSAGE_SELECT_FORMATFILE) + itemSelected , Toast.LENGTH_LONG).show();			
 						break;
 						
-					case Config.InitialSettings.ITEM_TYPEPREDICTION:
+					case Config.InitialSettings.ITEM_CODE_TYPEPREDICTION:
 						Config.InitialSettings.setTypePrediction(Config.InitialSettings.getOptionsTypePrediction()[childPosition]);
 						info.setTypePrediction(childPosition);
 						configAttOptions();
-						Toast.makeText(InitialConfigurationActivity.this, getString(Config.Message.SELECT_TYPEPREDICTION) + itemSelected , Toast.LENGTH_LONG).show();
+						Toast.makeText(InitialConfigurationActivity.this, getString(Config.Message.MESSAGE_SELECT_TYPEPREDICTION) + itemSelected , Toast.LENGTH_LONG).show();
 						break;
 					
-					case Config.InitialSettings.ITEM_STORAGE:
+					case Config.InitialSettings.ITEM_CODE_STORAGE:
 						moveDirectory(itemSelected);
 						Config.InitialSettings.setWorkingDir(itemSelected);
 						configFileDatasetOptions();
-						Toast.makeText(InitialConfigurationActivity.this, getString(Config.Message.SELECT_STORAGE) + itemSelected , Toast.LENGTH_LONG).show();
+						Toast.makeText(InitialConfigurationActivity.this, getString(Config.Message.MESSAGE_SELECT_STORAGE) + itemSelected , Toast.LENGTH_LONG).show();
 						break;
 					}
-					lastOptionSelect[groupPosition]=childPosition;
+					lastOptionSelect.setElementAt(childPosition, groupPosition);
 				}
 				
 				return false;
@@ -84,15 +85,15 @@ public class InitialConfigurationActivity extends Activity {
 			public boolean onGroupClick(ExpandableListView parent, View view, int groupPosition, long id) {
 				// TODO Auto-generated method stub
 				switch(groupPosition){
-				case Config.InitialSettings.ITEM_FORMATFILE:
+				case Config.InitialSettings.ITEM_CODE_FORMATFILE:
 					textInfo.setText(R.string.initial_dialogTitle_formatfile);			
 					break;
 					
-				case Config.InitialSettings.ITEM_TYPEPREDICTION:
+				case Config.InitialSettings.ITEM_CODE_TYPEPREDICTION:
 					textInfo.setText(R.string.initial_dialogTitle_typeprediction);
 					break;
 				
-				case Config.InitialSettings.ITEM_STORAGE:
+				case Config.InitialSettings.ITEM_CODE_STORAGE:
 					textInfo.setText(R.string.initial_dialogTitle_storage);
 					break;
 				}
@@ -108,6 +109,7 @@ public class InitialConfigurationActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				// TODO Auto-generated method stub
+				
 				finish();
 			}
         	
@@ -116,7 +118,7 @@ public class InitialConfigurationActivity extends Activity {
 	}
 	
 	private void moveDirectory(String itemSelected){
-		String oldPath = Config.InitialSettings.DIR_WORKING + getString(R.string.initial_subdirectory_app);
+		String oldPath = Config.InitialSettings.getDirWorking() + getString(R.string.initial_subdirectory_app);
 		File directorySource = new File(oldPath);
 		if(directorySource.exists()){
 			File destination = new File(itemSelected + "/" + getString(R.string.initial_subdirectory_app) );
@@ -137,25 +139,22 @@ public class InitialConfigurationActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_SELECT_FILE_DATASET, true);
-		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_SELECT_PREDICTED_ATT, false);
-		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_SELECT_SCHEMES, false);
+		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET, true);
+		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT, false);
+		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, false);
 	}
 	
 	private void configAttOptions() {
 		// TODO Auto-generated method stub
-		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_SELECT_PREDICTED_ATT, true);
-		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_SELECT_SCHEMES, false);
+		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT, true);
+		ConfiguresActivity.controlReSelect(Config.AppSettings.ITEM_CODE_SELECT_SCHEMES, false);
 	}
 	
 	private void configGroupItemsInitial(){
 		listDataHeader = new ArrayList<String>();
-		for(Integer id: Config.InitialSettings.INITIAL_ITEMS) {
+		for(Integer id: Config.InitialSettings.TITLE_INITIAL_ITEMS) {
 			listDataHeader.add(getString(id));
 		}
-		lastOptionSelect = new Integer[listDataHeader.size()];
-		for(int index = 0; index < lastOptionSelect.length; index++)
-			lastOptionSelect[index]=0;
 	}
 	
 	private void configItemsInitial(){
@@ -171,9 +170,9 @@ public class InitialConfigurationActivity extends Activity {
 		
 		List<String> directorys = getDirectorys(Config.InitialSettings.getDirStorage());
 		
-		listDataChild.put(getString(Config.InitialSettings.INITIAL_ITEMS[0]), formatFile);
-		listDataChild.put(getString(Config.InitialSettings.INITIAL_ITEMS[1]), typePrediction);
-		listDataChild.put(getString(Config.InitialSettings.INITIAL_ITEMS[2]), directorys);
+		listDataChild.put(getString(Config.InitialSettings.TITLE_INITIAL_ITEMS[0]), formatFile);
+		listDataChild.put(getString(Config.InitialSettings.TITLE_INITIAL_ITEMS[1]), typePrediction);
+		listDataChild.put(getString(Config.InitialSettings.TITLE_INITIAL_ITEMS[2]), directorys);
 		
 	}
 	
@@ -185,10 +184,14 @@ public class InitialConfigurationActivity extends Activity {
 		
 		File[] files = f.listFiles();
 		for(File arch: files)
-			if(arch.isDirectory()) 
-				directorys.add(arch.getAbsolutePath());
+			if(arch.isDirectory())  {
+				String dir = arch.getAbsolutePath();
+				if(! dir.endsWith("/"))
+					dir = dir.concat("/");
+				directorys.add(dir);
+			}
 		return directorys;
 	}
-
+	
 	
 }

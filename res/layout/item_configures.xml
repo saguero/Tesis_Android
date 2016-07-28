@@ -17,7 +17,7 @@
         	android:id="@+id/imageView_configures_items_icon"
         	android:layout_width="35dp"
         	android:layout_height="35dp"
-        	android:contentDescription="@string/configures_dialogok" />
+        	android:contentDescription="@string/message_alertdialog_ok" />
 	</LinearLayout>
     
     <!-- title -->
@@ -39,7 +39,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/configures_dialogok"
+        android:contentDescription="@string/message_alertdialog_ok"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:src="@drawable/icon_check" />

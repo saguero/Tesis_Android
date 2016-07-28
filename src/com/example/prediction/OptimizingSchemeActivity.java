@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,24 +30,22 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	private final int HISTORIAL = 0;
 	private final int SAVE = 1;
 	
-	private int titleId;
-	private int messageId;
+	private Info info = new Info();
 	
-	private ImageSwitcher imageswitcher;
 	private int index = 0;
 	private boolean saved; 
-	private Info info = new Info();
 	private Bitmap image_learningcurve;
 	private Bitmap image_errorprediction;
 	private static Vector<Bitmap> images = new Vector<Bitmap>();
+	private ImageSwitcher imageswitcher;
+	private TextView subtitle;
 	
-	
-	private TextView title;
-	private int actionAlert;
-	private int icon;
-	
-	
+
 	public class CautionDialog extends AlertDialog {
+		private int titleId;
+		private int messageId;
+		private int actionAlert;
+		private int icon;
 		
 		public CautionDialog(int alert) {
 			super(OptimizingSchemeActivity.this);
@@ -105,6 +104,9 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	        saved = false;
 	        generateImages();
 	        
+	        subtitle = (TextView) findViewById(R.id.textView_optimizing_subtitle);
+	        subtitle.setText(R.string.optimizing_subtitle_principle);
+	        
 	        Button button_suggestion = (Button) findViewById(R.id.button_optimizing_help);
 	        button_suggestion.setOnClickListener(new View.OnClickListener(){
 	        	@Override
@@ -131,15 +133,15 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 				@Override
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
-					if(saved){
+					if(!saved){
 						CautionDialog dialog = new CautionDialog(SAVE);
 						dialog.onCreateDialog();
 					}
 					else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(OptimizingSchemeActivity.this);
 				        builder.setTitle(R.string.message_alert_title)													
-				        .setMessage(Config.Exception.ALREADY_SAVED)
-				        .setIcon(icon)
+				        .setMessage(Config.Exception.EXCEPTION_ALREADY_SAVED)
+				        .setIcon(R.drawable.icon_alert_save)
 				        .setPositiveButton(R.string.optimizing_dialogyes, new DialogInterface.OnClickListener() {
 				        	@Override
 							public void onClick(DialogInterface dialog, int arg1) {
@@ -148,6 +150,7 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 							}
 				        	
 				        });
+				        builder.create().show();
 					}	        	
 				}
 	        });
@@ -173,15 +176,21 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	        Button button_previous = (Button) findViewById(R.id.button_optimizing_previous);
 	        button_previous.setOnClickListener(new View.OnClickListener(){
 				@Override
-				public void onClick(View arg0) {
+				public void onClick(View view) {
 					// TODO Auto-generated method stub
 					previousImage();
 				}	        	
 	        });
 	        
+	        Button button_model = (Button) findViewById(R.id.button_optimizing_model);
+	        button_model.setOnClickListener(new View.OnClickListener(){
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					generateModel();
+				}	        	
+	        });
 	        
-	        title = (TextView) findViewById(R.id.textView_optimizing_subtitle);
-	        title.setText(R.string.optimizing_subtitle_loading);
 	        
 	        imageswitcher=(ImageSwitcher) findViewById(R.id.imageSwitcher_optimizing_display);
 	        imageswitcher.setFactory(new ViewSwitcher.ViewFactory() {
@@ -193,17 +202,9 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 					imageview.setLayoutParams(new ImageSwitcher.LayoutParams(	ActionBar.LayoutParams.WRAP_CONTENT,
 																				ActionBar.LayoutParams.WRAP_CONTENT) );
 					imageview.setImageBitmap(images.elementAt(0));
-					title.setText(R.string.optimizing_subtitle_principle);
 					return imageview;
 				}
 			}); 
-	        imageswitcher.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
 	    }
 	 
 	 private void generateImages(){
@@ -222,6 +223,30 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 			}
 	 }
 
+	 private void generateModel(){
+		final EditText input = new EditText(this);
+		 input.setSingleLine(true);
+		 input.setHint(Config.Message.MESSAGE_DIALOG_GENERATEMODEL_INTROTEXT);
+
+		 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		 builder.setView(input);
+		 builder.setTitle(Config.Message.MESSAGE_DIALOG_GENERATEMODEL_TITLE);
+		 builder.setMessage(Config.Message.MESSAGE_DIALOG_GENERATEMODEL_DETAIL);
+		 builder.setPositiveButton(
+		     getString(Config.Message.MESSAGE_DIALOG_GENERATEMODEL_ACCEPT),
+		     new DialogInterface.OnClickListener() {
+		         public void onClick(DialogInterface dialog, int whichButton) {
+		             String value = input.getText().toString().trim();
+		             value = value.concat("!");
+		             
+		         }
+		     });
+		 builder.setNegativeButton( Config.Message.MESSAGE_DIALOG_GENERATEMODEL_CANCEL, null);
+		 builder.create().show();
+		 
+	 }
+	 
+	 
 	 private void nextImage(){
 		 Animation in = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in_left);
 	     Animation out = AnimationUtils.loadAnimation(this, R.anim.anim_slide_out_right);
@@ -232,7 +257,7 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	     imageswitcher.setAnimation(in);
 	 }
 	
-	 public void previousImage(){
+	 private void previousImage(){
 		 Animation in = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in_right);
 	     Animation out = AnimationUtils.loadAnimation(this, R.anim.anim_slide_out_left);
 	     imageswitcher.setAnimation(out);

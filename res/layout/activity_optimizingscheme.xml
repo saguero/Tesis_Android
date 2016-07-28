@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_fase3"
+    android:background="@drawable/background"
     tools:context=".OptimizingSchemeActivity" >
 
     <TextView
@@ -76,12 +76,12 @@
         android:stateListAnimator="@null" />
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="200dp"
+        android:id="@+id/textView_optimizing_config"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button_optimizing_previous"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="20dp"
         android:text="@string/optimizing_subtitle_config"
         android:textSize="20sp" />
 
@@ -98,12 +98,31 @@
     <Button
         android:id="@+id/button_optimizing_settings"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/textView_optimizing_config"
+        android:layout_toEndOf="@+id/textView_optimizing_config"
         android:background="@drawable/icon_configparams"
         android:onClick="configParameters()"
+        android:stateListAnimator="@null" />
+
+    <TextView
+        android:id="@+id/textView_optimizing_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_optimizing_config"
+        android:text="@string/optimizing_subtitle_model"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button_optimizing_model"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/textView_optimizing_model"
+        android:layout_toEndOf="@+id/textView_optimizing_model"
+        android:background="@drawable/icon_model"
         android:stateListAnimator="@null" />
 
 </RelativeLayout>

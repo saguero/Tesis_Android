@@ -21,18 +21,6 @@
 
     </ExpandableListView>
 
-    <TextView
-        android:id="@+id/textView_initial_info"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:gravity="center"
-        android:textSize="20sp" />
-
     <Button
         android:id="@+id/button_initial_ok"
         style="?android:attr/buttonStyleSmall"
@@ -56,5 +44,17 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_initial_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/expandableListView_initialconfiguration"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textSize="20sp" />
 
 </RelativeLayout>

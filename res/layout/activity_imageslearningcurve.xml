@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.7"
-    android:background="@drawable/background_fase3"
+    android:background="@drawable/background"
     tools:context=".ImagesLearningCurveActivity" >
 
     <ImageView
@@ -14,10 +14,10 @@
         android:layout_below="@+id/button_images_return"
         android:layout_marginTop="-20dp"
         android:background="@color/grey"
-        android:contentDescription="@string/configures_dialogok"
+        android:contentDescription="@string/message_alertdialog_ok"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:src="@drawable/background_fase3" />
+        android:src="@drawable/background" />
 
     <Button
         android:id="@+id/button_images_return"
@@ -25,7 +25,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignEnd="@+id/imageView_images"
-        android:background="@drawable/icon_undo"
+        android:background="@drawable/icon_return"
         android:stateListAnimator="@null" />
 
     <Button

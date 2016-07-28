@@ -13,8 +13,6 @@
     <string name="configures_selectdataset">Seleccionar archivo dataset</string>
     <string name="configures_selectpredAtt">Seleccionar atributo a predecir</string>
     <string name="configures_selectschemes">Seleccionar modelos</string>
-    <string name="configures_dialogok">OK</string> 
-    <string name="configures_dialogcancel">Cancelar</string>
 	<string name="configures_dialogchooseAtt">Elegir el atributo a predecir</string>
 	<string name="configures_dialogchooseLibrary">Elegir libreria</string>
 	<string name="configures_dialogchooseSchemes">Elegir modelos</string>
@@ -72,6 +70,7 @@
 	<string name="optimizing_subtitle_loading">Cargando</string>
 	<string name="optimizing_subtitle_principle">Analisis de los parametros del modelo</string>
 	<string name="optimizing_subtitle_config">Seleccione el boton para configurar los parametros</string>
+	<string name="optimizing_subtitle_model">Seleccione el boton para generar el modelo</string>
     
      											<!-- Activity Model fit-->
     <string name="title_modelfit">Model Fit</string>
@@ -120,7 +119,14 @@
    	<string name="message_savebefore_detail">Antes de cargar todas las imágenes, desea guardar las ultimas imágenes?</string>
    	<string name="message_savebefore_title">Guardar</string>
    	<string name="message_alert_title">Alerta</string>
+   	<string name="message_alertdialog_ok">Ok</string>
+   	<string name="message_alertdialog_cancel">Cancelar</string>
    	
+   	<string name="message_alertdialog_generatemodel_title">Generar Modelo</string>
+   	<string name="message_alertdialog_generatemodel_detail">Para generar el modelo de prediccion introduzca el nombre del archivo</string>
+   	<string name="message_alertdialog_generatemodel_accept">Generar</string>
+   	<string name="message_alertdialog_generatemodel_cancel">Cancelar</string>
+   	<string name="message_alertdialog_generatemodel_introtext">Escriba el nombre aqui</string>
    	
    	<string name="exception_alreadysaved">Las imágenes ya han sido guardadas.</string>
    	<string name="exception_selectscheme">Por favor, seleccione un modelo para continuar</string>

@@ -30,7 +30,7 @@ import android.graphics.drawable.BitmapDrawable;
 public class BarGraphics extends AbsGraphics {
 	private Vector<Integer> bestResults;
 	private Metric[] categorys;
-	private BitmapDrawable image;
+	private BitmapDrawable backgroundImage;
 	private Context context;
 	
 	class CustomRenderer extends BarRenderer{
@@ -38,26 +38,24 @@ public class BarGraphics extends AbsGraphics {
 
 		public CustomRenderer() {}
 		
-		public PaintType getItemPaintType(final int row, final int column) {
-			int index1 = column * 2;									//ROW: SERIE (BARRA)
-			  int index2 = (column * 2) + 1;							//COLUMN: CATEGORY (METRIC)
-			  if(column < 4){
-				  if(row == bestResults.elementAt(index1)){
+		public PaintType getItemPaintType(final int serie, final int category) {
+			int index1 = category * 2;									
+			  int index2 = (category * 2) + 1;							
+			  if(category < 4){
+				  if(serie == bestResults.elementAt(index1))
 					  return Config.Graphic.GRAPHIC_BAR_COLOR_BESTRESULT1;
-				   }
-				   if(row == bestResults.elementAt(index2)){
-					   return Config.Graphic.GRAPHIC_BAR_COLOR_BESTRESULT2;
-					   
-				   }  
+				   
+				   if(serie == bestResults.elementAt(index2))
+					   return Config.Graphic.GRAPHIC_BAR_COLOR_BESTRESULT2;	     
 			  }
 				return Config.Graphic.GRAPHIC_BAR_COLOR;																					  
 		   }
 		
-		//SHOW VALUES ON BAR WHICH RESULTS ARE BETTER!!
-		public CategoryItemLabelGenerator getItemLabelGenerator(int i, int j){ 				//J = COLUMN = METRIC
-			int index1 = j * 2;																//I = ROW = SCHEME
-			int index2 = (j * 2) + 1;
-			if(bestResults.elementAt(index1) == i || bestResults.elementAt(index2) == i)	
+		
+		public CategoryItemLabelGenerator getItemLabelGenerator(int serie, int category){ 				
+			int index1 = category * 2;																
+			int index2 = (category * 2) + 1;
+			if(bestResults.elementAt(index1) == serie || bestResults.elementAt(index2) == serie)	
 				return new StandardCategoryItemLabelGenerator("{2}", new DecimalFormat("##.###"));
 			return null;
 		} 
@@ -65,10 +63,10 @@ public class BarGraphics extends AbsGraphics {
 	
 	public BarGraphics(Context context,BitmapDrawable image) {
 		this.context = context;
-		this.image = image;
+		backgroundImage = image;
 	}
 
-	//DEFINE EL ANCHO DE LAS BARRAS 
+	 
 	private double itemMargin(int categorys, int series){
 		if (categorys == 1 || (categorys == 2 && series == 2) )
 			return -1.2;
@@ -90,11 +88,11 @@ public class BarGraphics extends AbsGraphics {
 		double value=0;
 		Vector<Double> values = new Vector<Double>();
 		Vector<Double> auxValues = new Vector<Double>();
-																							//row = serie
-		for(int column=0; column < dataset.getColumnCount(); column++){						//column = category
-			Required req = categorys[column].getRequired();
-			for(int row=0; row < dataset.getRowCount(); row++) {
-				value = dataset.getValue(row, column).doubleValue();
+																							
+		for(int category=0; category < dataset.getColumnCount(); category++){						
+			Required req = categorys[category].getRequired();
+			for(int serie=0; serie < dataset.getRowCount(); serie++) {
+				value = dataset.getValue(serie, category).doubleValue();
 				values.add(value);
 				auxValues.add(value);
 				if(value < min)
@@ -104,7 +102,7 @@ public class BarGraphics extends AbsGraphics {
 			}
 			Collections.sort(auxValues);
 			if(req.equals(Required.MAX)){
-				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	//PLANTEAR EXCEPCION SI SOLO TENGO UN SCHEME
+				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	
 				if(auxValues.size() > 1)
 					bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));
 			}
@@ -127,10 +125,11 @@ public class BarGraphics extends AbsGraphics {
 			categorys[index]=m;
 			index++;
 		}
-
 		configureDataset(trainingSet, evaluator);
-		return getChart(series, context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_CHART),
-				context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISX),  context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISY) );	
+		return getChart(series, 
+				context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_CHART),
+				context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISX),  
+				context.getString(Config.Graphic.GRAPHIC_BAR_TITLE_AXISY) );	
 	}
 	
 	protected AFreeChart createChart(String chartTitle, String axisX, String axisY) throws Exception{
@@ -165,10 +164,8 @@ public class BarGraphics extends AbsGraphics {
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));	
 		
 		CategoryPlot plot = chart.getCategoryPlot();
-	  
-		
-		plot.setBackgroundImage(image);
-		plot.setBackgroundAlpha(1);				//VER
+		plot.setBackgroundImage(backgroundImage);
+		plot.setBackgroundAlpha(100);				
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
 	    plot.setRangeGridlinePaintType(new SolidColor(Color.WHITE));
@@ -177,22 +174,18 @@ public class BarGraphics extends AbsGraphics {
 	   
 	    ((BarRenderer) renderer).setMaximumBarWidth( Config.Graphic.GRAPHIC_BAR_MAXBARWIDTH);
 		((BarRenderer) renderer).setItemMargin(itemMargin(dataset.getColumnCount(),dataset.getRowCount()));
-	    
-	    if(dataset.getRowCount() < Config.Graphic.GRAPHIC_BAR_MAXLABELSHORIZONTAL) {
-	    	chart.getLegend().setFrame(BlockBorder.NONE);	
-			//TOP-LEFT-BOTTOM-RIGHT
-			chart.getLegend().setItemLabelPadding(new RectangleInsets(5.0,2.0,3.0,width));
-			
-		}
-	    
-	   for(int i=0;i<dataset.getRowCount();i++){
+		for(int i=0;i<dataset.getRowCount();i++){
 	    	renderer.setSeriesItemLabelsVisible(i, true);
 	    	renderer.setSeriesPaintType(i, Config.Graphic.GRAPHIC_BAR_COLOR );
 	   }
-	    
-	    renderer.setBaseItemLabelsVisible(true);
+		renderer.setBaseItemLabelsVisible(true);
 	    plot.setRenderer(renderer);
-	    //SET RANGE AXIS
+	    
+	    if(dataset.getRowCount() < Config.Graphic.GRAPHIC_BAR_MAXLABELSHORIZONTAL) {
+	    	chart.getLegend().setFrame(BlockBorder.NONE);	
+			chart.getLegend().setItemLabelPadding(new RectangleInsets(5.0,2.0,3.0,width));	
+		}
+	  
 	    ValueAxis yAxis = plot.getRangeAxis();
 	    yAxis.setRange(min, max);  	    
 	}

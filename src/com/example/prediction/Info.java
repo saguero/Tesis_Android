@@ -63,7 +63,7 @@ public class Info {
 	}
 	
 	public void setListFilesDataset(Context context){
-		File dir = new File(Config.InitialSettings.DIR_WORKING);
+		File dir = new File(Config.InitialSettings.getDirWorking());
         File[] files =  dir.listFiles();
         Vector<CharSequence> aux = new Vector<CharSequence>();
         for (int f = 0; f < files.length; f++) {
@@ -216,9 +216,9 @@ public class Info {
 		images_learningCurve.add(0,img);
 		String name = "LearningCurve_" + getFileDatasetSelected().getName() + "_" + this.getBestScheme().getName() + "_" + IMG_LC_serialId + ".png";
 		
-		String path = 	Config.InitialSettings.DIR_WORKING +
+		String path = 	Config.InitialSettings.getDirWorking() +
 				context.getString(Config.InitialSettings.SUBDIR_APP) +
-				context.getString(Config.InitialSettings.SUBDIR_OPT_SCHEMES);
+				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
 		
 		if(persist(context,img, path, name))
 			IMG_LC_serialId++;		
@@ -227,7 +227,7 @@ public class Info {
 	public void saveErrorPredictionImage(Context context,Bitmap img){
 		images_errorPrediction.add(0,img);
 		
-		String path = 	Config.InitialSettings.DIR_WORKING +
+		String path = 	Config.InitialSettings.getDirWorking() +
 				context.getString(Config.InitialSettings.SUBDIR_APP) +
 				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
 		
@@ -240,9 +240,9 @@ public class Info {
 		images_schemesComparator.add(0,img);
 		String name = "SchemesComparator_" +  getFileDatasetSelected().getName() + "_" + IMG_SC_serialId + ".png";
 		
-		String path = 	Config.InitialSettings.DIR_WORKING +
+		String path = 	Config.InitialSettings.getDirWorking() +
 				context.getString(Config.InitialSettings.SUBDIR_APP) +
-				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
+				context.getString(Config.InitialSettings.SUBDIR_OPT_SCHEMES);
 		
 		if(persist(context,img, path, name)) {
 			IMG_SC_serialId++;	
@@ -274,7 +274,7 @@ public class Info {
 	}
 	
 	public void setFileDatasetSelected(String name, String destination) throws Exception{			
-		fileDatasetSelected = new File(Config.InitialSettings.DIR_WORKING + name);
+		fileDatasetSelected = new File(Config.InitialSettings.getDirWorking() + name);
 		trainingSet = getLibrarySelected().getDatasetObject();
 		File aux = trainingSet.convertFile(fileDatasetSelected, destination );
 		trainingSet.convertInstancesObject(aux);
@@ -354,13 +354,13 @@ public class Info {
 	public Vector<Integer> getListAttHandlerPrediction(AbsDataset dataset){
 		Vector<String> types = null;
 		switch(typePrediction){
-		case Config.InitialSettings.REGRESSION:
+		case Config.InitialSettings.CODE_REGRESSION:
 			types = librarySelected.getNumericalTypes();
 			break;
-		case Config.InitialSettings.CLASSIFICATION:
+		case Config.InitialSettings.CODE_CLASSIFICATION:
 			types = librarySelected.getCategoricalTypes();
 			break;
-		case Config.InitialSettings.CLUSTERING:
+		case Config.InitialSettings.CODE_CLUSTERING:
 			
 		}
 

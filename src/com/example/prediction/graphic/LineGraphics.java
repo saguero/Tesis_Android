@@ -21,14 +21,14 @@ import com.example.prediction.logica.*;
 
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
-	private BitmapDrawable img;
+	private BitmapDrawable backgroundImage;
 	private Context context;
 	
 	
 	public LineGraphics(Context context,BitmapDrawable image) throws Exception {
 		// TODO Auto-generated constructor stub
 		this.context = context;
-		this.img = image;
+		backgroundImage = image;
 	}
 	
 	@Override
@@ -53,8 +53,8 @@ public class LineGraphics extends AbsGraphics {
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		
 		
 		CategoryPlot plot = chart.getCategoryPlot();
-		plot.setBackgroundImage(img);
-		plot.setBackgroundAlpha(1);
+		plot.setBackgroundImage(backgroundImage);
+		plot.setBackgroundAlpha(200);
 	    plot.setBackgroundPaintType(new SolidColor(Color.WHITE));
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));
@@ -64,20 +64,20 @@ public class LineGraphics extends AbsGraphics {
 	    categoryAxis.setVisible(false);
 	  
 	    CategoryItemRenderer renderer = plot.getRenderer();
-		// FOR REAL VALUES:
+		// for real values:
 		renderer.setSeriesPaintType(0, Config.Graphic.GRAPHIC_LINE_COLOR_REALVALUES);
 		renderer.setSeriesStroke(0, Config.Graphic.GRAPHIC_LINE_STROKE_REALVALUES);
 				
-		//OTHERS:
+		//other:
 		for(int s=1; s< dataset.getRowCount(); s++)
 			renderer.setSeriesStroke(s, Config.Graphic.GRAPHIC_LINE_STROKE_PREDVALUES);
 		
-		//FOR BEST PREDICTED VALUES
+		//For best predicted values:
 		renderer.setSeriesStroke(bestPrediction, Config.Graphic.GRAPHIC_LINE_STROKE_REALVALUES);
 		
-		//RANGE VALUES:
 		ValueAxis yAxis = plot.getRangeAxis();
 		yAxis.setRange(min - factorRange, max + factorRange); 	
+		plot.setRenderer(renderer);
 	}
 	
 	private void configureErrorPrediction(AbsDataset trainingSet, AbsEvaluation evaluator) throws Exception {
@@ -156,7 +156,8 @@ public class LineGraphics extends AbsGraphics {
 	public AFreeChart graphedLearningCurve(AbsDataset trainingSet, AbsEvaluation evaluator, Vector<AbsClassifier> schemes) throws Exception {
 		setSeries(schemes);
 		configureLearningCurve(trainingSet,evaluator);
-		return getChart(series, context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC) + " - " + schemes.elementAt(0).getName(),
+		return getChart(series, 
+				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_LC) + " - " + schemes.elementAt(0).getName(),
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISX),
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISY) );
 	}
@@ -164,8 +165,8 @@ public class LineGraphics extends AbsGraphics {
 	public AFreeChart graphedErrorPrediction(AbsDataset trainingSet, AbsEvaluation evaluator, Vector<AbsClassifier> schemes) throws Exception{
 		setSeries(schemes);
 		configureErrorPrediction(trainingSet,evaluator);
-		return getChart(series, context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP) + " - " +
-								schemes.elementAt(0).getName(),
+		return getChart(series, 
+				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP) + " - " + schemes.elementAt(0).getName(),
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISX),
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISY) );
 	}

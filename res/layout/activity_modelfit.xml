@@ -66,7 +66,7 @@
             android:id="@+id/imageView_modelfit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/configures_dialogok"
+            android:contentDescription="@string/message_alertdialog_ok"
             android:src="@drawable/modelfit_introduction" />
 
         <TextView
@@ -125,8 +125,8 @@
             android:id="@+id/imageView_images"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/configures_dialogok"
-            android:src="@drawable/icon_settings" />
+            android:contentDescription="@string/message_alertdialog_ok"
+            android:src="@drawable/icon_configuration" />
 
         <Button
             android:id="@+id/button_modelfit_ok"
