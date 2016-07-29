@@ -10,7 +10,6 @@ import org.afree.graphics.geom.RectShape;
 
 import com.example.prediction.logica.Config;
 
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
 public class ChartView extends ImageView {

@@ -3,99 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_fase3"
+    android:background="@drawable/background"
     tools:context=".OptimizingSchemeActivity" >
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout_optiming1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="60dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView_optimizing_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/contorno_optimizing" />
-
-        <ImageSwitcher
-            android:id="@+id/imageSwitcher_optimizing_display"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-        </ImageSwitcher>
-
-        <LinearLayout
-            android:id="@+id/LinearLayout_optiming2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end" >
-
-            <Button
-                android:id="@+id/button_optimizing_save"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/save2"
-                android:stateListAnimator="@null" />
-
-            <Button
-                android:id="@+id/button_optimizing_historial"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/historial"
-                android:stateListAnimator="@null" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/LinearLayout_optiming3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0" >
-
-            <Button
-                android:id="@+id/button_optimizing_previous"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_prevbutton"
-                android:shadowRadius="0"
-                android:stateListAnimator="@null" />
-
-            <Button
-                android:id="@+id/button_optimizing_next"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_nextbutton"
-                android:stateListAnimator="@null" />
-
-            <Button
-                android:id="@+id/button_optimizing_settings"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="63dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="40dp"
-                android:background="@drawable/icon_settings"
-                android:onClick="configParameters()"
-                android:stateListAnimator="@null" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/textView_optimizing_title"
@@ -105,16 +14,115 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
+    
+    <TextView
+        android:id="@+id/textView_optimizing_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_optimizing_title"
+        android:text="@string/optimizing_subtitle_principle"
+        android:textSize="25sp" />
+
+    <ImageSwitcher
+        android:id="@+id/imageSwitcher_optimizing_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_optimizing_subtitle" >
+    </ImageSwitcher>
+
+    <Button
+        android:id="@+id/button_optimizing_next"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignEnd="@+id/imageSwitcher_optimizing_display"
+        android:layout_below="@+id/imageSwitcher_optimizing_display"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/icon_nextbutton"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_optimizing_previous"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/imageSwitcher_optimizing_display"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/icon_prevbutton"
+        android:shadowRadius="0"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_optimizing_historial"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/imageSwitcher_optimizing_display"
+        android:layout_alignEnd="@+id/imageSwitcher_optimizing_display"
+        android:background="@drawable/icon_historial"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_optimizing_save"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/imageSwitcher_optimizing_display"
+        android:layout_toStartOf="@+id/button_optimizing_historial"
+        android:background="@drawable/icon_alert_save"
+        android:stateListAnimator="@null" />
+
+    <TextView
+        android:id="@+id/textView_optimizing_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_optimizing_previous"
+        android:layout_marginTop="20dp"
+        android:text="@string/optimizing_subtitle_config"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button_optimizing_help"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/whatis"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_toStartOf="@+id/textView_optimizing_title"
+        android:background="@drawable/icon_help"
         android:onClick="showSuggestion()"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_optimizing_settings"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/textView_optimizing_config"
+        android:layout_toEndOf="@+id/textView_optimizing_config"
+        android:background="@drawable/icon_configparams"
+        android:onClick="configParameters()"
+        android:stateListAnimator="@null" />
+
+    <TextView
+        android:id="@+id/textView_optimizing_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_optimizing_config"
+        android:text="@string/optimizing_subtitle_model"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button_optimizing_model"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/textView_optimizing_model"
+        android:layout_toEndOf="@+id/textView_optimizing_model"
+        android:background="@drawable/icon_model"
         android:stateListAnimator="@null" />
 
 </RelativeLayout>

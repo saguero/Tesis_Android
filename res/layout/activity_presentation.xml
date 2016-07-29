@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/portada"
+    android:background="@drawable/background_presentation"
     tools:context=".PresentationActivity" >
 
     <TextView
@@ -32,17 +32,6 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_presentation_start"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="400dp"
-        android:background="@drawable/icon_start"
-        android:stateListAnimator="@null"
-        android:text="@string/presentation_start" />
-
     <TextView
         android:id="@+id/textView_presentation_intro"
         android:layout_width="match_parent"
@@ -54,5 +43,44 @@
         android:text="@string/presentation_intro"
         android:textColor="@color/black"
         android:textSize="25sp" />
+
+    <LinearLayout
+        android:id="@id/LinearLayout_presentation_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="360dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_presentation_flag_spanish"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@drawable/flag_spain"
+            android:stateListAnimator="@null" />
+
+        <Button
+            android:id="@+id/button_presentation_flag_english"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/flag_england"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_presentation_language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/LinearLayout_presentation_language"
+        android:gravity="center_horizontal"
+        android:text="@string/presentation_selectLang"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

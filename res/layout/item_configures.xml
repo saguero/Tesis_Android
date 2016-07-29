@@ -4,24 +4,44 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="2dp" >
-
-
-	<ImageView
-        android:id="@+id/profile_pic"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:contentDescription="@string/configures_dialogok"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-
+    
+    <LinearLayout
+        android:id="@+id/linearLayout_parent"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_centerVertical="true"
+    	android:layout_alignParentStart="true" >
+        
+        <!--  icon  -->
+		<ImageView
+        	android:id="@+id/imageView_configures_items_icon"
+        	android:layout_width="35dp"
+        	android:layout_height="35dp"
+        	android:contentDescription="@string/message_alertdialog_ok" />
+	</LinearLayout>
+    
+    <!-- title -->
 	<TextView
 	    android:id="@+id/textview_configures_id"
     	android:layout_width="match_parent"
     	android:layout_height="match_parent"
+    	android:layout_marginStart="25dp"
     	android:textStyle="normal"
     	android:textSize="20sp"
    	 	android:padding="30dp"
    	 	android:textColor="@color/grey" />
-    
+        
+    <!--  icon checked -->
+	<ImageView
+        android:id="@+id/imageView_configures_items_checked"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/message_alertdialog_ok"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/icon_check" />
 
 </RelativeLayout>
