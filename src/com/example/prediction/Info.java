@@ -49,6 +49,16 @@ public class Info {
 	static int typePrediction;
 	static AbsModeler bestScheme;
 	static Vector<AbsModeler> filteredBestSchemes = new Vector<AbsModeler>();
+	
+	static Vector<AbsModeler> not_handlesSchemes = new Vector<AbsModeler>();
+	
+	private static Info info;
+	
+	public static Info getInstance(){
+		if (info ==null)
+			info=new Info();
+		return info;
+	}
 
 	public Info() {
 		setLibraries();
@@ -92,12 +102,11 @@ public class Info {
 		Vector<Integer> Listschemes = librarySelected.getAcceptedModelers();
 		schemes = new CharSequence[Listschemes.size()];
 		Field[] fields = Config.Modeler.class.getFields();
-		int j = 0;
+		//int j = 0;
 		for (Field f : fields) {
 			try {
 				if (Listschemes.contains(f.getInt(null))) {
-					schemes[j] = f.getName();
-					j++;
+					schemes[f.getInt(null)] = f.getName();
 				}
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
@@ -135,33 +144,33 @@ public class Info {
 
 	/* GENERATE IMAGE */
 
-	public Bitmap generateImageLearningCurve(Context context, BitmapDrawable image) throws Exception {
+	public Bitmap generateImageLearningCurve(AbsDatabase database, Context context) throws Exception {
 		// TODO Auto-generated method stub
 
 		Vector<AbsModeler> schemes = new Vector<AbsModeler>();
 		schemes.add(this.getBestScheme());
 
-		LineGraphics linechart = new LineGraphics(context,image);
-		AFreeChart chart = linechart.graphedLearningCurve(trainingSet,schemes);
+		LineGraphics linechart = new LineGraphics(context);
+		AFreeChart chart = linechart.graphedLearningCurve(database,schemes);
         ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart );
         chartView.drawChart(chart);
         return ( (BitmapDrawable) chartView.getDrawable()).getBitmap();
 	}
 
-	public Bitmap generateImageErrorPrediction(Context context, BitmapDrawable img) throws Exception {
+	public Bitmap generateImageErrorPrediction(AbsDatabase database, Context context) throws Exception {
 		// TODO Auto-generated method stub
 
 		Vector<AbsModeler> schemes = new Vector<AbsModeler>();
 		schemes.add(this.getBestScheme());
 
-		LineGraphics linechart = new LineGraphics(context,img);
-		AFreeChart chart = linechart.graphedErrorPrediction(trainingSet, schemes, attributeSelected);
+		LineGraphics linechart = new LineGraphics(context);
+		AFreeChart chart = linechart.graphedErrorPrediction(database, schemes, attributeSelected);
 		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_LINE, chart);
 		chartView.drawChart(chart);
 		return ((BitmapDrawable) chartView.getDrawable()).getBitmap();
 	}
 
-	public Vector<Bitmap> generateImagesSchemesComparator(Context context, BitmapDrawable img) throws Exception {
+	public Vector<Bitmap> generateImagesSchemesComparator(AbsDatabase database, Context context) throws Exception {
 		// TODO Auto-generated method stub
 		
 		MetricsCollection mc=getLibrarySelected().getMetricsEvaluationObject();
@@ -175,9 +184,9 @@ public class Info {
 		
 		Vector<AbsModeler> listschemes = getBestSchemes();
 
-		BarGraphics barchart = new BarGraphics(context,img);
+		BarGraphics barchart = new BarGraphics(context);
 		barchart.setSeries(listschemes);
-		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(getDatasetSelected(), mc);
+		AFreeChart chart1 = barchart.graphedErrorPredictionNormalized(database, mc);
 
 		ChartView chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart1);
 		chartView.drawChart(chart1);
@@ -187,13 +196,13 @@ public class Info {
 		chartView.buildDrawingCache();
 		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
 
-		AFreeChart chart2 = barchart.graphedErrorPredictionScale(getDatasetSelected(), mc);
+		AFreeChart chart2 = barchart.graphedErrorPredictionScale(database, mc);
 		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart2);
 		chartView.drawChart(chart2);
 		chartView.buildDrawingCache();
 		images_schemesComparator.add(((BitmapDrawable) chartView.getDrawable()).getBitmap());
 
-		AFreeChart chart3 = barchart.graphedRelationData(getDatasetSelected(), mc);
+		AFreeChart chart3 = barchart.graphedRelationData(database, mc);
 		chartView = new ChartView(context, Config.Graphic.GRAPHIC_TYPE_BAR, chart3);
 		chartView.drawChart(chart3);
 		chartView.buildDrawingCache();
@@ -234,7 +243,6 @@ File appDirectory = new File(path );
 }
 
 	public void saveLearningCurveImage(Context context, Bitmap img){
-		images_learningCurve.add(0,img);
 		String name = "LearningCurve_" + getFileDatasetSelected().getName() + "_" + this.getBestScheme().getName() + "_" + IMG_LC_serialId + ".png";
 		
 		String path = 	Config.InitialSettings.getDirWorking() +
@@ -246,9 +254,6 @@ File appDirectory = new File(path );
 	}
 
 	public void saveErrorPredictionImage(Context context,Bitmap img){
-		images_errorPrediction.add(0,img);
-
-		
 		String path = 	Config.InitialSettings.getDirWorking() +
 				context.getString(Config.InitialSettings.SUBDIR_APP) +
 				context.getString(Config.InitialSettings.SUBDIR_OPT_PARAMS);
@@ -259,7 +264,6 @@ File appDirectory = new File(path );
 	}
 
 public boolean saveSchemesComparatorImage(Context context,Bitmap img){
-		images_schemesComparator.add(0,img);
 		String name = "SchemesComparator_" +  getFileDatasetSelected().getName() + "_" + IMG_SC_serialId + ".png";
 		
 		String path = 	Config.InitialSettings.getDirWorking() +
@@ -294,11 +298,10 @@ public boolean saveSchemesComparatorImage(Context context,Bitmap img){
 		librarySelected = classEstructure.getLibrary(ID);
 	}
 
-	public void setFileDatasetSelected(String name, String destination) throws Exception{			
+	public void setFileDatasetSelected(String name) throws Exception{			
 		fileDatasetSelected = new File(Config.InitialSettings.getDirWorking() + name);
 		trainingSet = getLibrarySelected().getDatasetObject();
-		File aux = trainingSet.saveFile(fileDatasetSelected, destination );
-		trainingSet.newInstanceFromARFF(aux);
+		trainingSet.parseFile(fileDatasetSelected);
 
 		setListAttributes(trainingSet);
 	}
@@ -310,6 +313,17 @@ public boolean saveSchemesComparatorImage(Context context,Bitmap img){
 	public void setSchemesSelected(Vector<Integer> schemes) {
 		schemesSelected.removeAllElements();
 		schemesSelected = librarySelected.createModelers(schemes, attributeSelected);
+		
+		/*Vector<AbsModeler> handles = new Vector<AbsModeler>(); 
+		not_handlesSchemes = new Vector<AbsModeler>(); 
+		for(AbsModeler model:schemesSelected){
+			if(model.handles(getDatasetSelected()))
+				handles.add(model);
+			else
+				not_handlesSchemes.add(model);
+		}
+		schemesSelected.removeAllElements();
+		schemesSelected = handles;	*/
 	}
 
 	/* GET OPTIONS SELECTED */
@@ -387,11 +401,28 @@ public static int getTypePrediction() {
 		}
 		return result;
 	}
+	
+	public Vector<AbsModeler> getNotHandlesSchemes(){
+		return not_handlesSchemes;
+	}
+
+	public void addNotComputedSchemes(AbsModeler m) {
+		// TODO Auto-generated method stub
+		not_handlesSchemes.add(m);
+	}
+
+
+	public void reset(){
+		images_learningCurve.removeAllElements();
+		images_errorPrediction.removeAllElements();
+		images_schemesComparator.removeAllElements();
+	}
+	
 	/*
 	 * DEBERIAN ESTAR LAS SUGERENCIAS, AYUDAS ... ESTO ES RESPECTO A LOS
 	 * SCHEMES, LOS PARAMETROS (LEARNING CURVE) --> FALTA LA ACTIVIDAD DE LA
 	 * AYUDA SOBRE LEARNING CURVE
 	 * 
 	 */
-
+	
 }

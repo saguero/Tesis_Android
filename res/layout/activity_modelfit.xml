@@ -1,140 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/background" >
 
     <LinearLayout
-        android:id="@+id/LinearLayout_presentation_language"
+        android:id="@+id/LinearLayout_modelfit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView_presentation_intro"
+            android:id="@+id/textView_modelfit_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_modelfit"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/textView_presentation_nameApp"
+        	android:gravity="center"
+            android:text="@string/modelfit_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+        	android:textColor="@color/white"
+        	android:textSize="30sp"
+        	android:textStyle="bold" />
+		
+		<TextView
+            android:id="@+id/textView_modelfit_explain_part1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title2_modelfit"
+            android:text="@string/modelfit_explain_part1"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_biasvar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/introduction_modelfit_biasvar"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/imageView_biasvar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bias_variance" />
-
-        <TextView
-            android:id="@+id/textView_bias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bias" />
-
-        <TextView
-            android:id="@+id/textView_var"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/var" />
-
-        <TextView
-            android:id="@+id/textView_title2Modelfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title3_modelfit"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView_introduction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/introduction_modelfit"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/imageView_modelfit"
+		
+		<ImageView
+            android:id="@+id/imageView_modelfit_learningcurves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/message_alertdialog_ok"
-            android:src="@drawable/modelfit_introduction" />
+            android:src="@drawable/learningcurves" />
 
         <TextView
-            android:id="@+id/textView_titleunderfitting"
+            android:id="@+id/textView_modelfit_epigraph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_underfitting"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/textView_underfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/underfitting" />
-
-        <TextView
-            android:id="@+id/textView_titleCausesUnderfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/title_causes" />
-
-        <TextView
-            android:id="@+id/textView_causesUnderfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView_titleoverfitting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_overfitting"
-            android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/textView_overfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/overfitting" />
-
-        <TextView
-            android:id="@+id/textView_titleCausesOverfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/title_causes" />
-
-        <TextView
-            android:id="@+id/textView_causesOverfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/modelfit_epigraph"
+            android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/imageView_images"
+            android:id="@+id/imageView_modelfit_compare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/message_alertdialog_ok"
-            android:src="@drawable/icon_configuration" />
+            android:src="@drawable/fitdata_compare" />
 
+        <TextView
+            android:id="@+id/textView_modelfit_explain_part2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modelfit_explain_part2"
+            android:textSize="20sp" />
+			
+		<ImageView
+		    android:id="@+id/imageView_modelfit_degree"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/message_alertdialog_ok"
+		    android:src="@drawable/fitdata_degree" />
+			
         <Button
             android:id="@+id/button_modelfit_ok"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:text="@string/ok_entendido" />
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+			android:background="@drawable/icon_ok"
+			android:stateListAnimator="@null"/>
 
     </LinearLayout>
     

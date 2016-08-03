@@ -13,7 +13,7 @@ public class WekaSimpleParameter extends AbsWekaParameter {
 
 	private char charOp_;
 	private double value_;
-	private float minValue = 0;			//Para eliminar el limite minimo, setear esto a -1
+	private float minValue = 1;			//Para eliminar el limite minimo, setear esto a -1
 	private float maxValue = -1;		//No tiene limite
 
 	public WekaSimpleParameter(char charOp, Object value, String name) {
@@ -106,7 +106,7 @@ public class WekaSimpleParameter extends AbsWekaParameter {
 		// TODO Auto-generated method stub
 		if (getMaxValue() == -1) { // No tiene limite maximo
 			if (max==-1)
-				return 0;
+				return getMinValor()+value_;
 			else
 				return max;
 		} else {

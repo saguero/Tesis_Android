@@ -9,10 +9,12 @@ import com.example.prediction.logica.parameters.AbsParameter;
 import com.example.prediction.logica.parameters.AbsWekaParameter;
 import com.example.prediction.logica.parameters.WekaKernelParameter;
 import com.example.prediction.logica.parameters.WekaSimpleParameter;
+import com.example.usuario.multisearch_android.src.weka.classifiers.meta.MultiSearch;
+import com.example.usuario.multisearch_android.src.weka.classifiers.meta.multisearch.DefaultSearch;
+import com.example.usuario.multisearch_android.src.weka.classifiers.meta.multisearch.Performance;
+import com.example.usuario.multisearch_android.src.weka.core.setupgenerator.AbstractParameter;
+import com.example.usuario.multisearch_android.src.weka.core.setupgenerator.MathParameter;
 
-import src.weka.classifiers.meta.MultiSearch;
-import src.weka.core.setupgenerator.AbstractParameter;
-import src.weka.core.setupgenerator.MathParameter;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.functions.SMOreg;
 import weka.classifiers.functions.supportVector.NormalizedPolyKernel;
@@ -23,6 +25,7 @@ import weka.classifiers.meta.GridSearch;
 import weka.classifiers.meta.MultiScheme;
 import weka.core.Instances;
 import weka.core.SelectedTag;
+import weka.core.Tag;
 import weka.core.Utils;
 
 public class WekaKernelOptimizer extends AbsWekaOptimizer {
@@ -70,7 +73,9 @@ public class WekaKernelOptimizer extends AbsWekaOptimizer {
 	private AbstractClassifier[] bestClassifiers(AbsModeler modeler, Instances dataset) throws Exception {
 		MultiSearch ms = new MultiSearch();
 		SMOreg smoreg = new SMOreg();
-		ms.setEvaluation(new SelectedTag(GridSearch.EVALUATION_CC, GridSearch.TAGS_EVALUATION));
+		Tag vector[]=new Tag[1];
+		vector[0]=new Tag(0, "CC");
+		ms.setEvaluation(new SelectedTag(0, vector));
 		
 		setKernelOptions();
 

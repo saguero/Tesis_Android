@@ -43,5 +43,5 @@ public class WekaIndividual extends Individual{
 	public double getValueAttribute(int att){
 		return individual.value(att);
 	}
-
+	
 }

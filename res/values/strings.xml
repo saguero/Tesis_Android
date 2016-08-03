@@ -1,105 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <!-- Activity Presentation-->
-    
-     <string name="presentation_appname">Prediction</string>
-     <string name="presentation_intro">machine learning techniques to predict non-functional attributes in components of android applications</string>
-	 <string name="presentation_selectLang">Select language</string>
-     
-    												<!-- Activity Configures-->
+    <string name="presentation_appname">Prediction</string>
+    <string name="presentation_intro">machine learning techniques to predict non-functional attributes in components of android applications</string>
+    <string name="presentation_selectLang">Select language</string>
+    <!-- Activity Configures-->
     <string name="configures_title">Configures</string>
     <string name="configures_selectlibrary">Select library</string>
     <string name="configures_selectdataset">Select File Dataset</string>
     <string name="configures_selectpredAtt">Select Predicted Attribute</string>
     <string name="configures_selectschemes">Select Schemes</string>
-	<string name="configures_dialogchooseAtt">Choose Predicted Attribute</string>
-	<string name="configures_dialogchooseLibrary">Choose Library</string>
-	<string name="configures_dialogchooseSchemes">Choose Schemes</string>
-	<string name="configures_dialogchooseFileDataset">Choose File Dataset</string>  
-	
-	<string name="configures_exception_missinglibrary">Please, select the library before</string>
-	<string name="configures_exception_missingfiledataset">Please, select the file dataset before</string>
-	<string name="configures_exception_missingpredatt">Please, select the predicted attribute before</string>
-	<string name="configures_exception_noLibrary">There are no added libraries</string>
-  	<string name="configures_exception_noFile">No files are found in the working directory. Consider changing the directory or file format</string>
-  	<string name="configures_exception_convertFile">The selected file could not be converted to the appropriate format</string>
-  	<string name="configures_exception_noModels">There are no models belonging to the current library</string>
-  	
-  	<string name="configures_exception_title">Notification</string>
-	
-	
-    												<!-- Activity Initial Configuration -->
-    <string name="initial_title">Initial configuration</string>												
-    												
+    <string name="configures_dialogchooseAtt">Choose Predicted Attribute</string>
+    <string name="configures_dialogchooseLibrary">Choose Library</string>
+    <string name="configures_dialogchooseSchemes">Choose Schemes</string>
+    <string name="configures_dialogchooseFileDataset">Choose File Dataset</string>
+    <string name="configures_exception_missinglibrary">Please, select the library before</string>
+    <string name="configures_exception_missingfiledataset">Please, select the file dataset before</string>
+    <string name="configures_exception_missingpredatt">Please, select the predicted attribute before</string>
+    <string name="configures_exception_noLibrary">There are no added libraries</string>
+    <string name="configures_exception_noFile">No files are found in the working directory. Consider changing the directory or file format</string>
+    <string name="configures_exception_convertFile">The selected file could not be converted to the appropriate format</string>
+    <string name="configures_exception_noModels">There are no models belonging to the current library</string>
+    <string name="configures_exception_title">Notification</string>
+    <!-- Activity Initial Configuration -->
+    <string name="initial_title">Initial configuration</string>
     <string name="initial_optionformatfile1">csv</string>
-    
     <string name="initial_optiontypeprediction1">Regression</string>
-    
     <string name="initial_message_selectformatfile">Format file selected: </string>
     <string name="initial_message_selectstorage">Directory to work: </string>
     <string name="initial_message_selecttypeprediction">Type of prediction selected: </string>
-    
     <string name="initial_item_formatfile">Format file</string>
     <string name="initial_item_storage">Storage</string>
     <string name="initial_item_typeprediction">Type Prediction</string>
-    
-    
     <string name="initial_dialogTitle_formatfile">Choose the file format of the dataset</string>
     <string name="initial_dialogTitle_storage">Select the directory to work with</string>
-    <string name="initial_dialogTitle_typeprediction">Define the type of prediction to do</string>	
-    
+    <string name="initial_dialogTitle_typeprediction">Define the type of prediction to do</string>
     <string name="initial_subdirectory_app">Prediction/</string>
     <string name="initial_subdirectory_optschemes">Optimization Schemes/</string>
     <string name="initial_subdirectory_optparams">Parameter Optimization/</string>
-    <string name="initial_subdirectory_models">Models/</string>		
-    <string name="initial_subdirectory_trainingSets">Training Sets/</string>	
-    										
-    												<!-- Activity Filtered Schemes-->
+    <string name="initial_subdirectory_models">Models/</string>
+    <string name="initial_subdirectory_trainingSets">Training Sets/</string>
+    <!-- Activity Filtered Schemes-->
     <string name="filtered_title">Step 1: Filtered Schemes</string>
     <string name="filtered_scheme">Schemes</string>
     <string name="filtered_metrics">Metrics</string>
     <string name="filtered_selectscheme">Select scheme...</string>
-    
     <string name="filtered_exception_missingscheme">Please, select scheme to continue</string>
-    
-    												<!-- Activity Optimizing Scheme-->
+    <!-- Activity Optimizing Scheme-->
     <string name="optimizing_title">Step 2: Optimizing scheme</string>
     <string name="optimizing_realvalues">Real Values</string>
     <string name="optimizing_dialogsave">save images?</string>
     <string name="optimizing_dialogloadhistorial">Load historial?</string>
     <string name="optimizing_dialogyes">Yes</string>
     <string name="optimizing_dialogno">No</string>
-    <string name="optimizing_subtitle_historial">Historical images of learning curve </string> 
-	<string name="optimizing_subtitle_loading">Loading</string>
-	<string name="optimizing_subtitle_principle">Scheme\'s parameters analysis</string>
-	<string name="optimizing_subtitle_config">Select the button to config parameters</string>
-	<string name="optimizing_subtitle_model">Select the button to generate model</string>
+    <string name="optimizing_subtitle_historial">Historical images of learning curve </string>
+    <string name="optimizing_subtitle_loading">Loading</string>
+    <string name="optimizing_subtitle_principle">Scheme\'s parameters analysis</string>
+    <string name="optimizing_subtitle_config">Select the button to config parameters</string>
+    <string name="optimizing_subtitle_model">Select the button to generate model</string>
+    <!-- Activity Model fit-->
+    <string name="modelfit_title">Understanding learning curves</string>
+    <string name="modelfit_explain_part1">When the quality of a model is evaluated, it is important to measure the error in the training set and the prediction. The exclusive use of error of the training set can lead to misleading results. These errors can lead to a phenomenon of overfitting, in which the model is very well suited to existing data but has poor performance to predict new results.</string>
+    <string name="modelfit_explain_part2">On underfitting cases, accuracy on training and test data could be poor because the learning algorithm did not have enough data to learn from (the model is too simple). You could improve performance by increase the amount of training data examples.</string>
+    <string name="modelfit_epigraph">Figure 1: The graph can be interpreted according to the degree of the polynomial model or model complexity. It can be understood that the model on the left is set to a linear order polynomial, which represents a case of poor quality adjustment (sub-optimal), the data are not well represented by a straight line. In cases of Overfitting, the data fit better if the hypothesis correspond to a higher degree polynomial.</string>
+    <!-- Activity Config Params-->
+    <string name="configparams_title">Configuration parameters</string>
+    <string name="configparams_underfit">In case of Underfit</string>
+    <string name="configparams_overfit">In case of Overfit</string>
+    <string name="configparams_addExamples">Add more examples</string>
+    <string name="configparams_degree">Select degree polynomial</string>
     
-     											<!-- Activity Model fit-->
-    <string name="title_modelfit">Model Fit</string>
-    <string name="title2_modelfit">Bias - Variance Tradeoff</string>
-    <string name="title3_modelfit">Underfitting vs. Overfitting</string>
-    <string name="title_causes">Causes</string>
-    <string name="title_underfitting">Underfitting</string>
-    <string name="title_overfitting">Overfitting</string>
-    
-    <string name="introduction_modelfit">Understanding model fit is important for understanding the root cause for poor model accuracy. We can determine whether a predictive model is underfitting or overfitting the training data by looking at the prediction error on the training data and the evaluation data.</string>
-    <string name="introduction_modelfit_biasvar">The bias - variance is the way of analysing a learning algorithm\'s expected generalization error beyond their training set </string>
- 
-	<string name="underfitting">Your model is underfitting the training data when the model performs poorly on the training data. This is because the model is unable to capture the relationship between the input examples (often called X) and the target values (often called Y).</string>
-	<string name="overfitting">Your model is overfitting your training data when you see that the model performs well on the training data but does not perform well on the evaluation data. This is because the model is memorizing the data it has seen and is unable to generalize to unseen examples.</string>
-	<string name="bias">The bias is error from erroneous assumptions in the algorithm.High bias can cause an algorithm to miss relevant relation between features and target outputs. (underfitting)</string>
-	<string name="var">The variance is error from sensitivity to small fluctuations in the training set. High variance can cause overfitting: modelling the random noise in the training data, rather than the intented output.</string>
-    
-   	<string name="ok_entendido">OK, understood</string>
-   	
-  
-  	<string name="configures_exception_alreadysaved">Files are already saved</string>
-  	
+    <string name="configparams_degree1">Degree 1</string>
+    <string name="configparams_degree2">Degree 2</string>
+    <string name="configparams_degree3">Degree 3</string>
+    <string name="configparams_degree4">Degree 4</string>
+    <string name="configures_exception_alreadysaved">Files are already saved</string>
     <string name="missingImg">Missing Image</string>
-    
-    
-    											<!-- GRAPHICS TITLES-->
+    <!-- GRAPHICS TITLES-->
     <string name="graphic_line_label_realvalues">Real values</string>
     <string name="graphic_line_label_trainingset">TrainingSet</string>
     <string name="graphic_line_label_cv">Cross Validation</string>
@@ -107,34 +84,32 @@
     <string name="graphic_line_title_lc">Learning Curve</string>
     <string name="graphic_line_axisx">Instances</string>
     <string name="graphic_line_axisy">Measure</string>
-   
+    <string name="graphic_line_prediction">Prediction</string>
     <string name="graphic_bar_title">Schemes Comparator</string>
     <string name="graphic_bar_axisx">Metrics</string>
     <string name="graphic_bar_axisy">Measure</string>
-    
-    											<!-- MESSAGES-->
-   	<string name="message_progressDialog_title">Please wait ...</string>
-   	<string name="message_progressDialog_detail">Task in progress...</string>
-   	<string name="message_alertdialog_save">The images will be storage in working directory</string>
-   	<string name="message_alertdialog_historial">All images will be shown</string>
-   	<string name="message_alertdialog_confirmsave_title">Confirm</string>
-   	<string name="message_alertdialog_confirmsave_detail">Task completed successfully</string>
-   	<string name="message_alertdialog_yes">YES</string>
-   	<string name="message_alertdialog_no">NO</string>
-   	<string name="message_alert_title">Alert</string>
-   	<string name="message_alertdialog_ok">Ok</string>
-   	<string name="message_alertdialog_cancel">Cancel</string>
-   	
-   	<string name="message_savebefore_detail">Before loading images, do you want to save last images?</string>
-   	<string name="message_savebefore_title">Save</string>
-   	
-   	<string name="message_alertdialog_generatemodel_title">Generate model</string>
-   	<string name="message_alertdialog_generatemodel_detail">To generate the prediction model enter the file name</string>
-   	<string name="message_alertdialog_generatemodel_accept">Generate</string>
-   	<string name="message_alertdialog_generatemodel_cancel">Cancel</string>
-   	<string name="message_alertdialog_generatemodel_introtext">Enter name file here</string>
-   	
-   	<string name="exception_alreadysaved">Images are already saved</string>	
-   	<string name="exception_selectscheme">Please, select a scheme to continue</string>
-
+    <!-- MESSAGES-->
+    <string name="message_progressDialog_title">Please wait ...</string>
+    <string name="message_progressDialog_detail">Task in progress...</string>
+    <string name="message_alertdialog_save">The images will be storage in working directory</string>
+    <string name="message_alertdialog_historial">All images will be shown</string>
+    <string name="message_alertdialog_confirmsave_title">Confirm</string>
+    <string name="message_alertdialog_confirmsave_detail">Task completed successfully</string>
+    <string name="message_alertdialog_yes">YES</string>
+    <string name="message_alertdialog_no">NO</string>
+    <string name="message_alert_title">Alert</string>
+    <string name="message_alertdialog_ok">Ok</string>
+    <string name="message_alertdialog_cancel">Cancel</string>
+    <string name="message_savebefore_detail">Before loading images, do you want to save last images?</string>
+    <string name="message_savebefore_title">Save</string>
+    <string name="message_alertdialog_generatemodel_title">Generate model</string>
+    <string name="message_alertdialog_generatemodel_detail">To generate the prediction model enter the file name</string>
+    <string name="message_alertdialog_generatemodel_accept">Generate</string>
+    <string name="message_alertdialog_generatemodel_cancel">Cancel</string>
+    <string name="message_alertdialog_generatemodel_introtext">Enter name file here</string>
+    <string name="message_alertdialog_handlesschemes_detail">the following schemes could not be executed: </string>
+    <string name="message_alertdialog_handlesschemes_alert">The selected schemes could not be run, please select others.</string>
+    <string name="message_alertdialog_addsamples_detail">The selected file is not compatible with the source dataset</string>
+    <string name="exception_alreadysaved">Images are already saved</string>
+    <string name="exception_selectscheme">Please, select a scheme to continue</string>
 </resources>

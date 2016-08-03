@@ -90,7 +90,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_toStartOf="@+id/textView_optimizing_title"
+        android:layout_toStartOf="@+id/button_optimizing_settings"
         android:background="@drawable/icon_help"
         android:onClick="showSuggestion()"
         android:stateListAnimator="@null" />

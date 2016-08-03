@@ -33,12 +33,12 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	private final int HISTORIAL = 0;
 	private final int SAVE = 1;
 	
-	private Info info = new Info();
+	private Info info = Info.getInstance();
 	
 	private int index = 0;
 	private boolean saved; 
-	private Bitmap image_learningcurve;
-	private Bitmap image_errorprediction;
+	private static Bitmap image_learningcurve;
+	private static Bitmap image_errorprediction;
 	private static Vector<Bitmap> images = new Vector<Bitmap>();
 	private ImageSwitcher imageswitcher;
 	private TextView subtitle;
@@ -212,13 +212,8 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 	 
 	 private void generateImages(){
 		try {
-			Bitmap img = BitmapFactory.decodeResource(getResources(),Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_EP);
-		    image_errorprediction = info.generateImageErrorPrediction(this, new BitmapDrawable(getResources(),img));
-		    images.add(0,image_errorprediction);
-		    
-		    img = BitmapFactory.decodeResource(getResources(),Config.Graphic.GRAPHIC_LINE_BACKGROUND_IMAGE_LC);
-		    image_learningcurve = info.generateImageLearningCurve(this,new BitmapDrawable(getResources(),img));
-		    images.add(0,image_learningcurve);
+		    addImageError(info.generateImageErrorPrediction(info.getDatasetSelected(), this));
+		    addImageLearningCurve(info.generateImageLearningCurve(info.getDatasetSelected(), this));
 	       
 		 } catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -283,5 +278,14 @@ public class OptimizingSchemeActivity<LineChart> extends Activity{
 		return images;
 	}
 	  
-
+	
+	public static void addImageLearningCurve(Bitmap image){
+		image_learningcurve=image;
+		images.add(0, image);
+	}
+	
+	public static void addImageError(Bitmap image){
+		image_errorprediction=image;
+		images.add(0, image);
+	}
 }

@@ -1,100 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    
     <!-- Activity Presentation-->
-    
-     <string name="presentation_appname">Prediccion</string>
-     <string name="presentation_intro">Tecnicas de aprendizaje de maquina para predecir atributos no funcionales en componentes de aplicaciones Android</string>
-	<string name="presentation_selectLang">Seleccionar lenguaje</string>
-     
-    												<!-- Activity Configures-->
+    <string name="presentation_appname">Prediccion</string>
+    <string name="presentation_intro">Tecnicas de aprendizaje de maquina para predecir atributos no funcionales en componentes de aplicaciones Android</string>
+    <string name="presentation_selectLang">Seleccionar lenguaje</string>
+    <!-- Activity Configures-->
     <string name="configures_title">Configuracion</string>
     <string name="configures_selectlibrary">Seleccionar libreria</string>
     <string name="configures_selectdataset">Seleccionar archivo dataset</string>
     <string name="configures_selectpredAtt">Seleccionar atributo a predecir</string>
     <string name="configures_selectschemes">Seleccionar modelos</string>
-	<string name="configures_dialogchooseAtt">Elegir el atributo a predecir</string>
-	<string name="configures_dialogchooseLibrary">Elegir libreria</string>
-	<string name="configures_dialogchooseSchemes">Elegir modelos</string>
-	<string name="configures_dialogchooseFileDataset">Elegir archivo dataset</string>  
-	
-	<string name="configures_exception_missinglibrary">Por favor, seleccionar antes la libreria </string>
-	<string name="configures_exception_missingfiledataset">Por favor, seleccionar antes el archivo dataset </string>
-	<string name="configures_exception_missingpredatt">Por favor, seleccionar antes el atributo a predecir</string>
-	<string name="configures_exception_noLibrary">No existen librerias añadidas</string>
-  	<string name="configures_exception_noFile">No se encontraron archivos en el directorio de trabajo. Considere cambiar el directorio o el formato de archivo</string>
-  	<string name="configures_exception_convertFile">El archivo seleccionado no pudo ser convertido al formato apropiado</string>
-  	<string name="configures_exception_noModels">No existen modelos pertenecientes a la libreria actual</string>
-	<string name="configures_exception_title">Notificacion</string>
-    
-    												<!-- Activity Initial Configuration -->
+    <string name="configures_dialogchooseAtt">Elegir el atributo a predecir</string>
+    <string name="configures_dialogchooseLibrary">Elegir libreria</string>
+    <string name="configures_dialogchooseSchemes">Elegir modelos</string>
+    <string name="configures_dialogchooseFileDataset">Elegir archivo dataset</string>
+    <string name="configures_exception_missinglibrary">Por favor, seleccionar antes la libreria </string>
+    <string name="configures_exception_missingfiledataset">Por favor, seleccionar antes el archivo dataset </string>
+    <string name="configures_exception_missingpredatt">Por favor, seleccionar antes el atributo a predecir</string>
+    <string name="configures_exception_noLibrary">No existen librerias añadidas</string>
+    <string name="configures_exception_noFile">No se encontraron archivos en el directorio de trabajo. Considere cambiar el directorio o el formato de archivo</string>
+    <string name="configures_exception_convertFile">El archivo seleccionado no pudo ser convertido al formato apropiado</string>
+    <string name="configures_exception_noModels">No existen modelos pertenecientes a la libreria actual</string>
+    <string name="configures_exception_title">Notificacion</string>
+    <!-- Activity Initial Configuration -->
     <string name="initial_title">Configuracion Inicial</string>
-    												
     <string name="initial_optionformatfile1">csv</string>
-    
     <string name="initial_optiontypeprediction1">Regresion</string>
-    
     <string name="initial_item_formatfile">Formato de archivo</string>
     <string name="initial_item_storage">Directorio</string>
     <string name="initial_item_typeprediction">Tipo de prediccion</string>
-    
-    
     <string name="initial_message_selectformatfile">Formato de archivo seleccionado: </string>
     <string name="initial_message_selectstorage">Directorio de trabajo: </string>
     <string name="initial_message_selecttypeprediction">Tipo de prediccion a realizar: </string>
-    
-    <string name="initial_dialogTitle_formatfile">Elegir el formato de archivo del detaset</string>											
+    <string name="initial_dialogTitle_formatfile">Elegir el formato de archivo del detaset</string>
     <string name="initial_dialogTitle_storage">Selecionar el directorio de trabajo</string>
-    <string name="initial_dialogTitle_typeprediction">Definir el tipo de prediccion a realizar</string>		
-    
+    <string name="initial_dialogTitle_typeprediction">Definir el tipo de prediccion a realizar</string>
     <string name="initial_subdirectory_app">Prediccion/</string>
     <string name="initial_subdirectory_optschemes">Ootimizacion de esquemas/</string>
     <string name="initial_subdirectory_optparams">Optimizacion de parametros/</string>
     <string name="initial_subdirectory_models">Modelos/</string>
-    <string name="initial_subdirectory_trainingSets">Training Sets/</string>									
-    											
-    												<!-- Activity Filtered Schemes-->
+    <string name="initial_subdirectory_trainingSets">Training Sets/</string>
+    <!-- Activity Filtered Schemes-->
     <string name="filtered_title">Paso 1: Modelos filtrados</string>
     <string name="filtered_scheme">Modelos</string>
     <string name="filtered_metrics">Métricas</string>
     <string name="filtered_selectscheme">Seleccionar modelo...</string>
-    
-    												<!-- Activity Optimizing Scheme-->
+    <!-- Activity Optimizing Scheme-->
     <string name="optimizing_title">Paso 2: Optimizando el modelo</string>
     <string name="optimizing_realvalues">Valores reales</string>
     <string name="optimizing_dialogsave">guardar imagen?</string>
     <string name="optimizing_dialogloadhistorial">cargar historial?</string>
     <string name="optimizing_dialogyes">Si</string>
     <string name="optimizing_dialogno">No</string>
-    <string name="optimizing_subtitle_historial">Imágenes historicas de curvas de aprendizaje</string> 
-	<string name="optimizing_subtitle_loading">Cargando</string>
-	<string name="optimizing_subtitle_principle">Analisis de los parametros del modelo</string>
-	<string name="optimizing_subtitle_config">Seleccione el boton para configurar los parametros</string>
-	<string name="optimizing_subtitle_model">Seleccione el boton para generar el modelo</string>
-    
-     											<!-- Activity Model fit-->
-    <string name="title_modelfit">Model Fit</string>
-    <string name="title2_modelfit">Bias - Variance Tradeoff</string>
-    <string name="title3_modelfit">Underfitting vs. Overfitting</string>
-    <string name="title_causes">Causas</string>
-    <string name="title_underfitting">Underfitting</string>
-    <string name="title_overfitting">Overfitting</string>
-    
-    <string name="introduction_modelfit">Understanding model fit is important for understanding the root cause for poor model accuracy. We can determine whether a predictive model is underfitting or overfitting the training data by looking at the prediction error on the training data and the evaluation data.</string>
-    <string name="introduction_modelfit_biasvar">The bias - variance is the way of analysing a learning algorithm\'s expected generalization error beyond their training set </string>
- 
-	<string name="underfitting">Your model is underfitting the training data when the model performs poorly on the training data. This is because the model is unable to capture the relationship between the input examples (often called X) and the target values (often called Y).</string>
-	<string name="overfitting">Your model is overfitting your training data when you see that the model performs well on the training data but does not perform well on the evaluation data. This is because the model is memorizing the data it has seen and is unable to generalize to unseen examples.</string>
-	<string name="bias">The bias is error from erroneous assumptions in the algorithm.High bias can cause an algorithm to miss relevant relation between features and target outputs. (underfitting)</string>
-	<string name="var">The variance is error from sensitivity to small fluctuations in the training set. High variance can cause overfitting: modelling the random noise in the training data, rather than the intented output.</string>
-    
-   	<string name="ok_entendido">OK, entendido</string>
-   	
-  	<string name="missingImg">Imagen perdida</string>
-  	
-    
-  	
-    											<!-- GRPHICS TITLES-->
+    <string name="optimizing_subtitle_historial">Imágenes historicas de curvas de aprendizaje</string>
+    <string name="optimizing_subtitle_loading">Cargando</string>
+    <string name="optimizing_subtitle_principle">Analisis de los parametros del modelo</string>
+    <string name="optimizing_subtitle_config">Seleccione el boton para configurar los parametros</string>
+    <string name="optimizing_subtitle_model">Seleccione el boton para generar el modelo</string>
+    <!-- Activity Model fit-->
+    <string name="modelfit_title">Entendiendo las curvas de aprendizaje</string>
+    <string name="modelfit_explain_part1">Cuando se evalua la calidad de un modelo, es importante medir el error en el conjunto de entrenamiento y en la prediccion. La utilizacion exclusiva del error del conjunto de entrenamiento puede conducir a resultados engañosos. Estos errores pueden conducir a un fenomeno de sobreajuste (overfitting), en el cual el modelo se ajusta muy bien a los datos existentes pero tiene pobre rendimiento para predecir nuevos resultados.</string>
+    <string name="modelfit_explain_part2">Por otro lado, en casos de Underfitting, la precision en los datos de entrenamiento y de evaluacion podrian ser pobres debido a que el algoritmo de aprendizaje no tiene suficientes datos para aprender (el modelo es demasiado simple). Se puede mejorar la performance incrementando el numero de ejemplos.</string>
+    <string name="modelfit_epigraph">Figura 1: La grafica puede interpretarse en funcion del grado del polinomio del modelo, o la complejidad del modelo. Se puede entender que el modelo de la izquierda se ajusta a un polinomio de orden lineal, el cual representa un caso de ajuste de baja calidad (sub-optimo), los datos no son bien representados por una recta. En casos de Overfitting, los datos se ajustan mejor si la hipotesis correspondiera a un polinomio de grado mayor.</string>
+    <string name="missingImg">Imagen perdida</string>
+    <!-- Activity Config Params-->
+    <string name="configparams_title">Configuración de parametros</string>
+    <string name="configparams_underfit">En caso de Underfit</string>
+    <string name="configparams_overfit">En caso de Overfit</string>
+    <string name="configparams_addExamples">Agregar más ejemplos</string>
+    <string name="configparams_degree">Seleccionar grado del polinomio</string>
+    <string name="configparams_degree1">Grado 1</string>
+    <string name="configparams_degree2">Grado 2</string>
+    <string name="configparams_degree3">Grado 3</string>
+    <string name="configparams_degree4">Grado 4</string>
+    <string name="configures_exception_alreadysaved">Archivos ya guardados</string>
+    <string name="missingImg">Imagen perdida</string>
+    <!-- GRPHICS TITLES-->
     <string name="graphic_line_label_realvalues">Valores reales</string>
     <string name="graphic_line_label_trainingset">TrainingSet</string>
     <string name="graphic_line_label_cv">Cross Validation</string>
@@ -102,33 +83,32 @@
     <string name="graphic_line_title_lc">Curva de aprendizaje</string>
     <string name="graphic_line_axisx">Instancias</string>
     <string name="graphic_line_axisy">Medida</string>
-   
+    <string name="graphic_line_prediction">Predicción</string>
     <string name="graphic_bar_title">Comparador de modelos</string>
     <string name="graphic_bar_axisx">Metricas</string>
     <string name="graphic_bar_axisy">Medida</string>
-    
-     											<!-- MESSAGES-->
-   	<string name="message_progressDialog_title">Por favor espere ...</string>
-   	<string name="message_progressDialog_detail">Tarea en progreso...</string>
-   	<string name="message_alertdialog_save">Las imágenes seran guardadas en el directorio de trabajo</string>
-   	<string name="message_alertdialog_historial">Se mostraran todas las imágenes</string>
-   	<string name="message_alertdialog_confirmsave_title">Confirmacion</string>
-   	<string name="message_alertdialog_confirmsave_detail">Tarea completada con éxito.</string>
-   	<string name="message_alertdialog_yes">SI</string>
-   	<string name="message_alertdialog_no">NO</string>
-   	<string name="message_savebefore_detail">Antes de cargar todas las imágenes, desea guardar las ultimas imágenes?</string>
-   	<string name="message_savebefore_title">Guardar</string>
-   	<string name="message_alert_title">Alerta</string>
-   	<string name="message_alertdialog_ok">Ok</string>
-   	<string name="message_alertdialog_cancel">Cancelar</string>
-   	
-   	<string name="message_alertdialog_generatemodel_title">Generar Modelo</string>
-   	<string name="message_alertdialog_generatemodel_detail">Para generar el modelo de prediccion introduzca el nombre del archivo</string>
-   	<string name="message_alertdialog_generatemodel_accept">Generar</string>
-   	<string name="message_alertdialog_generatemodel_cancel">Cancelar</string>
-   	<string name="message_alertdialog_generatemodel_introtext">Escriba el nombre aqui</string>
-   	
-   	<string name="exception_alreadysaved">Las imágenes ya han sido guardadas.</string>
-   	<string name="exception_selectscheme">Por favor, seleccione un modelo para continuar</string>
-    
+    <!-- MESSAGES-->
+    <string name="message_progressDialog_title">Por favor espere ...</string>
+    <string name="message_progressDialog_detail">Tarea en progreso...</string>
+    <string name="message_alertdialog_save">Las imágenes seran guardadas en el directorio de trabajo</string>
+    <string name="message_alertdialog_historial">Se mostraran todas las imágenes</string>
+    <string name="message_alertdialog_confirmsave_title">Confirmacion</string>
+    <string name="message_alertdialog_confirmsave_detail">Tarea completada con éxito.</string>
+    <string name="message_alertdialog_yes">SI</string>
+    <string name="message_alertdialog_no">NO</string>
+    <string name="message_savebefore_detail">Antes de cargar todas las imágenes, desea guardar las ultimas imágenes?</string>
+    <string name="message_savebefore_title">Guardar</string>
+    <string name="message_alert_title">Alerta</string>
+    <string name="message_alertdialog_ok">Ok</string>
+    <string name="message_alertdialog_cancel">Cancelar</string>
+    <string name="message_alertdialog_generatemodel_title">Generar Modelo</string>
+    <string name="message_alertdialog_generatemodel_detail">Para generar el modelo de prediccion introduzca el nombre del archivo</string>
+    <string name="message_alertdialog_generatemodel_accept">Generar</string>
+    <string name="message_alertdialog_generatemodel_cancel">Cancelar</string>
+    <string name="message_alertdialog_generatemodel_introtext">Escriba el nombre aqui</string>
+    <string name="message_alertdialog_handlesschemes_detail"> Los siguientes modelos no se pudieron ejecutar: </string>
+    <string name="message_alertdialog_handlesschemes_alert">Los modelos seleccionados no pudieron ejecutarse, por favor seleccione otros.</string>
+    <string name="message_alertdialog_addsamples_detail">El archivo seleccionado no es compatible con el dataset original</string>
+    <string name="exception_alreadysaved">Las imágenes ya han sido guardadas.</string>
+    <string name="exception_selectscheme">Por favor, seleccione un modelo para continuar</string>
 </resources>

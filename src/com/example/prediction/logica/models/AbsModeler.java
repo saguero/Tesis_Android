@@ -40,10 +40,10 @@ public abstract class AbsModeler {
 	}
 	
 
-	public void calculateModeler(AbsDatabase database){
+	public boolean calculateModeler(AbsDatabase database){
 		database_=database;
 		setIndexAttribute(indexClass);
-		getModel();
+		return getModel();
 	}
 	
 	public AbsDatabase getDatabase(){
@@ -60,6 +60,7 @@ public abstract class AbsModeler {
 
 	public Vector<Double> getPredictedValue(AbsDatabase database) throws Exception{
 		Vector<Double> r=new Vector<Double>();
+		setIndexAttribute(indexClass);
 		for (Individual i:database.getIndividuals()){
 			r.add(predictIndividualValue(i));
 		}
@@ -68,7 +69,7 @@ public abstract class AbsModeler {
 	
 	//--Abstract methods
 	
-	protected abstract void getModel();
+	protected abstract boolean getModel();
 	public abstract String getName();
 	public abstract String toString();
 	

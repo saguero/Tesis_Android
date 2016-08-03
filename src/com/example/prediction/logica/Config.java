@@ -18,7 +18,6 @@ public class Config {
 		public static int SUBDIR_MODELS = R.string.initial_subdirectory_models;
 		public static int SUBDIR_OPT_SCHEMES = R.string.initial_subdirectory_optschemes;
 		public static int SUBDIR_OPT_PARAMS = R.string.initial_subdirectory_optparams;
-		public static int SUBDIR_DATABASE = R.string.initial_subdirectory_trainingSets;
 		
 		public static int[] optionsFormatDataset = {R.string.initial_optionformatfile1};
 		public static int[] optionsTypePrediction = {R.string.initial_optiontypeprediction1};
@@ -97,7 +96,8 @@ public class Config {
 		public static final int[] ICON_CONFIGURES_ITEMS = {	R.drawable.icon_library,
 															R.drawable.icon_file,
 															R.drawable.icon_attribute,
-															R.drawable.icon_schemes	};	
+															R.drawable.icon_schemes	};
+		public static final int[] TITLE_POLYNOMIAL_DEGREE = {R.string.configparams_degree1, R.string.configparams_degree2, R.string.configparams_degree3, R.string.configparams_degree4};	
  	}
 	
  	public static class Graphic {
@@ -107,8 +107,8 @@ public class Config {
 		
 		public static final int GRAPHIC_LINE_HEIGHT = 367;
 		public static final int GRAPHIC_LINE_WIDTH = 560;
-		public static final int GRAPHIC_LINE_LIMIT_INSTANCES = 300;
-		public static final int GRAPHIC_LINE_INSTANCES_LEARNING_CURVE = 10;
+		public static final int GRAPHIC_LINE_LIMIT_INSTANCES = 3;
+		public static final int GRAPHIC_LINE_INSTANCES_LEARNING_CURVE = 5;
 		
 		public static final float GRAPHIC_LINE_STROKE_REALVALUES = 3F;
 		public static final float GRAPHIC_LINE_STROKE_BESTPRED = 3F;
@@ -123,6 +123,7 @@ public class Config {
 		public static final int GRAPHIC_LINE_BACKGROUND_IMAGE_EP = R.drawable.learning_curve;
 		public static final int GRAPHIC_LINE_LABEL_TRAINING = R.string.graphic_line_label_trainingset;
 		public static final int GRAPHIC_LINE_LABEL_CROSSVALIDATION = R.string.graphic_line_label_cv;
+		public static final int GRAPHIC_LINE_PREDICTION = R.string.graphic_line_prediction;
 		
 		public static final SolidColor GRAPHIC_LINE_COLOR_REALVALUES = new SolidColor(Color.BLACK);
 		
@@ -140,6 +141,7 @@ public class Config {
 		public static final SolidColor GRAPHIC_BAR_COLOR = new SolidColor(Color.GRAY);
 		public static final SolidColor GRAPHIC_BAR_COLOR_BESTRESULT1 = new SolidColor(Color.rgb(133,47,4));
 		public static final SolidColor GRAPHIC_BAR_COLOR_BESTRESULT2 = new SolidColor(Color.rgb(174,60,4));
+		
 		
 	}
 	
@@ -175,7 +177,8 @@ public class Config {
 		public final static int MESSAGE_SELECT_STORAGE = R.string.initial_message_selectstorage;
 
 
-
+		public final static int MESSAGE_DIALOG_HANDLESSCHEMES_DETAIL = R.string.message_alertdialog_handlesschemes_detail;
+		public final static int MESSAGE_DIALOG_HANDLESSCHEMES_ALERT= R.string.message_alertdialog_handlesschemes_alert;
 
 
 

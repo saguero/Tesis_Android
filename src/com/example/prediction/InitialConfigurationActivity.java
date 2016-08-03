@@ -22,7 +22,7 @@ public class InitialConfigurationActivity extends Activity {
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     private TextView textInfo;
-    private Info info = new Info();
+    private Info info = Info.getInstance();
     private static Integer[] lastOptionSelect;
     
 

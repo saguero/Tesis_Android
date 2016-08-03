@@ -4,9 +4,11 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="lib" path="libs/freechart/afreechart-0.0.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/weka/wekaSTRIPPED.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/weka/gridSearch.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/weka/gridSearch.jar" sourcepath="C:/Users/usuario/Tesisworkspace/weka-src"/>
 	<classpathentry exported="true" kind="lib" path="libs/weka/attributeSelectionSearchMethods.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/multisearch-android.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/multisearch-android-studio.jar" sourcepath="C:/Users/usuario/workspace/Proyecto/multisearch-android"/>
+	<classpathentry exported="true" kind="lib" path="libs/java-cup.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/openbeans-1.0.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>

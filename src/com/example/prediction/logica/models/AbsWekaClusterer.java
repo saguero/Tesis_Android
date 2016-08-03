@@ -19,9 +19,13 @@ public abstract class AbsWekaClusterer extends AbsClusterer {
 	}
 
 	@Override
-	protected void getModel() {
+	protected boolean getModel() {
 		// TODO Auto-generated method stub
+		removeIndexClass();
+		if (handles(database_)){
 		getClusterer((Instances) database_.getDatabaseImplementation());
+		return true;}
+		return false;
 	}
 
 	@Override

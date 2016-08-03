@@ -27,21 +27,23 @@ import android.widget.Toast;
 
 public class FilteredSchemesActivity extends Activity {
 	private ImageView imageview;
-	private static Vector<Bitmap> images;
+	private Vector<Bitmap> images;
 	private int index = 0; 
-	private Info info = new Info();
+	private Info info = Info.getInstance();
 	private boolean schemeSelected;
 	
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filteredschemes);
         
+        setContentView(R.layout.activity_filteredschemes);
+        showHandlesSchemesNotification(info.getListSchemesSelected(), info.getNotHandlesSchemes());
         images = new Vector<Bitmap>();
         schemeSelected = false;
         
-        imageview = (ImageView) findViewById(R.id.imageView_display); 
+        imageview = (ImageView) findViewById(R.id.imageView_filtered); 
                 
         Button button_change = (Button) findViewById(R.id.button_filtered_changeImage);
         button_change.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +64,7 @@ public class FilteredSchemesActivity extends Activity {
 			}
         });	
         
-        Button button_nextStep = (Button) findViewById(R.id.button_nextStep);
+        Button button_nextStep = (Button) findViewById(R.id.button_filtered_nextStep);
         button_nextStep.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -74,7 +76,7 @@ public class FilteredSchemesActivity extends Activity {
 			}	
         });
          
-       Spinner spinner_selectScheme = (Spinner) findViewById(R.id.spinner_selectScheme);
+       Spinner spinner_selectScheme = (Spinner) findViewById(R.id.spinner_filtered_selectScheme);
        List<String> list = new ArrayList<String>();
        list.add(getString(R.string.filtered_selectscheme));
        for(AbsModeler c :info.getBestSchemes()) {
@@ -142,9 +144,9 @@ public class FilteredSchemesActivity extends Activity {
     										getString(Config.Message.MESSAGE_PROGRESSDIALOG_TITLE), 
     										getString(Config.Message.MESSAGE_PROGRESSDIALOG_DETAIL) );
     	try {
-    		Info info = new Info();
-    		Bitmap img = BitmapFactory.decodeResource(getResources(),Config.Graphic.GRAPHIC_BAR_BACKGROUND_IMAGE);
-    		images = info.generateImagesSchemesComparator(this, new BitmapDrawable(this.getResources(),img));
+    		Info info = Info.getInstance();
+    		images.removeAllElements();
+    		images = info.generateImagesSchemesComparator(info.getDatasetSelected(), this);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -169,6 +171,7 @@ public class FilteredSchemesActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
+    	builder.create().show();
     }
     
     
@@ -176,6 +179,33 @@ public class FilteredSchemesActivity extends Activity {
     	Intent intent = new Intent(this, OptimizingSchemeActivity.class);
 		startActivity(intent);
     }
+    
+    private void showHandlesSchemesNotification(Vector<AbsModeler> handles, Vector<AbsModeler> not_handles) {
+		// TODO Auto-generated method stub
+		String menssage = "";
+		if(! (not_handles.isEmpty()) ){
+			if(handles.isEmpty())
+				menssage = getString(Config.Message.MESSAGE_DIALOG_HANDLESSCHEMES_ALERT);
+			else {
+				menssage = getString(Config.Message.MESSAGE_DIALOG_HANDLESSCHEMES_DETAIL) + "\n";
+				for(AbsModeler model: not_handles){
+					menssage = menssage.concat(model.getName() + "\n");
+				}
+			}
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setIcon(R.drawable.icon_alert_exception)
+			.setTitle(R.string.configures_exception_title)
+			.setMessage(menssage)
+			.setPositiveButton(Config.Message.MESSAGE_DIALOG_OK, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
+			builder.create().show();
+		}	
+	}
 
     
 }

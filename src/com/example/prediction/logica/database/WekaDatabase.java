@@ -81,7 +81,6 @@ public class WekaDatabase extends AbsDatabase {
 			e.printStackTrace();
 		}
 		super.addData(file);
-
 	}
 
 	@Override
@@ -97,30 +96,6 @@ public class WekaDatabase extends AbsDatabase {
 
 	public WekaDatabase(File file) throws Exception{
 		super(file);
-	}
-
-	public File saveFile(File file, String destination) throws Exception {
-		// TODO Auto-generated method stub
-		Instances data = null;
-		if(file.exists()){
-			if(file.canRead()){
-				CSVLoader loader = new CSVLoader();
-				
-				loader.setFieldSeparator(",");
-				loader.setSource(file);
-				data = loader.getDataSet();
-			}
-		}	
-		String name = file.getName();
-		name = name.substring(0, name.lastIndexOf(".") );
-		// save ARFF
-       ArffSaver saver = new ArffSaver();
-       saver.setInstances(data);
-       File f = new File(destination +"/" + name +".arff");
-       saver.setFile(f);
-       saver.writeBatch();
-       
-       return f;
 	}
 	
 	@Override
@@ -153,12 +128,6 @@ public class WekaDatabase extends AbsDatabase {
 	public String getNameAttribute(int attribute) {
 		// TODO Auto-generated method stub
 		return trainingSet.attribute(attribute).name(); 
-	}
-	
-	@Override
-	public void newInstanceFromARFF(File fileInstances) throws Exception{
-		// TODO Auto-generated method stub
-		trainingSet = new Instances(new FileReader(fileInstances));
 	}
 
 	@Override

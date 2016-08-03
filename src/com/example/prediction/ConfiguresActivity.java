@@ -38,7 +38,7 @@ public class ConfiguresActivity extends Activity {
 	private static ItemsAdapter adapter;
 	private static ListView lvList;
 	
-	private Info info = new Info();
+	private Info info = Info.getInstance();
 	private Integer[] selectedModels;
 	private static Integer[] lastSelectedItems;
 	
@@ -212,18 +212,7 @@ public class ConfiguresActivity extends Activity {
 		            		
 		            	}
 		                   
-		          });
-		    if(item == Config.AppSettings.ITEM_CODE_SELECT_PREDICTED_ATT){
-		    	builder.setAdapter(new DialogItemsAdapter(ConfiguresActivity.this,
-		    			optionsItem, info.getListAttHandlerPrediction(info.getDatasetSelected()),
-		    			R.layout.select_dialog_singlechoice_material), new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int itemSelected) {
-								// TODO Auto-generated method stub
-								checkedItem = itemSelected;	
-							}
-						});
-		    }		    
+		          });	    
 		    builder.create().show();
 		    
 		}
@@ -255,7 +244,6 @@ public class ConfiguresActivity extends Activity {
 		            controlSelectSchemes(mSelectedItems);
 		            mSelectedItems.removeAllElements();
 		            dialog.dismiss();
-		            adapter.showItemChecked(item, parentAdapter);
 		                 
 		               }
 		           })
@@ -303,8 +291,12 @@ public class ConfiguresActivity extends Activity {
                             //Do some stuff that take some time...
                             //Thread.sleep(5000); // Let's wait for some time	
                             Vector<AbsModeler> models=info.getListSchemesSelected();
+                            info.reset();
                             for (AbsModeler m:models){
-                            	m.calculateModeler(info.getDatasetSelected());
+                            	
+                            	if (!m.calculateModeler(info.getDatasetSelected())){
+                            		info.addNotComputedSchemes(m);
+                            	}
                             }
                             info.setFilteredBestSchemes();
                         } catch (Exception e) {
@@ -407,10 +399,6 @@ public class ConfiguresActivity extends Activity {
 	    builder.create().show();
 
 
-
-
-
-
 	}
 	
 	private void selectLibrary(){
@@ -470,9 +458,7 @@ public class ConfiguresActivity extends Activity {
 		int index = Config.AppSettings.ITEM_CODE_SELECT_FILE_DATASET;
 		if(lastSelectedItems[index] == null || lastSelectedItems[index] != itemSelect) {					
 			try {
-				info.setFileDatasetSelected(item, 	Config.InitialSettings.getDirWorking() +
-													getString(Config.InitialSettings.SUBDIR_APP) +
-													getString(Config.InitialSettings.SUBDIR_DATABASE));
+				info.setFileDatasetSelected(item);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -527,14 +513,16 @@ public class ConfiguresActivity extends Activity {
 	}
 
 
-	
 	private void controlSelectSchemes(Vector<Integer> schemes) {
 		int index = Config.AppSettings.ITEM_CODE_SELECT_SCHEMES;
 		if(selectItems[index]){
 			info.setSchemesSelected(schemes);
-			button_lock.setBackgroundResource(R.drawable.icon_lockopen);
-			button_lock.setAlpha(1);
-			button_lock.setEnabled(true);
+			if(info.getListSchemesSelected().size() != 0) {
+				adapter.showItemChecked(index, lvList);
+				button_lock.setBackgroundResource(R.drawable.icon_lockopen);
+				button_lock.setAlpha(1);
+				button_lock.setEnabled(true);
+			}
 		}		
 	}
 	
@@ -542,9 +530,6 @@ public class ConfiguresActivity extends Activity {
     	Intent intent = new Intent(this, activity);
     	startActivity(intent);
     	overridePendingTransition(R.anim.anim_left_in, R.anim.anim_left_out);
-
-
-
 
 
 	}
@@ -558,21 +543,8 @@ public class ConfiguresActivity extends Activity {
 			button_lock.setBackgroundResource(R.drawable.icon_lockclose);
 			button_lock.setAlpha(0.2F);
 			adapter.hideItemChecked(index, lvList);
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 
-
-
 	}
+
 }

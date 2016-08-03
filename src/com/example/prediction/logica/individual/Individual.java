@@ -25,5 +25,12 @@ public class Individual {
 	public double getValueAttribute(int att){
 		return attributes.get(attributes.keySet().toArray()[att]);
 	}
+	
+	public boolean equalsHeader(Individual ind){
+		Hashtable<String, Double> attsInd = ind.getIndividualAttributes();
+		if (attsInd.keySet().equals(attributes.keySet()))
+			return true;
+		return false;
+	}
 
 }

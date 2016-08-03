@@ -28,13 +28,11 @@ import org.afree.ui.RectangleInsets;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 
 public class BarGraphics extends AbsGraphics {
 	private Vector<Integer> bestResults = new Vector<Integer>();
 	private AbsMetric[] categorys;
 	private Context context;
-	private BitmapDrawable image;
 	
 	class CustomRenderer extends BarRenderer{
 		private static final long serialVersionUID = 1L;
@@ -66,9 +64,8 @@ public class BarGraphics extends AbsGraphics {
 		} 
 	}
 	
-	public BarGraphics(Context context, BitmapDrawable image) {
+	public BarGraphics(Context context) {
 		this.context = context;
-		this.image = image;
 	}
 
 	//DEFINE EL ANCHO DE LAS BARRAS 
@@ -106,12 +103,14 @@ public class BarGraphics extends AbsGraphics {
 			}
 			Collections.sort(auxValues);
 			if(req.equals(Required.MAX)){
-				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	//PLANTEAR EXCEPCION SI SOLO TENGO UN SCHEME
-				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));
+				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-1)));	
+				if (auxValues.size()>1){
+				bestResults.add(values.indexOf(auxValues.elementAt(auxValues.size()-2)));}
 			}
 			else {
 				bestResults.add(values.indexOf(auxValues.elementAt(0)));
-				bestResults.add(values.indexOf(auxValues.elementAt(1)));
+				if (values.size()>1){
+				bestResults.add(values.indexOf(auxValues.elementAt(1)));}
 			}
 			auxValues.removeAllElements();
 			values.removeAllElements();
@@ -151,7 +150,6 @@ public class BarGraphics extends AbsGraphics {
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));	
 		
 		CategoryPlot plot = chart.getCategoryPlot();
-		plot.setBackgroundImage(image);
 		plot.setBackgroundAlpha(100);				
 	    plot.setOutlineVisible(false);
 	    plot.setDomainGridlinePaintType(new SolidColor(Color.WHITE));

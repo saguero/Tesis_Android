@@ -1,7 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
     
+    <TextView
+        android:id="@+id/textView_configparams_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/configparams_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_configparams_underfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_configparams_title"
+        android:layout_marginTop="15dp"
+        android:text="@string/configparams_underfit"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView_configparams_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_configparams_underfit"
+        android:layout_marginTop="15dp"
+        android:text="@string/configparams_addExamples"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView_configparams_overfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_configparams_add"
+        android:layout_marginTop="10dp"
+        android:text="@string/configparams_overfit"
+        android:textColor="@color/darkblue"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView_configparams_degree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_configparams_overfit"
+        android:layout_marginTop="10dp"
+        android:text="@string/configparams_degree"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button_configparams_add"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_configparams_add"
+        android:layout_alignBottom="@+id/textView_configparams_add"
+        android:layout_toEndOf="@+id/textView_configparams_underfit"
+        android:background="@drawable/icon_add"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/button_configparams_ok"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/icon_ok"
+        android:stateListAnimator="@null" />
+
+    <ListView
+        android:id="@+id/listView_configparams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_configparams_degree" >
+    </ListView>
 
 </RelativeLayout>

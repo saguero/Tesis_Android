@@ -43,12 +43,15 @@ public abstract class AbsWekaClassifier extends AbsClassifier {
 	}
 
 	@Override
-	public void getModel() {
+	public boolean getModel() {
 		super.setIndexAttribute(indexClass);
+		if (handles(database_)){
 		selectBestAttributes();
 		try {
 			optimizer.optimiceParams(this);
+			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			Log.d("com.example.prediction", "No se puede optimizar");
 		}
 		try {
@@ -57,6 +60,8 @@ public abstract class AbsWekaClassifier extends AbsClassifier {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+		return false;
 	}
 
 	public void selectBestAttributes() {

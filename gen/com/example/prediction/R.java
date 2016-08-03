@@ -1708,9 +1708,9 @@ containing a value of this type.
         public static final int button_material_light=0x7f060013;
         public static final int coral=0x7f06003c;
         public static final int darkaquamarine=0x7f06004a;
-        public static final int darkblue=0x7f060045;
+        public static final int darkblue=0x7f060043;
         public static final int darkgreen=0x7f060047;
-        public static final int darkgrey=0x7f060044;
+        public static final int darkgrey=0x7f060045;
         public static final int darkorange=0x7f060048;
         public static final int darkpurple=0x7f060046;
         public static final int darkred=0x7f060049;
@@ -1721,7 +1721,7 @@ containing a value of this type.
         public static final int foreground_material_dark=0x7f060004;
         public static final int foreground_material_light=0x7f060005;
         public static final int green=0x7f06003f;
-        public static final int grey=0x7f060043;
+        public static final int grey=0x7f060044;
         /**  TODO: This is 40% alpha on the default accent color. 
          */
         public static final int highlighted_text_material_dark=0x7f060024;
@@ -2054,39 +2054,45 @@ containing a value of this type.
         public static final int background_initial=0x7f02004c;
         public static final int background_presentation=0x7f02004d;
         public static final int bias_variance=0x7f02004e;
-        public static final int flag_england=0x7f02004f;
-        public static final int flag_spain=0x7f020050;
-        public static final int grafico=0x7f020051;
-        public static final int ic_launcher=0x7f020052;
-        public static final int icon_alert_exception=0x7f020053;
-        public static final int icon_alert_historial=0x7f020054;
-        public static final int icon_alert_save=0x7f020055;
-        public static final int icon_alert_wait=0x7f020056;
-        public static final int icon_attribute=0x7f020057;
-        public static final int icon_check=0x7f020058;
-        public static final int icon_checked=0x7f020059;
-        public static final int icon_configparams=0x7f02005a;
-        public static final int icon_configuration=0x7f02005b;
-        public static final int icon_file=0x7f02005c;
-        public static final int icon_help=0x7f02005d;
-        public static final int icon_historial=0x7f02005e;
-        public static final int icon_library=0x7f02005f;
-        public static final int icon_lockclose=0x7f020060;
-        public static final int icon_lockopen=0x7f020061;
-        public static final int icon_model=0x7f020062;
-        public static final int icon_next=0x7f020063;
-        public static final int icon_nextbutton=0x7f020064;
-        public static final int icon_prevbutton=0x7f020065;
-        public static final int icon_return=0x7f020066;
-        public static final int icon_schemes=0x7f020067;
-        public static final int learning_curve=0x7f020068;
-        public static final int machine_learning=0x7f020069;
-        public static final int modelfit_introduction=0x7f02006a;
-        public static final int notification_template_icon_bg=0x7f02006b;
+        public static final int fitdata_compare=0x7f02004f;
+        public static final int fitdata_degree=0x7f020050;
+        public static final int flag_england=0x7f020051;
+        public static final int flag_spain=0x7f020052;
+        public static final int grafico=0x7f020053;
+        public static final int ic_launcher=0x7f020054;
+        public static final int icon_add=0x7f020055;
+        public static final int icon_alert_exception=0x7f020056;
+        public static final int icon_alert_historial=0x7f020057;
+        public static final int icon_alert_save=0x7f020058;
+        public static final int icon_alert_wait=0x7f020059;
+        public static final int icon_attribute=0x7f02005a;
+        public static final int icon_check=0x7f02005b;
+        public static final int icon_checked=0x7f02005c;
+        public static final int icon_configparams=0x7f02005d;
+        public static final int icon_configuration=0x7f02005e;
+        public static final int icon_file=0x7f02005f;
+        public static final int icon_help=0x7f020060;
+        public static final int icon_historial=0x7f020061;
+        public static final int icon_library=0x7f020062;
+        public static final int icon_lockclose=0x7f020063;
+        public static final int icon_lockopen=0x7f020064;
+        public static final int icon_model=0x7f020065;
+        public static final int icon_next=0x7f020066;
+        public static final int icon_nextbutton=0x7f020067;
+        public static final int icon_ok=0x7f020068;
+        public static final int icon_prevbutton=0x7f020069;
+        public static final int icon_return=0x7f02006a;
+        public static final int icon_schemes=0x7f02006b;
+        public static final int learning_curve=0x7f02006c;
+        public static final int learningcurves=0x7f02006d;
+        public static final int machine_learning=0x7f02006e;
+        public static final int modelfit_introduction=0x7f02006f;
+        public static final int notification_template_icon_bg=0x7f020070;
     }
     public static final class id {
-        public static final int LinearLayout_presentation_language=0x7f090062;
-        public static final int action0=0x7f09008a;
+        public static final int LinearLayout_modelfit=0x7f09006a;
+        public static final int LinearLayout_presentation_language=0x7f090082;
+        public static final int action0=0x7f09008f;
         public static final int action_bar=0x7f090041;
         public static final int action_bar_activity_content=0x7f090003;
         public static final int action_bar_container=0x7f090040;
@@ -2095,7 +2101,7 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f090022;
         public static final int action_bar_title=0x7f090021;
         public static final int action_context_bar=0x7f090042;
-        public static final int action_divider=0x7f09008e;
+        public static final int action_divider=0x7f090093;
         public static final int action_menu_divider=0x7f090005;
         public static final int action_menu_presenter=0x7f090006;
         public static final int action_mode_bar=0x7f09003e;
@@ -2106,28 +2112,30 @@ containing a value of this type.
         public static final int always=0x7f090019;
         public static final int beginning=0x7f09001e;
         public static final int buttonPanel=0x7f09002b;
-        public static final int button_configures_lock=0x7f090052;
-        public static final int button_configures_settings=0x7f090053;
-        public static final int button_filtered_changeImage=0x7f090055;
-        public static final int button_filtered_save=0x7f090056;
-        public static final int button_images_next=0x7f09005c;
-        public static final int button_images_previuous=0x7f09005d;
-        public static final int button_images_return=0x7f09005b;
-        public static final int button_initial_ok=0x7f090060;
-        public static final int button_modelfit_ok=0x7f090073;
-        public static final int button_nextStep=0x7f090059;
-        public static final int button_optimizing_help=0x7f09007c;
-        public static final int button_optimizing_historial=0x7f090079;
-        public static final int button_optimizing_model=0x7f09007f;
-        public static final int button_optimizing_next=0x7f090077;
-        public static final int button_optimizing_previous=0x7f090078;
-        public static final int button_optimizing_save=0x7f09007a;
-        public static final int button_optimizing_settings=0x7f09007d;
-        public static final int button_presentation_flag_english=0x7f090082;
-        public static final int button_presentation_flag_spanish=0x7f090081;
-        public static final int cancel_action=0x7f09008b;
+        public static final int button_configparams_add=0x7f090055;
+        public static final int button_configparams_ok=0x7f090056;
+        public static final int button_configures_lock=0x7f09005a;
+        public static final int button_configures_settings=0x7f09005b;
+        public static final int button_filtered_changeImage=0x7f09005d;
+        public static final int button_filtered_nextStep=0x7f090061;
+        public static final int button_filtered_save=0x7f09005e;
+        public static final int button_images_next=0x7f090064;
+        public static final int button_images_previuous=0x7f090065;
+        public static final int button_images_return=0x7f090063;
+        public static final int button_initial_ok=0x7f090068;
+        public static final int button_modelfit_ok=0x7f090072;
+        public static final int button_optimizing_help=0x7f09007b;
+        public static final int button_optimizing_historial=0x7f090078;
+        public static final int button_optimizing_model=0x7f09007e;
+        public static final int button_optimizing_next=0x7f090076;
+        public static final int button_optimizing_previous=0x7f090077;
+        public static final int button_optimizing_save=0x7f090079;
+        public static final int button_optimizing_settings=0x7f09007c;
+        public static final int button_presentation_flag_english=0x7f090084;
+        public static final int button_presentation_flag_spanish=0x7f090083;
+        public static final int cancel_action=0x7f090090;
         public static final int checkbox=0x7f090039;
-        public static final int chronometer=0x7f090091;
+        public static final int chronometer=0x7f090096;
         public static final int collapseActionView=0x7f09001a;
         public static final int contentPanel=0x7f090031;
         public static final int custom=0x7f090037;
@@ -2137,31 +2145,34 @@ containing a value of this type.
         public static final int disableHome=0x7f09000d;
         public static final int edit_query=0x7f090043;
         public static final int end=0x7f09001f;
-        public static final int end_padder=0x7f090096;
+        public static final int end_padder=0x7f09009b;
         public static final int expand_activities_button=0x7f090025;
-        public static final int expandableListView_initialconfiguration=0x7f09005e;
+        public static final int expandableListView_initialconfiguration=0x7f090066;
         public static final int expanded_menu=0x7f090038;
         public static final int home=0x7f090000;
         public static final int homeAsUp=0x7f09000e;
         public static final int icon=0x7f090029;
         public static final int ifRoom=0x7f09001b;
         public static final int image=0x7f090026;
-        public static final int imageSwitcher_optimizing_display=0x7f090076;
-        public static final int imageView_biasvar=0x7f090065;
-        public static final int imageView_configures_items_checked=0x7f090088;
-        public static final int imageView_configures_items_icon=0x7f090086;
-        public static final int imageView_display=0x7f090058;
-        public static final int imageView_images=0x7f09005a;
-        public static final int imageView_modelfit=0x7f09006a;
-        public static final int info=0x7f090095;
-        public static final int line1=0x7f09008f;
-        public static final int line3=0x7f090093;
-        public static final int linearLayout_optiming1=0x7f090080;
-        public static final int linearLayout_parent=0x7f090085;
+        public static final int imageSwitcher_optimizing_display=0x7f090075;
+        public static final int imageView1=0x7f09008c;
+        public static final int imageView_configures_items_checked=0x7f09008a;
+        public static final int imageView_configures_items_icon=0x7f090088;
+        public static final int imageView_filtered=0x7f090060;
+        public static final int imageView_images=0x7f090062;
+        public static final int imageView_modelfit_compare=0x7f09006f;
+        public static final int imageView_modelfit_degree=0x7f090071;
+        public static final int imageView_modelfit_learningcurves=0x7f09006d;
+        public static final int info=0x7f09009a;
+        public static final int line1=0x7f090094;
+        public static final int line3=0x7f090098;
+        public static final int linearLayout_parent=0x7f090087;
+        public static final int linearLayout_presentation_back=0x7f090080;
         public static final int listMode=0x7f09000a;
+        public static final int listView_configparams=0x7f090057;
         public static final int list_item=0x7f090028;
-        public static final int listview_configures=0x7f090050;
-        public static final int media_actions=0x7f09008d;
+        public static final int listview_configures=0x7f090058;
+        public static final int media_actions=0x7f090092;
         public static final int middle=0x7f090020;
         public static final int multiply=0x7f090014;
         public static final int never=0x7f09001c;
@@ -2171,6 +2182,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f09003b;
+        public static final int radioButton_configparams_itemdegree=0x7f09008e;
         public static final int screen=0x7f090015;
         public static final int scrollIndicatorDown=0x7f090035;
         public static final int scrollIndicatorUp=0x7f090032;
@@ -2191,44 +2203,42 @@ containing a value of this type.
         public static final int showHome=0x7f090011;
         public static final int showTitle=0x7f090012;
         public static final int spacer=0x7f09002c;
-        public static final int spinner_selectScheme=0x7f090057;
+        public static final int spinner_filtered_selectScheme=0x7f09005f;
         public static final int split_action_bar=0x7f090004;
         public static final int src_atop=0x7f090016;
         public static final int src_in=0x7f090017;
         public static final int src_over=0x7f090018;
-        public static final int status_bar_latest_event_content=0x7f09008c;
+        public static final int status_bar_latest_event_content=0x7f090091;
         public static final int submit_area=0x7f09004c;
         public static final int tabMode=0x7f09000c;
-        public static final int text=0x7f090094;
-        public static final int text2=0x7f090092;
+        public static final int text=0x7f090099;
+        public static final int text2=0x7f090097;
         public static final int textSpacerNoButtons=0x7f090034;
-        public static final int textView_bias=0x7f090066;
-        public static final int textView_biasvar=0x7f090064;
-        public static final int textView_causesOverfit=0x7f090072;
-        public static final int textView_causesUnderfit=0x7f09006e;
-        public static final int textView_configures_title=0x7f090051;
-        public static final int textView_initial_info=0x7f090061;
-        public static final int textView_initial_title=0x7f09005f;
-        public static final int textView_initialconfiguration_groupitem=0x7f090084;
-        public static final int textView_initialconfiguration_item=0x7f090089;
-        public static final int textView_introduction=0x7f090069;
-        public static final int textView_optimizing_config=0x7f09007b;
-        public static final int textView_optimizing_model=0x7f09007e;
-        public static final int textView_optimizing_subtitle=0x7f090075;
-        public static final int textView_optimizing_title=0x7f090074;
-        public static final int textView_overfit=0x7f090070;
-        public static final int textView_presentation_intro=0x7f090054;
-        public static final int textView_presentation_language=0x7f090083;
-        public static final int textView_presentation_nameApp=0x7f090063;
-        public static final int textView_title2Modelfit=0x7f090068;
-        public static final int textView_titleCausesOverfit=0x7f090071;
-        public static final int textView_titleCausesUnderfit=0x7f09006d;
-        public static final int textView_titleoverfitting=0x7f09006f;
-        public static final int textView_titleunderfitting=0x7f09006b;
-        public static final int textView_underfit=0x7f09006c;
-        public static final int textView_var=0x7f090067;
-        public static final int textview_configures_id=0x7f090087;
-        public static final int time=0x7f090090;
+        public static final int textView_configparams_add=0x7f090052;
+        public static final int textView_configparams_degree=0x7f090054;
+        public static final int textView_configparams_itemdegree=0x7f09008d;
+        public static final int textView_configparams_overfit=0x7f090053;
+        public static final int textView_configparams_title=0x7f090050;
+        public static final int textView_configparams_underfit=0x7f090051;
+        public static final int textView_configures_title=0x7f090059;
+        public static final int textView_filtered_title=0x7f09005c;
+        public static final int textView_initial_info=0x7f090069;
+        public static final int textView_initial_title=0x7f090067;
+        public static final int textView_initialconfiguration_groupitem=0x7f090086;
+        public static final int textView_initialconfiguration_item=0x7f09008b;
+        public static final int textView_modelfit_epigraph=0x7f09006e;
+        public static final int textView_modelfit_explain_part1=0x7f09006c;
+        public static final int textView_modelfit_explain_part2=0x7f090070;
+        public static final int textView_modelfit_title=0x7f09006b;
+        public static final int textView_optimizing_config=0x7f09007a;
+        public static final int textView_optimizing_model=0x7f09007d;
+        public static final int textView_optimizing_subtitle=0x7f090074;
+        public static final int textView_optimizing_title=0x7f090073;
+        public static final int textView_presentation_intro=0x7f090081;
+        public static final int textView_presentation_language=0x7f090085;
+        public static final int textView_presentation_nameApp=0x7f09007f;
+        public static final int textview_configures_id=0x7f090089;
+        public static final int time=0x7f090095;
         public static final int title=0x7f09002a;
         public static final int title_template=0x7f09002f;
         public static final int topPanel=0x7f09002e;
@@ -2311,18 +2321,19 @@ containing a value of this type.
         public static final int item_configures=0x7f030022;
         public static final int item_initialconfiguration=0x7f030023;
         public static final int item_spinner=0x7f030024;
-        public static final int notification_media_action=0x7f030025;
-        public static final int notification_media_cancel_action=0x7f030026;
-        public static final int notification_template_big_media=0x7f030027;
-        public static final int notification_template_big_media_narrow=0x7f030028;
-        public static final int notification_template_lines=0x7f030029;
-        public static final int notification_template_media=0x7f03002a;
-        public static final int notification_template_part_chronometer=0x7f03002b;
-        public static final int notification_template_part_time=0x7f03002c;
-        public static final int select_dialog_item_material=0x7f03002d;
-        public static final int select_dialog_multichoice_material=0x7f03002e;
-        public static final int select_dialog_singlechoice_material=0x7f03002f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030030;
+        public static final int items_polynomial_degree=0x7f030025;
+        public static final int notification_media_action=0x7f030026;
+        public static final int notification_media_cancel_action=0x7f030027;
+        public static final int notification_template_big_media=0x7f030028;
+        public static final int notification_template_big_media_narrow=0x7f030029;
+        public static final int notification_template_lines=0x7f03002a;
+        public static final int notification_template_media=0x7f03002b;
+        public static final int notification_template_part_chronometer=0x7f03002c;
+        public static final int notification_template_part_time=0x7f03002d;
+        public static final int select_dialog_item_material=0x7f03002e;
+        public static final int select_dialog_multichoice_material=0x7f03002f;
+        public static final int select_dialog_singlechoice_material=0x7f030030;
+        public static final int support_simple_spinner_dropdown_item=0x7f030031;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -2390,7 +2401,19 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0a0004;
-        public static final int bias=0x7f0a0053;
+        public static final int configparams_addExamples=0x7f0a0050;
+        public static final int configparams_degree=0x7f0a0051;
+        public static final int configparams_degree1=0x7f0a0052;
+        public static final int configparams_degree2=0x7f0a0053;
+        public static final int configparams_degree3=0x7f0a0054;
+        public static final int configparams_degree4=0x7f0a0055;
+        public static final int configparams_overfit=0x7f0a004f;
+        /**  Activity Config Params
+ Activity Config Params
+ Activity Config Params
+         */
+        public static final int configparams_title=0x7f0a004d;
+        public static final int configparams_underfit=0x7f0a004e;
         public static final int configures_dialogchooseAtt=0x7f0a001c;
         public static final int configures_dialogchooseFileDataset=0x7f0a001f;
         public static final int configures_dialogchooseLibrary=0x7f0a001d;
@@ -2413,8 +2436,8 @@ containing a value of this type.
  Activity Configures
          */
         public static final int configures_title=0x7f0a0017;
-        public static final int exception_alreadysaved=0x7f0a0074;
-        public static final int exception_selectscheme=0x7f0a0075;
+        public static final int exception_alreadysaved=0x7f0a0078;
+        public static final int exception_selectscheme=0x7f0a0079;
         public static final int filtered_exception_missingscheme=0x7f0a003d;
         public static final int filtered_metrics=0x7f0a003b;
         public static final int filtered_scheme=0x7f0a003a;
@@ -2424,9 +2447,9 @@ containing a value of this type.
  Activity Filtered Schemes
          */
         public static final int filtered_title=0x7f0a0039;
-        public static final int graphic_bar_axisx=0x7f0a0060;
-        public static final int graphic_bar_axisy=0x7f0a0061;
-        public static final int graphic_bar_title=0x7f0a005f;
+        public static final int graphic_bar_axisx=0x7f0a0061;
+        public static final int graphic_bar_axisy=0x7f0a0062;
+        public static final int graphic_bar_title=0x7f0a0060;
         public static final int graphic_line_axisx=0x7f0a005d;
         public static final int graphic_line_axisy=0x7f0a005e;
         public static final int graphic_line_label_cv=0x7f0a005a;
@@ -2436,6 +2459,7 @@ containing a value of this type.
          */
         public static final int graphic_line_label_realvalues=0x7f0a0058;
         public static final int graphic_line_label_trainingset=0x7f0a0059;
+        public static final int graphic_line_prediction=0x7f0a005f;
         public static final int graphic_line_title_ep=0x7f0a005b;
         public static final int graphic_line_title_lc=0x7f0a005c;
         public static final int initial_dialogTitle_formatfile=0x7f0a0031;
@@ -2459,32 +2483,40 @@ containing a value of this type.
  Activity Initial Configuration 
          */
         public static final int initial_title=0x7f0a0028;
-        public static final int introduction_modelfit=0x7f0a004f;
-        public static final int introduction_modelfit_biasvar=0x7f0a0050;
-        public static final int message_alert_title=0x7f0a006a;
-        public static final int message_alertdialog_cancel=0x7f0a006c;
-        public static final int message_alertdialog_confirmsave_detail=0x7f0a0067;
-        public static final int message_alertdialog_confirmsave_title=0x7f0a0066;
-        public static final int message_alertdialog_generatemodel_accept=0x7f0a0071;
-        public static final int message_alertdialog_generatemodel_cancel=0x7f0a0072;
-        public static final int message_alertdialog_generatemodel_detail=0x7f0a0070;
-        public static final int message_alertdialog_generatemodel_introtext=0x7f0a0073;
-        public static final int message_alertdialog_generatemodel_title=0x7f0a006f;
-        public static final int message_alertdialog_historial=0x7f0a0065;
-        public static final int message_alertdialog_no=0x7f0a0069;
-        public static final int message_alertdialog_ok=0x7f0a006b;
-        public static final int message_alertdialog_save=0x7f0a0064;
-        public static final int message_alertdialog_yes=0x7f0a0068;
-        public static final int message_progressDialog_detail=0x7f0a0063;
+        public static final int message_alert_title=0x7f0a006b;
+        public static final int message_alertdialog_addsamples_detail=0x7f0a0077;
+        public static final int message_alertdialog_cancel=0x7f0a006d;
+        public static final int message_alertdialog_confirmsave_detail=0x7f0a0068;
+        public static final int message_alertdialog_confirmsave_title=0x7f0a0067;
+        public static final int message_alertdialog_generatemodel_accept=0x7f0a0072;
+        public static final int message_alertdialog_generatemodel_cancel=0x7f0a0073;
+        public static final int message_alertdialog_generatemodel_detail=0x7f0a0071;
+        public static final int message_alertdialog_generatemodel_introtext=0x7f0a0074;
+        public static final int message_alertdialog_generatemodel_title=0x7f0a0070;
+        public static final int message_alertdialog_handlesschemes_alert=0x7f0a0076;
+        public static final int message_alertdialog_handlesschemes_detail=0x7f0a0075;
+        public static final int message_alertdialog_historial=0x7f0a0066;
+        public static final int message_alertdialog_no=0x7f0a006a;
+        public static final int message_alertdialog_ok=0x7f0a006c;
+        public static final int message_alertdialog_save=0x7f0a0065;
+        public static final int message_alertdialog_yes=0x7f0a0069;
+        public static final int message_progressDialog_detail=0x7f0a0064;
         /**  MESSAGES
  MESSAGES
  MESSAGES
          */
-        public static final int message_progressDialog_title=0x7f0a0062;
-        public static final int message_savebefore_detail=0x7f0a006d;
-        public static final int message_savebefore_title=0x7f0a006e;
+        public static final int message_progressDialog_title=0x7f0a0063;
+        public static final int message_savebefore_detail=0x7f0a006e;
+        public static final int message_savebefore_title=0x7f0a006f;
         public static final int missingImg=0x7f0a0057;
-        public static final int ok_entendido=0x7f0a0055;
+        public static final int modelfit_epigraph=0x7f0a004c;
+        public static final int modelfit_explain_part1=0x7f0a004a;
+        public static final int modelfit_explain_part2=0x7f0a004b;
+        /**  Activity Model fit
+ Activity Model fit
+ Activity Model fit
+         */
+        public static final int modelfit_title=0x7f0a0049;
         public static final int optimizing_dialogloadhistorial=0x7f0a0041;
         public static final int optimizing_dialogno=0x7f0a0043;
         public static final int optimizing_dialogsave=0x7f0a0040;
@@ -2500,7 +2532,6 @@ containing a value of this type.
  Activity Optimizing Scheme
          */
         public static final int optimizing_title=0x7f0a003e;
-        public static final int overfitting=0x7f0a0052;
         /**  Activity Presentation
  Activity Presentation
  Activity Presentation
@@ -2515,18 +2546,6 @@ containing a value of this type.
          [CHAR LIMIT=4] 
          */
         public static final int status_bar_notification_info_overflow=0x7f0a0011;
-        public static final int title2_modelfit=0x7f0a004a;
-        public static final int title3_modelfit=0x7f0a004b;
-        public static final int title_causes=0x7f0a004c;
-        /**  Activity Model fit
- Activity Model fit
- Activity Model fit
-         */
-        public static final int title_modelfit=0x7f0a0049;
-        public static final int title_overfitting=0x7f0a004e;
-        public static final int title_underfitting=0x7f0a004d;
-        public static final int underfitting=0x7f0a0051;
-        public static final int var=0x7f0a0054;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f0b0044;

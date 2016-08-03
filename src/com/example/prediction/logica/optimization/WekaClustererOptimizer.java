@@ -74,6 +74,9 @@ public class WekaClustererOptimizer extends AbsWekaOptimizer {
 					finalk = k;
 				}
 			}
+			if (finalk==0){
+				finalk=2;
+			}
 			System.out.println(finalk);
 			((WekaSimpleParameter) p).setValue(finalk);
 			p.modifyModel(modeler);

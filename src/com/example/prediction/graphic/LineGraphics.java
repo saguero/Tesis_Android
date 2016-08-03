@@ -12,11 +12,11 @@ import org.afree.chart.renderer.category.CategoryItemRenderer;
 import org.afree.data.category.DefaultCategoryDataset;
 import org.afree.graphics.SolidColor;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 
 import com.example.prediction.logica.Config;
 import com.example.prediction.logica.database.AbsDatabase;
@@ -26,13 +26,11 @@ import com.example.prediction.logica.models.AbsModeler;
 public class LineGraphics extends AbsGraphics {
 	private int bestPrediction = 0;
 	private Context context;
-	private BitmapDrawable image;
+	private static int id=1;
 	
-	
-	public LineGraphics(Context context,BitmapDrawable image) throws Exception {
+	public LineGraphics(Context context) throws Exception {
 		// TODO Auto-generated constructor stub
 		this.context = context;
-		this.image=image;
 	}
 	
 	@Override
@@ -57,7 +55,6 @@ public class LineGraphics extends AbsGraphics {
 		chart.setBackgroundPaintType(new SolidColor(Color.WHITE));		
 		
 		CategoryPlot plot = chart.getCategoryPlot();
-		plot.setBackgroundImage(image);
 		plot.setBackgroundAlpha(200);
 	    plot.setBackgroundPaintType(new SolidColor(Color.WHITE));
 	    plot.setOutlineVisible(false);
@@ -114,7 +111,7 @@ public class LineGraphics extends AbsGraphics {
 	      			
 	      		//PREDICTED VALUE:
 	      		double predictedValue = predicted.elementAt(v);
-	      		dataset.addValue( predictedValue , "Prediction - " + scheme.getName() , index );
+	      		dataset.addValue( predictedValue , context.getString(Config.Graphic.GRAPHIC_LINE_PREDICTION) + " - " + scheme.getName() , index );
 	  	    	  
 	      		max = Math.max(max,predictedValue);
 	      		min = Math.min(min, predictedValue);
@@ -124,7 +121,7 @@ public class LineGraphics extends AbsGraphics {
 	
 	private void configureLearningCurve(AbsDatabase trainingSet) throws Exception {
 		dataset = new DefaultCategoryDataset();
-		int groupInstances = 1;//Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
+		int groupInstances =5;// Config.Graphic.GRAPHIC_LINE_INSTANCES_LEARNING_CURVE;
 		//int last = trainingSet.numInstances();
 		SimpleERMetric rae=new SimpleERMetric();
 		int traininglimit=(int) Math.ceil(trainingSet.numInstances()*0.6);
@@ -198,9 +195,10 @@ public class LineGraphics extends AbsGraphics {
 	
 	public AFreeChart graphedErrorPrediction(AbsDatabase trainingSet, Vector<AbsModeler> schemes, int indexClass) throws Exception{
 		setSeries(schemes);
+		id++;
 		configureErrorPrediction(trainingSet, indexClass);
 		return getChart(series, 
-				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP) + " - " + schemes.elementAt(0).getName(),
+				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_CHART_EP) + " - " + schemes.elementAt(0).getName() + id,
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISX),
 				context.getString(Config.Graphic.GRAPHIC_LINE_TITLE_AXISY) );
 	}

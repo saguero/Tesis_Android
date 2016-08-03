@@ -71,7 +71,7 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 	/*Sil*/
 	
 	public AbsDatabase(File file) throws Exception{
-		newInstanceFromARFF(saveFile(file, Config.InitialSettings.getDirWorking()));
+		parseFile(file);
 	}
 	
 	public  Vector<Double> getActualValues(int classIndex){
@@ -152,9 +152,7 @@ public abstract class AbsDatabase implements Cloneable{		//Database general - se
 		return result;
 	}
 	
-	public abstract AbsDatabase newInstance(AbsDatabase database);
-	public abstract File saveFile(File file, String destination) throws Exception;						//Ver como se va a almacenar el file
-	public abstract void newInstanceFromARFF(File saveFile) throws Exception;		//Replace with default save format
+	public abstract AbsDatabase newInstance(AbsDatabase database);					//Ver como se va a almacenar el file
 	public abstract void parseFile(File file);	//Parsing del archivo
 	public abstract String getTypeAttribute(int index);
 	
